@@ -97,6 +97,21 @@
 /* A glass button that is the chosen one of a set. */
 .nr-button--glass[aria-pressed="true"] { background: var(--accent); color: var(--text-on-accent); }
 
+/* Refresh: the word, then the glyph, at the round button's height (NDS-36). */
+.nr-button--refresh { min-height: var(--size-control-large); padding: 0 var(--space-10); gap: var(--space-4); font-weight: 500; }
+.nr-button--refresh.nr-button--small { min-height: var(--size-control); padding: 0 var(--space-8); }
+.nr-button--refresh svg { flex: none; width: var(--space-12); height: var(--space-12); }
+.nr-button--refresh:not(:disabled):not([aria-disabled="true"]):hover { background: var(--control-hover); }
+.nr-button--refresh[aria-busy="true"] svg { animation: nr-button-spin var(--duration-spin) var(--ease-linear) infinite; }
+.nr-touch .nr-button--refresh { min-height: var(--nr-h-control); }
+
+/* Ground-aware fills (NDS-38): a pill on a menu or on a selected row. */
+:is(.nr-menu, .nr-popover) :is(.nr-button--glass, .nr-button--submit, .nr-button--refresh) { background: var(--control-on-menu); }
+:is(.nr-menu, .nr-popover) :is(.nr-button--glass, .nr-button--submit, .nr-button--refresh):not(:disabled):not([aria-disabled="true"]):hover { background: var(--control-on-menu-hover); }
+[aria-selected="true"] :is(.nr-button--glass, .nr-button--submit, .nr-button--refresh, .nr-icon-button--kebab) { background: var(--control-on-selection); color: var(--text-on-accent); }
+[aria-selected="true"] :is(.nr-button--glass, .nr-button--submit, .nr-button--refresh):not(:disabled):not([aria-disabled="true"]):hover,
+[aria-selected="true"] .nr-icon-button--kebab:not(:disabled):hover { background: var(--control-on-selection-hover); color: var(--text-on-accent); }
+
 /* Sizes: bar (every button in an action bar), small (a modal's or card's CTA). */
 .nr-button--bar { min-height: var(--nr-h-bar); padding: 0 var(--space-16); }
 .nr-button--small { min-height: var(--size-cta-small); padding: 0 var(--space-14); }
@@ -739,7 +754,7 @@
 @media (prefers-reduced-motion: reduce) {
   .nr-button, .nr-icon-button, .nr-split-button__action, .nr-split-button__menu,
   .nr-split-button__menu svg { transition: none; }
-  .nr-button__spinner { animation: none; }
+  .nr-button__spinner, .nr-button--refresh[aria-busy="true"] svg { animation: none; }
   .nr-modal-layer,
   :is(.nr-menu, .nr-command-palette, .nr-popover, .nr-tooltip):popover-open { animation: none; }
   .nr-sheet-layer > .nr-sheet { animation: none !important; }

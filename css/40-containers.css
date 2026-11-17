@@ -263,6 +263,10 @@ a.nr-list-row { cursor: pointer; }
 
 .nr-list-row[aria-selected="true"] :is(.nr-list-row__title, .nr-list-row__sub, .nr-list-row__disclosure,
   .nr-list-row__tile, .nr-list-row__meta, .nr-list-row__chevron, .nr-list-row__menu) { color: var(--text-on-accent); }
+/* On a selected row the pill and the open menu take the selection's own fill (NDS-38). */
+.nr-list-row[aria-selected="true"] .nr-list-row__pill { background: var(--control-on-selection); color: var(--text-on-accent); }
+.nr-list-row[aria-selected="true"] .nr-list-row__pill:hover,
+.nr-list-row[aria-selected="true"] .nr-list-row__menu[aria-expanded="true"] { background: var(--control-on-selection-hover); }
 
 /* ===== DataTable =========================================================== */
 
@@ -773,8 +777,104 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
 @keyframes nr-bar-graph-from-trailing { from { opacity: 0; transform: translateX(var(--space-24)); } to { opacity: 1; transform: none; } }
 @keyframes nr-bar-graph-from-leading { from { opacity: 0; transform: translateX(calc(0px - var(--space-24))); } to { opacity: 1; transform: none; } }
 
+/* ===== Nested card ========================================================= */
+/* One detail inside a card (NDS-38). One level only. */
+.nr-card__nested {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-card-quiet);
+  background: var(--card-nested);
+  color: var(--text-secondary);
+}
+
+/* ===== GetStartedCard ====================================================== */
+/* One card for every surface that explains how it starts (NDS-39):
+   a head, numbered steps (title over one line, "i" after it), one link.
+   Derived: step inset = space-10; disc = space-16 + space-2 (18). */
+.nr-get-started {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  min-width: 0;
+  padding: var(--card-padding-y) var(--card-padding-x);
+  border-radius: var(--radius-card);
+  background: var(--card);
+}
+.nr-get-started__head { display: flex; align-items: flex-start; gap: var(--space-8); min-width: 0; }
+.nr-get-started__heading { flex: 1 1 auto; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+.nr-get-started__title { margin: 0; color: var(--text-primary); }
+.nr-get-started__lead { margin: 0; color: var(--text-secondary); font-weight: 400; }
+.nr-get-started__close {
+  position: relative;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: var(--space-20);
+  height: var(--space-20);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+.nr-get-started__close svg { width: var(--space-12); height: var(--space-12); }
+.nr-get-started__close:hover { color: var(--text-primary); }
+.nr-get-started__close:active { filter: brightness(0.92); }
+.nr-get-started__close::after {
+  content: "";
+  position: absolute;
+  inset: calc((var(--space-20) - var(--nr-target, var(--target-pointer))) / 2);
+}
+.nr-get-started__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  margin: 0;
+  padding: 0 var(--space-10);
+  list-style: none;
+}
+.nr-get-started__step { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--space-10); align-items: start; }
+.nr-get-started__number {
+  display: inline-grid;
+  place-items: center;
+  width: calc(var(--space-16) + var(--space-2));
+  height: calc(var(--space-16) + var(--space-2));
+  border-radius: 50%;
+  background: var(--accent-tint);
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+}
+.nr-get-started__text { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.nr-get-started__step-title { color: var(--text-primary); }
+.nr-get-started__line { color: var(--text-secondary); font-weight: 400; }
+.nr-get-started__link { align-self: flex-start; display: inline-flex; align-items: center; gap: var(--space-4); margin-top: var(--space-6); color: var(--accent-text); text-decoration: none; }
+.nr-get-started__link:hover { text-decoration: underline; }
+.nr-get-started__link svg { width: var(--space-10); height: var(--space-10); }
+
+/* Sample data: a banner, then the sample dimmed and inert. */
+.nr-sample-banner {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+  min-width: 0;
+  padding: var(--space-8) var(--space-12);
+  border-radius: var(--radius-control);
+  background: var(--caution-tint);
+}
+.nr-sample-banner__glyph { flex: none; width: var(--space-14); height: var(--space-14); margin-top: var(--space-2); color: var(--caution-text); }
+.nr-sample-banner__text { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.nr-sample-banner__title { color: var(--text-primary); }
+.nr-sample-banner__line { color: var(--text-secondary); font-weight: 400; }
+.nr-sample { opacity: 0.55; pointer-events: none; user-select: none; }
+
 /* ===== Increased contrast: painted surfaces and wells get the 1pt edge ===== */
-[data-theme$="-hc"] :is(.nr-stat-card, .nr-consent-block, .nr-code-block, .nr-bar-graph, .nr-property-inspector__field) {
+[data-theme$="-hc"] :is(.nr-stat-card, .nr-consent-block, .nr-code-block, .nr-bar-graph, .nr-property-inspector__field,
+  .nr-get-started, .nr-card__nested, .nr-sample-banner) {
   box-shadow: inset 0 0 0 1px var(--edge-hc);
 }
 [data-theme$="-hc"] .nr-property-inspector__field[aria-invalid="true"],
@@ -793,7 +893,7 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
 @media (prefers-reduced-motion: reduce) {
   .nr-card--interactive, .nr-list-row, .nr-list-row__disclosure, .nr-list-row__pill, .nr-list-row__menu,
   .nr-data-table__sort-glyph, .nr-expander__summary, .nr-expander__chevron, .nr-property-inspector__field,
-  .nr-code-block__copy, .nr-bar-graph__column { transition: none; }
+  .nr-code-block__copy, .nr-bar-graph__column, .nr-get-started__close { transition: none; }
   .nr-expander[open] > .nr-expander__content,
   .nr-bar-graph__plot--from-trailing, .nr-bar-graph__plot--from-leading { animation: none; }
 }

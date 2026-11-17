@@ -64,7 +64,7 @@ Touch fields use the body step because both platforms' own fields do, and becaus
 - Invalid: `aria-invalid="true"` and `aria-describedby` on the message; announce the message politely when it appears.
 - The consumer supplies every word: label, prompt, help, the reason, the mixed word and any button names.
 - Contrast: text `text-primary`, prompt `text-placeholder` and messages `text-tertiary` or `critical-text`, each 4.5:1 over the worst-case ground.
-- The focus ring is on by default. A product that turns it off with `.nr-focus-off`, as Trace does, fails WCAG 2.4.7 Focus Visible.
+- The focus ring is on by default. A product that turns it off with `.nr-focus-off`, as Gateway does, fails WCAG 2.4.7 Focus Visible.
 - Touch targets are the whole well: 44 on iOS, 48 on Android.
 
 ## Platforms

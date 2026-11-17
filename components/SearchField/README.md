@@ -2,7 +2,7 @@
 
 A capsule field with a search glyph, a clear button and optional scope tokens, for finding and filtering content as people type.
 
-Intentional addition. trace-commons has no search component; its search screens reuse `GlassTextField` with a Command-F focus binding. Every platform has its own search idiom (HIG search fields, M3 search, Unity search field), and NEAR AI products search sessions, traces, models and agents, so the parent defines one.
+Intentional addition. trace-commons has no search component; its search screens reuse `GlassTextField` with a Command-F focus binding. Every platform has its own search idiom (HIG search fields, M3 search, Unity search field), and Near AI products search traces, models and agents, so the parent defines one.
 
 ## When to use
 
@@ -16,7 +16,7 @@ Intentional addition. trace-commons has no search component; its search screens 
 3. **Tokens** (optional): input `Chip`s that scope the search ("in: nearcore", "@near/nearcore"), before the text.
 4. **Clear**: a filled-circle glyph at 16, `text-tertiary`, `text-primary` on hover. It shows only while there is text, and its hit area grows to `--nr-target`.
 5. **Well**: `field` fill, `radius-pill`, height `--nr-h-control`, `space-10` leading and `space-4` trailing padding.
-6. **Results line** (outside, optional): caption `text-tertiary` in a polite live region ("12 sessions match").
+6. **Results line** (outside, optional): caption `text-tertiary` in a polite live region ("12 traces match").
 
 ## Sizes by density
 
@@ -81,4 +81,4 @@ Intentional addition. trace-commons has no search component; its search screens 
 
 ## Source
 
-Intentional addition. Grounded in Trace's review sheet search (field auto-focused and on Cmd-F, recents, a three-state result label) built from `GlassTextField(focus:)` in Controls.swift; HIG search fields and Liquid Glass search placement (bottom on iPhone, trailing toolbar on iPad and Mac); M3 search; Unity search field (live results, 150 minimum width, condensed variant).
+Intentional addition. Grounded in Gateway's review sheet search (field auto-focused and on Cmd-F, recents, a three-state result label) built from `GlassTextField(focus:)` in Controls.swift; HIG search fields and Liquid Glass search placement (bottom on iPhone, trailing toolbar on iPad and Mac); M3 search; Unity search field (live results, 150 minimum width, condensed variant).

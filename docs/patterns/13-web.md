@@ -1,6 +1,6 @@
 # Web patterns
 
-The web shell renders NEAR AI products in a browser, in the Windows and Linux desktop shells (Tauri) and on mobile web. It uses our own components on the parent tokens (decision NDS-18) and keeps what people expect from the web: every place has a URL, Back works, text zooms, and the page adapts to any window. On the web the glass has no desktop behind it, so the `.nr-scene` gradient stands in for one.
+The web shell renders Near AI products in a browser, in the Windows and Linux desktop shells (Tauri) and on mobile web. It uses our own components on the parent tokens (decision NDS-18) and keeps what people expect from the web: every place has a URL, Back works, text zooms, and the page adapts to any window. On the web the glass has no desktop behind it, so the `.nr-scene` gradient stands in for one.
 
 ## Layout classes and container queries
 
@@ -15,7 +15,7 @@ Classify layout by the width of the window or the container, never by device (ND
 | Extra-large | 1600 and up | `(min-width: 1600px)` | 3 (third is the inspector) | Expanded rail or `Sidebar` | 24 |
 
 - Generate the media queries from `bp-medium`, `bp-expanded`, `bp-large` and `bp-xlarge` at build time. CSS custom properties do not work inside `@media` conditions, so never hand-type the numbers.
-- Make every pane a size container (`container-type: inline-size`) and write component layouts against it. The inspector at `size-pane-inspector` (293) and the same inspector shown as a full page at compact then pick their layouts from their own width. This replaces SwiftUI's `ViewThatFits` in the session review card's action row: inline buttons when the container is wide enough, stacked when it is not.
+- Make every pane a size container (`container-type: inline-size`) and write component layouts against it. The inspector at `size-pane-inspector` (293) and the same inspector shown as a full page at compact then pick their layouts from their own width. This replaces SwiftUI's `ViewThatFits` in the review card's action row: inline buttons when the container is wide enough, stacked when it is not.
 - Treat a height under 480 (a phone in landscape) as compact height: keep one pane, keep bars short, and never pin two bars at once.
 - Support 200% browser zoom and reflow at 320 CSS px with no horizontal scrolling (WCAG 1.4.10). Zoom halves the effective width, so a 1280 window at 200% is a medium layout. Size type in `rem` on a 16px root so browser text settings scale it.
 - Cap running text at `size-readable-width` (680) at every class. Panes grow on large screens; lines do not.
@@ -37,7 +37,7 @@ The shell is a scene with panes floating on it. Panes are the navigation layer (
 | Menus, popovers, tooltips, `CommandPalette` | Floating | `.nr-floating`: `blur-floating` under `popover` or `menu` | `pane-base` | `pane-opaque` |
 | `Modal` | Modal | `pane-base` and `pane-fill`, `shadow-modal`, over `scrim-modal` and `blur-scrim` | Scrim without blur | Scrim without blur |
 
-**Spacing.** Panes sit `pane-gap` (10) from each other and from the viewport edge, and content sits `pane-padding` (12) inside a pane, so content lands 22 from the window edge. Pages without panes (compact screens, settings at compact, marketing) use `margin-compact` 16 and `margin-medium` 24 directly. Where an element hugs its container, its corners are concentric (outer radius minus the padding between them, never below `radius-tile`).
+**Spacing.** Panes sit `pane-gap` (10) from each other and from the viewport edge, and content sits `pane-padding` (12) inside a pane, so content lands 22 from the window edge. Pages without panes (compact screens, settings at compact) use `margin-compact` 16 and `margin-medium` 24 directly; marketing pages use their own grid (see *Marketing pages*). Where an element hugs its container, its corners are concentric (outer radius minus the padding between them, never below `radius-tile`).
 
 **The glass budget.** Show about four glass surfaces per viewport and at most one large blurred surface. Count every pane, bar and floating surface that has its own `backdrop-filter`.
 
@@ -52,9 +52,31 @@ The shell is a scene with panes floating on it. Panes are the navigation layer (
 | Compact page with both bars and a menu | Top bar (1) + `TabBar` (1) + menu (1) = 3 |
 | Compact page with a sheet | Sheet chrome replaces both bars; scrim is not glass = 1 |
 
+**Floating opacity.** `popover` and `menu` are 94% opaque, so the rows, pills and Submit buttons under a menu never show through it (NDS-24). The blur behind them is for depth, not legibility.
+
 **Compact.** Below 600 the scene goes away and the page itself is an opaque pane (`pane-base`), as on phones. Only the bars float, and they take `blur-bar` only when content is behind them. See Phone patterns.
 
 [Liquid Glass: non-Apple platforms] [trace-commons: glass.css]
+
+## The chat shell
+
+The Near AI chat (the private chat built on LibreChat) uses an opaque shell instead of the glass panes, because a browser has no desktop behind its glass (NDS-44). It is that product's shell, not a replacement for the glass app shell, and it keeps this section's layout classes and navigation model (NDS-12, NDS-13).
+
+| Region | Expanded and up | Medium | Compact |
+|---|---|---|---|
+| Frame | The `scene` color fills the window | Same | The page is the pane, full bleed |
+| Navigation | An icon rail on the scene; its buttons open the chats panel, prompts and bookmarks | The rail collapses; the chats panel opens over the page | The `TabBar` or a top-bar menu button |
+| Top band | 48 tall, on the scene, above both cards: the masthead (Near AI N 22 + wordmark 18 tall, NDS-27) over the panel, then the conversation title (`web-label` medium, truncated) and the chrome buttons | Same | An overlay top bar with the model picker |
+| Cards | The chats panel (`card-on-opaque`, rows 36 tall, "New chat" first) and the conversation card, 8 from the window's edges, `radius-pane` 20 on their outer corners, meeting at a 1px line with square inner corners | The conversation card only | No cards; the page is the pane |
+| Composer | `radius-pane` 20, two rows, the model picker after the attach button | Same | Folds to one 54 pill row (attach, text, send) while the draft is empty or one line |
+
+- Chrome icon buttons (bookmark, proof, share, temporary chat, overflow) show their container only on hover, press and while their menu is open (`IconButton`, toolbar variant, 36 on the web).
+- The current chat in the panel takes `accent-tint` over the panel with no edge bar; hover and press are two clearly separate grey steps (see `Sidebar`).
+- The deployment's proof pill sits in the band's trailing group; each signed reply leads its actions with a `ProofTag` (NDS-43).
+- The empty thread is the welcome described in AI and agent patterns: the drawn N, a title and a subtitle anchored above the composer, with `scene-glow-brand` rising from the composer's top edge.
+- The chat keeps the drawer and the 640 and 768 breakpoints it inherits from LibreChat. They stay out of the system for now (owner, 2026-11-04; NDS-49): the layout classes and "no drawer" above still bind every other web product.
+
+[nearai/LibreChat PR #5]
 
 ## Navigation by class
 
@@ -74,7 +96,7 @@ One navigation model, rendered per class (NDS-13). The rail and the bottom bar h
 - Put the title and the screen's actions in a `Toolbar` at the top of the content pane, with at most three groups and one primary action at the trailing end (NDS-19).
 - Use a `Breadcrumb` for sub-pages inside a destination at medium and up (Home > History). At compact the breadcrumb collapses to a back button naming the parent ("Home").
 
-**Trace worked example.** The Trace monitor keeps its navigation inside the main pane: `Tabs` with the ember rule for Home / Inference / Traces at medium and up, with the decisions-owed `Badge` on Traces. At compact the same three become a `TabBar`, and the badge moves onto the Traces tab. Home's sub-pages (History, Missions, Insights) stay a `Breadcrumb` in the pane. Before onboarding only Inference shows, at every class.
+**Gateway worked example.** The Gateway monitor keeps its navigation inside the main pane: `Tabs` with the ember rule for Home / Private AI / Traces / Insights at medium and up (NDS-37), with the decisions-owed count on Traces. At compact the same four become a `TabBar`, and the count moves onto the Traces tab. History is a sub-page of Traces and Missions a sub-page of Home, each a `Breadcrumb` in the pane. Before onboarding only Private AI shows, at every class.
 
 [M3: navigation rail] [trace-commons: MonitorWindowView.swift]
 
@@ -82,14 +104,14 @@ One navigation model, rendered per class (NDS-13). The rail and the bottom bar h
 
 Use the three M3 canonical layouts before inventing one. Each states its panes per class and what happens on resize.
 
-**List-detail.** A list of items and the selected item's detail. Examples: Traces (folders and sessions, then the session review card); agent runs (runs, then the `AgentRun` with its `ToolCall`s); chats (threads, then the thread).
+**List-detail.** A list of items and the selected item's detail. Examples: Traces (folders and traces, then the trace's review card); agent runs (runs, then the `AgentRun` with its `ToolCall`s); chats (threads, then the thread).
 
 | Class | Shows | Back | Selection |
 |---|---|---|---|
 | Compact, medium | List or detail | Detail shows a back button and browser Back returns to the list | Not drawn |
 | Expanded and up | List (`size-pane-main` 440, never under 360) and detail side by side | No back button | The selected `ListRow` uses `selection` with `text-on-accent` |
 
-- Opening a wide window with nothing selected shows an `EmptyState` in the detail pane, written by the product ("Select a session to review it.").
+- Opening a wide window with nothing selected shows an `EmptyState` in the detail pane, written by the product ("Select a trace to review it.").
 - Narrowing a window with a selection shows the detail. Widening it shows both, with the selection kept.
 - Keep each pane's scroll position and the read state across these changes.
 
@@ -101,9 +123,9 @@ Use the three M3 canonical layouts before inventing one. Each states its panes p
 | Medium | A modal side sheet over `scrim` (at most 400 wide) |
 | Expanded and up | A fixed pane beside the primary content: `size-pane-inspector` 293 for inspection, up to 360 for reading |
 
-**Feed.** A grid of cards. Examples: Home's `StatCard`s (Waiting, Contributed, Credit pending) and icon cards (Missions, History); a mission or model catalogue. One column at compact; add columns from medium as the container widens; keep every card's text inside `size-readable-width`. A whole-card link has the role of a link and one target.
+**Feed.** A grid of cards. Examples: Home's `StatCard`s (Waiting, Contributed, Credit) and icon cards (Missions, Private AI Settings); a mission or model catalogue. One column at compact; add columns from medium as the container widens; keep every card's text inside `size-readable-width`. A whole-card link has the role of a link and one target.
 
-**The three-pane window on the web.** Trace's floating three-pane window (main 440, flexible content, inspector 293) translates by class. The browser window cannot grow to the right the way the Mac window does, so a pane that no longer fits swaps places with another.
+**The three-pane window on the web.** Gateway's floating three-pane window (main 440, flexible content, inspector 293) translates by class. The browser window cannot grow to the right the way the Mac window does, so a pane that no longer fits swaps places with another.
 
 | Class | Main pane | Content (map) | Inspector |
 |---|---|---|---|
@@ -131,8 +153,8 @@ Every place a person can land on has a URL, and Back always takes them somewhere
 
 | State | Where it lives | Example |
 |---|---|---|
-| Destination and selected item | Path | `/traces/near-agents/sessions/2026-10-12T0914` |
-| Sub-page | Path | `/home/history` |
+| Destination and selected item | Path | `/traces/near-agents/2026-10-12T0914` |
+| Sub-page | Path | `/traces/history` |
 | View of the item a shared link should keep | Query | `?tab=transcript`, `?q=api_key` |
 | Pane visibility, pane widths, collapsed sections | Per-device storage, read with try/catch | Inspector open, map hidden |
 | Drafts | Per-device storage, autosaved | An unsent prompt in `PromptComposer` |
@@ -143,7 +165,7 @@ Every place a person can land on has a URL, and Back always takes them somewhere
 - At compact, a `Sheet` or full-screen task pushes one entry, so browser Back closes it. Dialogs at medium and up do not push; Esc closes them.
 - A deep link opens exactly that item at any class. The in-app back button goes up to the parent list even when browser history is empty.
 - Restore scroll position on Back. Never intercept Back with a confirmation; autosave drafts instead.
-- Changing the URL never changes data. Actions (Contribute, Keep, Dismiss) are buttons, never links.
+- Changing the URL never changes data. Actions (Submit, Dismiss) are buttons, never links.
 
 ## Dialogs, sheets and popovers
 
@@ -158,7 +180,7 @@ Choose the presentation by need, then by class. Never stack modals; queue approv
 | Choices for an action just started | `Menu`, or a `Sheet` for more than about seven items | `Menu` | `Menu` |
 | Read-only review ("Look inside") | Full-screen task with Close | `Modal` 780 | `Modal` 780 |
 
-**Modal.** Use the `<dialog>` element with `showModal()`, which makes the page behind it inert. Focus moves to the first field or the safest action, Tab wraps inside, Esc closes any modal that is not mid-commit, and focus returns to the control that opened it. Keep `modal-inset` 28 to the viewport edges. Cancel sits leading and the primary trailing (NDS-19), with at most one primary. Destructive is never the default. An irreversible send (Contribute) is drawn prominent but never answers Return, and a consent confirmation can stay disabled until its `Checkbox` is ticked. A click on the scrim never closes a modal.
+**Modal.** Use the `<dialog>` element with `showModal()`, which makes the page behind it inert. Focus moves to the first field or the safest action, Tab wraps inside, Esc closes any modal that is not mid-commit, and focus returns to the control that opened it. Keep `modal-inset` 28 to the viewport edges. Cancel sits leading and the primary trailing (NDS-19), with at most one primary. Destructive is never the default. An irreversible send (Submit in the review) is drawn prominent but never answers Return, and a consent confirmation can stay disabled until its `Checkbox` is ticked. A click on the scrim never closes a modal.
 
 **Sheet at compact.** A bottom sheet with `radius-sheet` 28 top corners, a 32 by 4 drag handle centered in a 48 band, and medium and large detents. Dragging down or tapping the handle changes detent; a visible Close or Cancel button is always present, because dragging is never the only way. Confirm before a swipe discards unsent text.
 
@@ -171,8 +193,8 @@ Choose the presentation by need, then by class. Never stack modals; queue approv
 The web, Windows and Linux have no menu bar, so the `CommandPalette` is where the whole command registry lives (NDS-14). It renders the same commands the Mac menu bar lists, with the same labels and enabled states.
 
 - Open it with `Mod+K` and with a visible search button in the top `Toolbar`. At compact it opens as a full-screen sheet with the field at the top; elsewhere it floats near the top of the window at `size-modal-narrow` 450, on the floating layer.
-- Group results: recent items, then destinations (Home, Traces, Private AI, each settings section), then commands. List only commands that can run now. An irreversible send such as Contribute may be listed; choosing it opens the review where the action lives.
-- When the product has an assistant, add one explicit row, "Ask NEAR AI", that turns the typed text into a prompt. The palette never sends a prompt unless that row is chosen.
+- Group results: recent items, then destinations (Home, Traces, Private AI, each settings section), then commands. List only commands that can run now. An irreversible send such as Submit may be listed; choosing it opens the review where the action lives.
+- When the product has an assistant, add one explicit row, "Ask Near AI", that turns the typed text into a prompt. The palette never sends a prompt unless that row is chosen.
 - Write shortcuts as the platform shows them: ⌘K in a browser on a Mac, Ctrl+K elsewhere. Never bind keys the browser keeps (`Mod+T`, `Mod+W`, `Mod+N`, `Mod+L`, `Mod+R`, `Mod+Q`, Ctrl+Tab) or `Mod+Space`.
 - `Mod+,` opens the settings page. Esc stops a running generation when focus is in the composer or the transcript, after first closing the topmost floating surface if one is open.
 - List every shortcut in a keyboard shortcuts dialog reachable from the palette. Navigation and commands holds the registry and the full shortcut table.
@@ -184,7 +206,7 @@ The web, Windows and Linux have no menu bar, so the `CommandPalette` is where th
 Forms and data holds the full field rules. On the web:
 
 - Put the label above the field (`web-label`), helper text below (`web-caption`, `text-tertiary`), and an `InlineAlert` under the field it refers to, linked with `aria-describedby`.
-- Mark the smaller group in words: "(optional)" after optional labels, or "Required" as a `Tag`. An asterisk alone is not enough. Set `aria-required` on required fields.
+- Mark the smaller group in words: "(optional)" after optional labels, or "required" as inline text after the label, in `positive-text` on consent rows (NDS-42). An asterisk alone is not enough. Set `aria-required` on required fields.
 - Validate a field once it has been touched, never during a first attempt or on page load. Keep submit enabled and report problems inline; with two or more errors, or one out of view, add a `Notice` at the top that links to each field. An empty `PromptComposer` is the exception: its Send stays disabled.
 - Set `autocomplete`, `inputmode` and `enterkeyhint` on every field (`enterkeyhint="send"` on the composer, `"search"` on a `SearchField`). Use native date and time inputs where the browser's picker is adequate.
 - A `Switch` applies at once and offers Undo where the change is reversible; a `Checkbox` group applies on Save.
@@ -198,13 +220,13 @@ The page carries one of the six themes in `data-theme` on `<html>`. Resolve it i
 |---|---|
 | In-app choice (Light / Dark / System) | Overrides the system appearance on this device; applies at once in every open tab |
 | `prefers-color-scheme` | Light or dark when the choice is System (NDS-17) |
-| `prefers-contrast: more` | The `-hc` theme of the current appearance. Trace has no `-hc` pair, so it uses `light-hc` or `dark-hc`, accent included |
+| `prefers-contrast: more` | The `-hc` theme of the current appearance. Gateway has no `-hc` pair, so it uses `light-hc` or `dark-hc`, accent included |
 | `prefers-reduced-transparency: reduce` | Panes and floating surfaces become `pane-opaque`; blur is removed. Offer the same switch in settings, because support for the query varies by browser |
 | `forced-colors: active` | Surfaces become `Canvas` with a 1px `CanvasText` border; state is carried by borders and outlines, never by fills. Only `Logo` and chart swatches opt out with `forced-color-adjust: none` |
 | `prefers-reduced-motion: reduce` | Nothing moves. Changes jump to their end state and view transitions are off (NDS-11) |
 
 - Set `data-theme` and `color-scheme` from a small blocking script in `<head>` before first paint, so the page never flashes the wrong appearance. Listen for `matchMedia` changes and re-resolve.
-- Keep the focus ring on: 2px `focus-ring`, 2px outside, keyboard focus only (NDS-5). A product may turn it off with `.nr-focus-off`, as Trace does; turning it off fails WCAG 2.4.7 (Focus Visible), and it hurts most on the web, where keyboard users have no system ring to fall back on.
+- Keep the focus ring on: 2px `focus-ring`, 2px outside, keyboard focus only (NDS-5). A product may turn it off with `.nr-focus-off`, as Gateway does; turning it off fails WCAG 2.4.7 (Focus Visible), and it hurts most on the web, where keyboard users have no system ring to fall back on.
 
 ## Performance budgets
 
@@ -217,7 +239,7 @@ The page carries one of the six themes in `data-theme` on `<html>`. Resolve it i
 | Opaque fallback trigger | 4 or fewer cores, Save-Data, `prefers-reduced-data`, or sustained dropped frames |
 | Refraction (SVG displacement lensing) | Not used. Flat glass has none, and Firefox draws nothing for it |
 | Largest contentful paint, interaction to next paint, layout shift | 2.5 s, 200 ms, 0.1 at the 75th percentile |
-| Rendered rows before virtualizing a list | About 100 (Trace's History caps at 100 rows) |
+| Rendered rows before virtualizing a list | About 100 (Gateway's History caps at 100 rows) |
 
 ## Loading and streaming
 
@@ -237,7 +259,7 @@ See AI and agent patterns and Feedback and states.
 
 - Let people look around before signing in where the product allows it. Ask for an account at the first action that needs one (defer commitment).
 - Offer a passkey first: WebAuthn with conditional mediation, so the field with `autocomplete="username webauthn"` offers saved passkeys. Name the method the device offers ("Use a passkey", "Windows Hello").
-- The account is the NEAR AI account. Trace's Join step shows a passkey card and a NEAR AI account card, each an eyebrow, one line and an action that turns into a "done" `StatusLabel` with Undo. The action note above the `ActionBar` states the consequence: "Signing in doesn't authorize any data sharing."
+- The account is the Near AI account. Gateway's Join step, the last step of first run (NDS-32), shows one Near AI account card whose action turns into a spinner and then a "Signed in" `StatusLabel`; its passkey card was removed on 2026-10-31. The action note above the `ActionBar` states the consequence: "Connecting or creating an account doesn't authorize any data sharing." Gateway requires the account to finish setup, so Join has no Skip.
 - When sign-in continues in another browser tab or window, keep Cancel visible while it waits and show a `Spinner` in the primary action.
 - Settings > Account offers sign-out and account deletion, with the same effort to delete as to sign up. Deletion says what it removes (chats, memory, files) and when it is complete.
 
@@ -249,19 +271,115 @@ See AI and agent patterns and Feedback and states.
 - In "Choose", each category is a `Switch`, off by default. Essential storage is shown on and locked, tagged "required". Each category states its consequence ("Analytics cookies record which pages you open.").
 - Remember the choice, never ask again on the next visit, and keep a "Cookie settings" link in the footer and in Settings.
 
-## Marketing and app surfaces
+## Marketing pages
+
+Marketing pages sell a product to someone who does not have it yet. They follow their own register, set by the owner on the Near AI Gateway site (nearai-gateway-website, 2026-10-27 to 10-30, NDS-45): Near AI blue on a near-black void, live pixel art, and the Near AI brand faces. App surfaces keep everything above this section.
 
 | | Marketing pages | App surfaces |
 |---|---|---|
-| Type | `hero-display` and `hero-figure` for one or two moments, then `web-display` down | `web-*` steps only |
-| Material | Scene and painted cards; Classic treatment allowed for one promotion | Flat glass shell |
-| Motion | `spring-expressive` for one or two hero moments | Standard springs and `ease-standard` |
-| Layout | Page sections spaced `space-48` to `space-64`, text at `size-readable-width` | Panes and canonical layouts |
-| Marks | `Logo` from the NEAR AI kit; a product's own mark | Product mark in the app tile or rail header only |
+| Ground | Void #070708, dark only | `scene` and panes, following the system appearance (NDS-17) |
+| Type | Brand faces: Schibsted Grotesk, Mona Sans, JetBrains Mono (NDS-45) | `system-ui` and `web-*` steps only (NDS-4) |
+| Accent | Near AI blue #0091FD with void ink | `accent` with `text-on-accent` |
+| Material | Glass on the header bar only; content on painted surfaces with a 1px rule | Flat glass shell |
+| Motion | Live art at 24 fps, paused when unseen | Standard springs and `ease-standard` |
+| Marks | The Near AI wordmark with the product name typeset beside it (NDS-27) | Product mark in the app tile, rail or masthead |
 
-- Never use SF fonts on the web (NDS-4, NDS-18); both surfaces use the `system-ui` stack.
-- Decoration stays restrained: no gradients as ornament beyond the scene, no colored borders on cards, no emoji.
-- Marketing copy follows the same voice: state what happens to data, never promise privacy.
+### Palette
+
+| Role | Value | Use |
+|---|---|---|
+| Void | #070708 | Page ground, CTA ground, art grounds |
+| Obsidian | #0F0F11 | Plates and notes |
+| Basalt | #18181B | Panels |
+| Slate | #26262B | 1px rules and card edges, the lockup divider |
+| Silver | #C1C1C1 | Body text, nav links |
+| Marble | #FAFAF7 | Headings, the current nav item, the brightest art step |
+| Pewter | #808088 | Meta and the few remaining labels (5.1:1 on void) |
+| Near AI blue | #0091FD (`brand-blue`) | Primary fill, link underlines, bullets, signals. Void ink on it is 6.2:1; white on it is only 3.3:1, so never white |
+| Art ramp | #035CA3, #0091FD, `brand-sky` #83DCFF, #FAFAF7 | The four lit steps of every illustration |
+
+The neutrals come from the owner's Cyber-Classical pattern library (its "classical" register), with Near AI blue as the one pigment. There is no light marketing theme: the owner removed every light section. A marketing page still sets `color-scheme: dark` and honors `prefers-reduced-motion`.
+
+### Type
+
+| Role | Face | Size / weight / line |
+|---|---|---|
+| Hero title | Schibsted Grotesk | 40 to 68 (`clamp(2.5rem, 4.8vw, 4.25rem)`), 600, 1.04, −0.035em; a second line in 500 and silver |
+| Page title, section head | Schibsted Grotesk | 56 and 52, 600 |
+| Subhead | Schibsted Grotesk | 34, 600; card titles 22, 500 |
+| Lede | Mona Sans | 21, line 1.45 to 1.5, at most 62ch |
+| Body | Mona Sans | 16, line 1.55 |
+| Button | Mona Sans | 15, 600, sentence case |
+| Nav link, label, code | JetBrains Mono | 12, 500, uppercase with 0.1em tracking for nav; code and terminal text 12.5 to 13.5 |
+
+Below 768 the titles step down to `clamp(2.1rem, 9vw, 2.75rem)` and ledes to 18. Faces load from the font host with system fallbacks; SF is never served (NDS-4).
+
+### Header
+
+- A floating glass bar, sticky 12 from the top, 56 tall, radius 36 (squircle; 20 where `corner-shape` is unsupported). Glass is `rgba(255,255,255,.04)` over a navy veil (`rgba(7,10,26,.7)`), `blur(22px) saturate(1.2)` and a soft drop. No edge or top highlight: the owner removed it.
+- The lockup leads: the Near AI wordmark (17 tall), a 1px slate divider, then the product name typeset in Schibsted Grotesk 21 / 600 at −0.04em ("Gateway"), as tall as the wordmark's "AI". The product name hides below 340.
+- Links trail in JetBrains Mono. The current page is marble with a 2px Near AI blue underline 8 below the label. The app's ember glow was tried on the site nav and reverted.
+- No Download button in the bar. Below 900 a Menu button opens the same glass as a panel 8 below the bar, with a full-width "Download for macOS".
+
+### Page heads and header art
+
+- Every head starts on the same line: `--head-top: clamp(56px, 9vw, 132px)`. Inner heads end `--head-gap: clamp(112px, 15vw, 216px)` above their first section, and the art may run behind that section. No rule under a head.
+- Header art is full bleed behind the copy, reaching up under the bar, running off the top and trailing edges and fading toward the copy with a radial mask. On phones it sits behind the copy at 55% opacity, never above it.
+- Text over moving art gets a stacked black text shadow (`0 0 2px #000` out to `0 0 56px rgb(0 0 0 / .85)`), which the owner asked for. Keep art away from body paragraphs.
+
+### Sections and grid
+
+- Content width `min(100% − 2 × gutter, 1234px)`; gutters 16, 24 from 768, 32 from 1280.
+- Sections are `clamp(72px, 10vw, 128px)` apart, tight ones `clamp(48px, 7vw, 88px)`, with a hairline between consecutive sections and none under a hero or page head.
+- No eyebrows above headlines, no section numbers and no § marks: the owner removed all of them. Numbered steps use numerals in squircle tiles (JetBrains Mono, tabular), which roll once into view.
+
+### Buttons
+
+- **Primary.** Flat Near AI blue, void ink, no border, about 50 tall (padding 13 × 20), radius 18 squircle (10 fallback), with a soft blue glow below (`0 14px 30px -12px` at 65%), which the owner kept because it echoes the app's tab ember. Hover mixes 12% white into the fill and lifts the glow.
+- **Secondary.** Transparent with a 1px marble outline; hover fills marble with void text.
+- **Link.** No container, 16 text with a 1px underline 4 below.
+- An `<a>` styled as a button carries its own ink; it never inherits the body's link color.
+- No arrows, gradients, glass, frost, halftone fills or edge highlights on buttons. Each was tried and the owner reverted to "something minimal".
+
+### Art direction
+
+- Every illustration is drawn live (canvas or WebGL) as light, then quantized to a pixel grid (3 for header art, 2 for section art and on phones) through an ordered Bayer dither into the art ramp, after a contrast curve. Pixels render crisp (`image-rendering: pixelated`).
+- Art runs at 24 frames a second, pauses offscreen and in a hidden tab, and shows one still frame under reduced motion. Without WebGL it falls back to a 2D drawing.
+- A group of cards shares one canvas clipped to each card's outline, so one field reads across them, never one effect per card.
+- Frames, captions, placards and magnifier lenses around art were all removed.
+
+### Components
+
+| Component | Anatomy |
+|---|---|
+| Terminal window | macOS-style title bar (#2c2c2e, three grey 11px lights, centered title), body #1e1e1f with #e4e4e6 text, radius 22 (12 fallback). Copy is a 28 icon in the title bar with a status word ("Copied") that clears after 2.4 s |
+| Release card | A terminal window titled with the file name: product, version in mono, size and date, the primary download and links (Release notes, SHA-256) |
+| Steps | A numeral column (44 or 32 numerals in Near AI blue) beside a title and body, hairlines between |
+| Callout | Near AI blue at 6% over void, a 10px blue square mark, `radius-card`-like 28, no border |
+| Plates | Three cards in a row (one column below 1024): a 5:4 figure on void over a body with a numeral, title and line |
+| Stations | Three stops joined by a dotted line; the middle stop (the person) filled blue |
+| Ledger | Mono rows with a dotted leader to the value or a tag |
+| CTA panel | Void, 1px rule, radius 36, centered: title, primary and link, mono meta |
+| Footer | Four columns (two below 900): the lockup and one line, then link columns with mono headings; a base row with the copyright |
+| Share card | 1200 × 630: the hero's still frame under its mask, the lockup, the title and one line |
+| Product tour | A replay of the app at 1:1 (its own tokens, sizes and words) inside a desktop frame, with chapter chips, a caption card in the lower trailing corner and play / pause. It autoplays only in view and in a foreground tab, and shows end states under reduced motion |
+
+### Writing
+
+Marketing copy follows the same voice: say what happens to data, name the action on each button, sentence case, no exclamation marks. Headings say the point first ("You decide what leaves your Mac."). Facts (versions, sizes, requirements) come from the release feed, never typed by hand.
+
+### Open conflicts
+
+These shipped on the Gateway site and contradict the rules elsewhere in this system. They are recorded, not adopted:
+
+- "Private by default, always" promises privacy (see Writing and content). The app's one permitted sentence, "Add a privacy layer to AI models you are already using.", is the model.
+- "Paid with your Near AI credit." puts "credit" on a Private AI section, where it is restricted.
+- The site writes the folder modes "Ask each time, Automatic or Never"; the app says Ask / Automatic / Never (NDS-30).
+- Tool logos are recolored into the dithered art, against the third-party logo rule (Iconography).
+- Art moves behind headlines and ledes without pause, against "Nothing fidgets" (Motion).
+- "Gateway" as a product name collides with the proof state "Gateway only" (AI and agent patterns).
+
+[nearai-gateway-website: assets/css/site.css, assets/js/site.js]
 
 ## Windows and Linux shells
 

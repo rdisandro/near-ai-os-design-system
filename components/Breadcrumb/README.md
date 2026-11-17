@@ -4,7 +4,7 @@ A breadcrumb shows where a sub-page sits inside its pane and takes the person ba
 
 ## When to use
 
-- Sub-pages inside a pane: Home › History, Missions, Insights, Mission drafts.
+- Sub-pages inside a pane: Traces › History, Missions, Mission drafts. A sub-page lives under the tab whose content it extends (Gateway moved History into Traces).
 - Web pages two or more levels deep (Agents › Research agent › Run 14).
 - Not for top-level destinations (`Tabs`, `Sidebar`), not for a sequence (`StepProgress`), and not as the only way back on a phone, where the platform's back control leads.
 
@@ -12,7 +12,7 @@ A breadcrumb shows where a sub-page sits inside its pane and takes the person ba
 
 1. **Back button** `.nr-breadcrumb__back`: a chevron glyph, 12 (`space-12`) on desktop and 20 on touch, semibold weight, no container. The target is 26 (`size-control`) on macOS, `--nr-target` elsewhere. It pulls the trail 4 closer so the first crumb keeps its place.
 2. **Trail** `.nr-breadcrumb__list`, an ordered list. Crumbs `.nr-breadcrumb__crumb` are links in `text-secondary`, each with a hit area 6 above and below the text (28 tall at the label step).
-3. **Separator**: a `›` in `text-tertiary`, drawn by CSS and silent to screen readers.
+3. **Separator**: a `›` in `text-tertiary`, drawn by CSS and silent to screen readers. Gateway's macOS shell draws a `/` (`--slash`); a product picks one separator and keeps it everywhere.
 4. **Current page** `.nr-breadcrumb__current` in `text-primary`, a heading, truncating with an ellipsis when space runs out.
 
 Every part uses the label step at semibold, 4 apart.
@@ -72,4 +72,4 @@ Every part uses the label step at semibold, 4 apart.
 
 ## Source
 
-`GlassBreadcrumb` and `GlassCrumb` in `macos/Sources/TCDesign/Components/Navigation.swift`: a bare back chevron (owner, 2026-10-08) on a `size.control` 26 target with a 12pt semibold glyph; crumbs secondary, separator tertiary, current primary with the header trait; crumbs turn primary under the pointer (#1146 `.tc-breadcrumb__crumb:hover`). Used for Home's sub-pages in `Views/MonitorWindowView.swift`, where Escape goes back.
+`GlassBreadcrumb` and `GlassCrumb` in `macos/Sources/TCDesign/Components/Navigation.swift`: a bare back chevron (owner, 2026-10-08) on a `size.control` 26 target with a 12pt semibold glyph; crumbs secondary, separator tertiary ("/" since 2026-10-12), current primary with the header trait; crumbs turn primary under the pointer (#1146 `.tc-breadcrumb__crumb:hover`). Used for sub-pages in `Views/MonitorWindowView.swift` ("Traces / History" since 2026-10-12), where Escape goes back.

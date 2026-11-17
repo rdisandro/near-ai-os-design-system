@@ -26,6 +26,31 @@
       "$value": "#cde6dc",
       "$description": "Web scene glow, center. Decorative."
     },
+    "scene-glow-brand": {
+      "$type": "color",
+      "$value": "#0070c63d",
+      "$description": "The one brand glow drawn straight on the scene: the welcome glow rising behind a composer, the first-run corner glow. Near AI blue at low alpha; never under body text without a card."
+    },
+    "scene-card": {
+      "$type": "color",
+      "$value": "#ffffffc7",
+      "$description": "A card drawn straight on the scene with no pane under it: the first-run stage's settings card, a welcome screen's card."
+    },
+    "scene-control": {
+      "$type": "color",
+      "$value": "#ffffffb8",
+      "$description": "A neutral control drawn straight on the scene (first-run Back). Lighter than `control`, whose dark well vanishes on the navy scene."
+    },
+    "scene-control-hover": {
+      "$type": "color",
+      "$value": "#ffffffeb",
+      "$description": "`scene-control` under the pointer."
+    },
+    "scene-rule": {
+      "$type": "color",
+      "$value": "#00000029",
+      "$description": "A rule or dashed line drawn straight on the scene, stronger than `rule`."
+    },
     "glass-veil": {
       "$type": "color",
       "$value": "#e3e6eca8",
@@ -71,6 +96,11 @@
       "$value": "#f8f9fb",
       "$description": "A quiet card on an opaque ground."
     },
+    "card-nested": {
+      "$type": "color",
+      "$value": "#0000000b",
+      "$description": "A card drawn on a card: the inner container that holds a detail or an estimate inside a card. One step from the card it sits on; never a third level."
+    },
     "control": {
       "$type": "color",
       "$value": "#ffffff70",
@@ -80,6 +110,26 @@
       "$type": "color",
       "$value": "#ebebedd6",
       "$description": "Replaces the control fill under the pointer."
+    },
+    "control-on-menu": {
+      "$type": "color",
+      "$value": "#00000014",
+      "$description": "A neutral control or pill drawn on a menu, popover or other floating surface, where `control` would vanish into the floating fill."
+    },
+    "control-on-menu-hover": {
+      "$type": "color",
+      "$value": "#00000021",
+      "$description": "`control-on-menu` under the pointer."
+    },
+    "control-on-selection": {
+      "$type": "color",
+      "$value": "#0000002e",
+      "$description": "A neutral control or pill drawn on a selected row (`selection`). Its label and glyph take `text-on-accent`."
+    },
+    "control-on-selection-hover": {
+      "$type": "color",
+      "$value": "#00000047",
+      "$description": "`control-on-selection` under the pointer."
     },
     "well": {
       "$type": "color",
@@ -98,13 +148,13 @@
     },
     "popover": {
       "$type": "color",
-      "$value": "#f7f7f9d6",
-      "$description": "A popover, node card or tooltip on the floating layer (over its own blur)."
+      "$value": "#f7f7f9f0",
+      "$description": "A popover, node card or tooltip on the floating layer (over its own blur). 94%: opaque enough that rows and pills under it never show through (owner, 2026-10-05 web and 2026-10-19 macOS)."
     },
     "menu": {
       "$type": "color",
-      "$value": "#f7f7f9cc",
-      "$description": "A menu on the floating layer (over its own blur)."
+      "$value": "#f7f7f9f0",
+      "$description": "A menu or dropdown on the floating layer (over its own blur). 94%, for the same reason as `popover`."
     },
     "scrim": {
       "$type": "color",
@@ -144,7 +194,17 @@
     "toggle-off": {
       "$type": "color",
       "$value": "#00000029",
-      "$description": "A switch track when off."
+      "$description": "The 16 to 18% ink behind things that are off or empty: a progress track, the spinner ring, the subtle badge. The switch track uses `toggle-track-off`."
+    },
+    "toggle-track-off": {
+      "$type": "color",
+      "$value": "#00000029",
+      "$description": "A switch track when off. In the dark themes it is 38% white so the navy off knob (`toggle-knob-off`) holds 3:1 on it (owner, 2026-10-22)."
+    },
+    "toggle-knob-off": {
+      "$type": "color",
+      "$value": "#ffffff",
+      "$description": "A switch knob when off. White in the light themes; in the dark themes the same navy as the on knob (`text-on-accent`), so on and off differ by track and position, not by knob."
     },
     "toolbar-glyph": {
       "$type": "color",
@@ -180,6 +240,11 @@
       "$type": "color",
       "$value": "#000000a3",
       "$description": "A field's prompt. Text, so it holds 4.5:1 on field."
+    },
+    "text-placeholder-on-opaque": {
+      "$type": "color",
+      "$value": "#6e6e74",
+      "$description": "Placeholder text on an opaque ground (`pane-opaque`, `card-on-opaque`, phone and web shells with no glass). Quieter than `text-placeholder`, which is already at the 4.5:1 floor over the worst glass ground. Never on glass."
     },
     "text-on-status": {
       "$type": "color",
@@ -255,6 +320,16 @@
       "$type": "color",
       "$value": "#1a8f4c24",
       "$description": "Positive tag ground. A notice never takes a tint; its tone is the dot in its title."
+    },
+    "proof-text": {
+      "$type": "color",
+      "$value": "#1a6b48",
+      "$description": "The word of a passed proof (Verified) and the seal's ink, on `proof-tint`. Calmer than `positive-text` so a proof never reads as a neon success."
+    },
+    "proof-tint": {
+      "$type": "color",
+      "$value": "#d2f1df",
+      "$description": "The ground of a passed proof: the ProofTag pill, the proof pill in a header, the seal-match box. Opaque, so it reads the same on glass and on paint."
     },
     "caution": {
       "$type": "color",
@@ -366,12 +441,27 @@
     "brand-blue": {
       "$type": "color",
       "$value": "#0091fd",
-      "$description": "The \"AI\" of the NEAR AI wordmark and the secondary lockup. Logos, illustration and brand moments; in the dark themes it is also data-1 and accent-soft. Not text on a light ground (2.9:1 on pane-opaque)."
+      "$description": "The \"AI\" of the Near AI wordmark and the secondary lockup. Logos, illustration and brand moments; in the dark themes it is also data-1 and accent-soft. Not text on a light ground (2.9:1 on pane-opaque)."
+    },
+    "brand-sky": {
+      "$type": "color",
+      "$value": "#83dcff",
+      "$description": "Near AI Sky, from the near.ai/brand palette. The light steps of brand illustration (the marketing site's dithered art ramp). Logo, illustration and marketing use only; never text or controls."
+    },
+    "brand-deep-blue": {
+      "$type": "color",
+      "$value": "#2385c7",
+      "$description": "Near AI Deep Blue, from the near.ai/brand palette. Mid steps of brand illustration. Illustration and marketing use only."
     },
     "brand-tile": {
       "$type": "color",
       "$value": "#0b8ff6",
-      "$description": "The ground of the NEAR AI tile (app-icon lockup). Logo use only."
+      "$description": "The ground of the Near AI tile (app-icon lockup). Logo use only."
+    },
+    "brand-tile-dark": {
+      "$type": "color",
+      "$value": "#024175",
+      "$description": "The tile ground of the dark app-icon appearance (macOS and iOS Icon Composer documents). App icons only."
     },
     "brand-paper": {
       "$type": "color",
@@ -383,10 +473,10 @@
       "$value": "#000000",
       "$description": "The \"near\" wordmark in the color lockup on light grounds. Logo use only."
     },
-    "trace-purple": {
+    "gateway-purple": {
       "$type": "color",
       "$value": "#6d14f3",
-      "$description": "Trace product brand purple: the Trace dark accent. Trace themes only."
+      "$description": "The old Trace purple: Gateway's dark accent until 2026-10-20 (NDS-22). It survives only in the old Trace mark and Gateway's Shared data series (#8a3dff dark, #7a2cf5 light). Never on controls."
     }
   },
   "spacing": {

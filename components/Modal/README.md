@@ -72,7 +72,7 @@ Every footer button is the small CTA's height whatever its kind, so Cancel stand
 ## Do and don't
 
 - Do write the title as the decision ("Turn on Automatic for near-agents?"), never "Are you sure?".
-- Do state what happens to data in the message ("Sessions already sent stay sent.").
+- Do state what happens to data in the message ("Traces already sent stay sent.").
 - Do keep one primary; Cancel leading, the primary or destructive action trailing (NDS-19).
 - Don't use Yes, No or OK for a decision.
 - Don't offer more than three actions.

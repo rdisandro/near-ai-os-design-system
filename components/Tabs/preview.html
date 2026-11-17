@@ -1,21 +1,22 @@
-<!-- @dsCard group="Navigation" height=300 subtitle="The Ember Rule: Home, Inference, Traces" -->
+<!-- @dsCard group="Navigation" height=300 subtitle="The Ember Rule: Home, Private AI, Traces, Insights" -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Tabs — preview</title></head>
 <body>
 <div class="nr-preview nr-scene">
   <section class="nr-pane nr-compact nr-stack" style="width: 440px" aria-label="Main pane, macOS">
-    <div class="nr-tabs nr-tabs--bleed" style="--nr-tabs-count: 3; --nr-tabs-index: 0">
+    <div class="nr-tabs nr-tabs--bleed" style="--nr-tabs-count: 4; --nr-tabs-index: 0">
       <div class="nr-tabs__list" role="tablist" aria-label="Sections">
         <button class="nr-tabs__tab mac-body" role="tab" aria-selected="true">Home</button>
-        <button class="nr-tabs__tab mac-body" role="tab" aria-selected="false" tabindex="-1">Inference <span class="nr-tabs__dot nr-tabs__dot--positive" aria-hidden="true"></span><span class="nr-visually-hidden">, Private AI answering</span></button>
-        <button class="nr-tabs__tab mac-body" role="tab" aria-selected="false" tabindex="-1">Traces <span class="nr-tabs__badge mac-micro" aria-hidden="true">3</span><span class="nr-visually-hidden">, 3 decisions owed</span></button>
+        <button class="nr-tabs__tab mac-body" role="tab" aria-selected="false" tabindex="-1">Private AI <span class="nr-tabs__dot nr-tabs__dot--positive" aria-hidden="true"></span><span class="nr-visually-hidden">, answering</span></button>
+        <button class="nr-tabs__tab mac-body" role="tab" aria-selected="false" tabindex="-1">Traces <span class="nr-tabs__badge nr-tabs__badge--caution mac-micro" aria-hidden="true">3</span><span class="nr-visually-hidden">, 3 decisions owed</span></button>
+        <button class="nr-tabs__tab mac-body" role="tab" aria-selected="false" tabindex="-1">Insights</button>
         <span class="nr-tabs__ember" aria-hidden="true"></span>
       </div>
     </div>
     <div class="nr-card nr-card--quiet nr-stack">
       <div class="mac-body-strong">Watching 3 folders</div>
-      <div class="mac-caption nr-text-secondary">3 sessions are waiting for a decision. Nothing is sent unless you say so.</div>
+      <div class="mac-caption nr-text-secondary">3 traces are waiting for a decision. Nothing is sent unless you say so.</div>
     </div>
   </section>
 
@@ -33,16 +34,17 @@
     <div class="web-caption nr-text-secondary">Touch: 48 tall, the alert badge for runs that wait on you.</div>
   </section>
 
-  <section class="nr-pane nr-stack" style="width: 440px" aria-label="Main pane, web">
-    <div class="nr-tabs nr-tabs--bleed" style="--nr-tabs-count: 3; --nr-tabs-index: 2">
+  <section class="nr-pane nr-stack" style="width: 440px" aria-label="Main pane, web, movable tabs">
+    <div class="nr-tabs nr-tabs--bleed nr-tabs--movable" style="--nr-tabs-count: 4; --nr-tabs-index: 2">
       <div class="nr-tabs__list" role="tablist" aria-label="Sections">
         <button class="nr-tabs__tab web-body" role="tab" aria-selected="false" tabindex="-1">Home</button>
-        <button class="nr-tabs__tab web-body" role="tab" aria-selected="false" tabindex="-1">Inference <span class="nr-tabs__dot nr-tabs__dot--positive" aria-hidden="true"></span><span class="nr-visually-hidden">, Private AI answering</span></button>
+        <button class="nr-tabs__tab web-body" role="tab" aria-selected="false" tabindex="-1">Private AI <span class="nr-tabs__dot nr-tabs__dot--positive" aria-hidden="true"></span><span class="nr-visually-hidden">, answering</span></button>
         <button class="nr-tabs__tab web-body" role="tab" aria-selected="true">Traces <span class="nr-tabs__badge web-micro" aria-hidden="true">&#8212;</span><span class="nr-visually-hidden">, decisions owed unknown</span></button>
+        <button class="nr-tabs__tab nr-tabs__tab--lifted web-body" role="tab" aria-selected="false" tabindex="-1">Insights</button>
         <span class="nr-tabs__ember" aria-hidden="true"></span>
       </div>
     </div>
-    <div class="web-caption nr-text-secondary">Web, Traces selected. The count is unknown, so the badge shows a dash.</div>
+    <div class="web-caption nr-text-secondary">Web, Traces selected; its count is unknown, so the pill shows a dash. Insights is lifted by a held press, ready to drag; Home stays first.</div>
   </section>
 </div>
 <script>

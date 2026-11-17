@@ -10,10 +10,10 @@ Forms collect what a product needs and data views give it back. Words sit beside
 | Touch, Android | The M3 outlined field's floating label, which stays visible on the border | 56dp | `space-16` | Supporting text 4dp under the field |
 | Regular, web | Above the field (`web-label`, `text-secondary`), `space-4` above it | `--nr-h-control` | `space-16` | One column; never stretch fields across a wide window |
 | Compact, macOS | Above the field as an eyebrow (`mac-eyebrow`, `text-tertiary`), 4 pt above a 28 pt field | `size-control-large` (28) | `space-12` | Settings rows put the label leading (wrapping) and the control on the trailing edge |
-| Compact, read-only facts | `KeyValueList`: labels right-aligned in a 70 pt column, values selectable | Text height | `space-6` | Project facts, account details, proof summaries |
+| Compact, read-only facts | `KeyValueList`: labels right-aligned in a 70 pt column, values selectable (Gateway now leads with the label and drops the fixed column) | Text height | `space-6` | Project facts, account details, proof summaries |
 | Dense | `PropertyInspector`: label column 33 to 40% (minimum 96), left-aligned, no colon | `size-control-dense` (20) | `space-2` | Padding `dense-padding-left` 18 / 4 / 8; indent `dense-indent` 15 per level, 6 levels at most; panel at least 275 wide |
 
-- Use one column. Group related fields under a section heading; Trace's Settings sections are eyebrow cards in a 20 / 12 padded column.
+- Use one column. Group related fields under a section heading; Gateway's Settings sections are eyebrow cards in a 20 / 12 padded column.
 - Keep labels visible at all times. Labels are short noun phrases in sentence case with no colon. A placeholder is an example of valid input, never the label.
 - Size each field to its expected input. A field for a six-digit code is short; a field for a name is long.
 - Keep tab order equal to reading order.
@@ -26,15 +26,15 @@ Forms collect what a product needs and data views give it back. Words sit beside
 
 - Mark whichever group is smaller. When most fields are required, add "(optional)" to the optional labels. When most are optional, add the word "Required" to the required ones, as a `Tag` or after the label. An asterisk alone is not enough; if a product uses one, explain it once at the top of the form.
 - Include the marker in the accessible name and set the required semantics (`aria-required`, the platform's required trait).
-- Show a required consent that cannot be refused as ticked and disabled, with a "required" `Tag` and an info button that explains why (Trace's first-run Uses step).
+- Show a required consent that cannot be refused as ticked and disabled, with the word "required" inline after its title in `positive-text` (not a `Tag`) and an info button that explains why (Gateway's first-run Uses step; NDS-42). The row reads: checkbox, title, "i", "required".
 - Put helper text under the field in `<tier>-caption`, `text-tertiary`, `space-4` below the field. Use it for the format or the consequence ("Shown on your public profile."). Consequences belong beside the field or the action, never only in a tooltip.
 - Show an error in the helper text's slot, replacing the helper, so the layout does not shift. The words are `critical-text`; the field gets a 1px `critical` ring inside its edge. The words carry the meaning, so color is never alone.
 
 ### Counters
 
 - Show a character counter as "n/max" in `<tier>-mono` at the trailing end of the helper line.
-- Show it from 80% of the limit, or at all times when the limit is short (280 or less). Trace's examples: title 100, outcome 600, instructions 4000, bio 280.
-- Count in the limit's own unit, and say so when it is not characters (Trace's bio limit counts bytes).
+- Show it from 80% of the limit, or at all times when the limit is short (280 or less). Gateway's examples: title 100, outcome 600, instructions 4000, bio 280.
+- Count in the limit's own unit, and say so when it is not characters (Gateway's bio limit counts bytes).
 - Past the limit, the counter turns `critical-text` and states the excess in words ("12 over").
 - Give the counter an accessible value ("Character count, 140 of 280") and announce it at thresholds, never on every keystroke.
 
@@ -48,7 +48,7 @@ Forms collect what a product needs and data views give it back. Words sit beside
 | Constraints (length, character rules) | Live, as progress (a counter or a rule list), never as errors | "64 characters at most" |
 | Clearing an error | Live: once an error shows, re-check on every change and clear it the moment the value is valid | |
 
-- Validate after the field is touched, never while someone types a first attempt, and never on page load. Trace's passkey name field shows its rule (not empty, at most 64 characters) only after the field has been touched.
+- Validate after the field is touched, never while someone types a first attempt, and never on page load. Gateway's passkey name field shows its rule (not empty, at most 64 characters) only after the field has been touched.
 - Never show an error on every keystroke.
 - Keep Submit enabled and report problems inline. Disable a submit control only in trivial cases (an empty composer), or when a consent precondition is unmet, with the reason in words beside it.
 - In dense numeric fields, Enter commits and Esc reverts; an invalid entry reverts to the last valid value and the field says why.
@@ -72,7 +72,7 @@ Forms collect what a product needs and data views give it back. Words sit beside
 
 - Never mix the two models on one surface.
 - Confirm before closing a surface that would lose unsaved explicit-save edits, and offer Save in that confirmation.
-- A setting that takes time to apply shows its in-flight state and draws "On" only after the service confirms it. Trace's menu-bar values never read "On" unless the daemon confirms, and its settings stay disabled until the daemon answers.
+- A setting that takes time to apply shows its in-flight state and draws "On" only after the service confirms it. Gateway's menu-bar values never read "On" unless the daemon confirms, and its settings stay disabled until the daemon answers.
 
 [HIG: file management] [HIG: settings] [trace-commons: SettingsStateRow.swift]
 
@@ -93,7 +93,17 @@ Forms collect what a product needs and data views give it back. Words sit beside
 - Phrase options so that on means on. A switch never disables something when turned on.
 - On iOS, put switches only inside list rows; elsewhere use a toggle-style button. On macOS, prefer checkboxes for ordinary options inside forms, and switches for settings that control a group.
 - Show mixed values in multi-item editing: a dash in a `Checkbox`, "—" in text and number fields, and "Mixed" in a `Select`. Editing applies the new value to every item; Esc leaves them mixed.
-- Trace's folder mode (Ask me / Automatic / Never) is a `Select` with a status dot per option. Choosing Automatic opens a confirmation, because it grants consent.
+- Gateway's folder mode (Ask / Automatic / Never) is a `Select` with a status dot per option. Choosing Automatic opens a confirmation, because it grants consent.
+- **A setup choice is a default, not an override.** The sharing choice made in first run ("Automatic / Ask each time") applies only to folders that have no rule of their own, and it stays changeable at the top of Settings > Projects with the same disclosures. A folder's own rule always wins, including when Automatic is granted again (NDS-30).
+
+### Roll-ups and overrides
+
+A control that sums many per-item settings (the menu-bar panel's sharing mode over every folder) shows what the items say, and changing it is an override, not a rewrite.
+
+- **Show the uniform value or Mixed.** When every item agrees, the roll-up shows that value with its check. When they differ it shows **Mixed**, as a three-color mark plus the word, and the check sits on Mixed.
+- **A choice applies a temporary global override**, through the same confirmations as changing one item (Automatic confirms).
+- **A Mixed row clears it.** Its words name what happens ("Use each folder's setting"). Clearing an override that would resume automatic sending confirms first, and when any item's state is unknown it fails closed: nothing resumes until the states are read.
+- Multi-item editing (above) is a different case: there Mixed means the selected items differ, and editing writes one value to all of them.
 
 [HIG: toggles] [M3: switch, checkbox] [Unity Foundations: toggle, dropdown]
 
@@ -126,7 +136,7 @@ Forms collect what a product needs and data views give it back. Words sit beside
 ## Search and filters
 
 - Place search where each platform expects it: the bottom toolbar or a Search tab on iPhone, the top on Android, the trailing end of the toolbar on iPad, macOS and web. Mod+F focuses search in the current view; Mod+K opens the `CommandPalette`.
-- Name the scope in the placeholder ("Search sessions"). The clear button appears at the trailing end once there is text. Esc clears, then a second Esc leaves the field.
+- Name the scope in the placeholder ("Search traces"). The clear button appears at the trailing end once there is text. Esc clears, then a second Esc leaves the field.
 - Update results as people type, after a 150 to 300 ms pause for remote searches. Show recent searches before typing, let people clear them, and keep them off shared surfaces.
 - Report results in three states: a count ("12 matches"), none ("No matches"), or unavailable when the search could not run.
 - Highlight matched text with `accent-tint` behind `text-primary`.
@@ -151,7 +161,7 @@ Forms collect what a product needs and data views give it back. Words sit beside
 - **Selection.** A selected row uses `selection` with `text-on-accent`; `row-hover` never covers a selected row. Multi-select adds a `Checkbox` column with a mixed-state header box, and an `ActionBar` that counts the selection ("3 selected") and holds the bulk actions. Shift-click selects a range, Mod-click toggles a row, Mod+A selects all.
 - **Keyboard.** The table is one tab stop. Arrows move, Return opens, Space toggles selection, Home and End jump.
 - **Columns.** Resizing, reordering and hiding columns belong to dense tools (`PropertyInspector`-class surfaces); everyday tables keep fixed columns.
-- **Long data.** Virtualize long local lists (logs, ledgers, transcripts) with fixed row heights. Paginate server results whose position should survive a shared link, in pages of 25, 50 or 100. A "Load more" control states what remains ("240 remaining"). Cap very long histories with a line that says so (Trace shows its latest 100 rows). Never use infinite scroll above other content.
+- **Long data.** Virtualize long local lists (logs, ledgers, transcripts) with fixed row heights. Paginate server results whose position should survive a shared link, in pages of 25, 50 or 100. A "Load more" control states what remains ("240 remaining"). Cap very long histories with a line that says so (Gateway shows its latest 100 rows). Never use infinite scroll above other content.
 - **Live data.** New rows never shift the row under the pointer; count them in a line above the table and insert them on request. A refetch keeps the current rows on screen.
 
 ### On compact screens
@@ -172,14 +182,29 @@ Charts follow NDS-20. Use a chart to make one point. For lookup, use a `DataTabl
 - **Marks.** Bars at most 24 px thick with a 4 px rounded data end and a square baseline; a 2 px surface gap between touching marks; lines 2 px; markers at least 8 px with a 2 px surface ring; area fills as a light wash; a lighter companion series at `opacity-series-reduced` (0.75). Bars start at zero; ticks fall on clean numbers (0, 5, 10).
 - **Words.** Give every chart a title and a takeaway in plain language ("Most calls this week went to Private AI."). Accessibility descriptions give context, then value, with no subjective words.
 - **Interaction.** Every mark has a tooltip on hover and the same on keyboard focus, with a hit area of at least 24 px. Tooltips add detail; nothing is reachable only through them.
-- **Table view.** Every chart has a table twin, offered with a `SegmentedControl` (Chart / Table) or a link. Each bar bucket is one accessible element with its description. A chart hidden from assistive technology carries a text alternative (Trace's Sessions view pairs its chart with a column of marker cards).
+- **Table view.** Every chart has a table twin, offered with a `SegmentedControl` (Chart / Table) or a link. Each bar bucket is one accessible element with its description. A chart hidden from assistive technology carries a text alternative (Gateway's Insights pairs its chart with a column of marker cards).
 - **Filters.** One row above all the charts it scopes, with the date range first.
 - **Refreshing.** Hold the previous render at reduced opacity while new data loads. No skeleton and no layout jump.
 - **Missing data.** Draw data that could not be read as a labelled gap, never as zero or as activity. Draw paused periods grey.
 - **Projections.** Draw projected values with their own mark style (outlined or hatched) and the word "projected", never in the settled style.
 - **Motion.** Animate changes on the spring tokens; nothing moves under Reduce Motion, and changes are announced.
 
-`BarGraph` is the system's bar chart. Trace's tapered dot-matrix graph (shared above the axis, kept below) is a product treatment built on the same rules.
+- **Disclosure.** A chevron on a card means "go somewhere". Content that belongs to the card is shown in place, not folded behind a chevron that expands below other cards (Gateway's Insights breakdown is always shown; owner, 2026-10-23).
+
+`BarGraph` is the system's bar chart. Gateway's tapered dot-matrix graph (shared above the axis, kept below) is a product treatment built on the same rules. While watching is paused its bars draw in a paused grey and the legend keeps its colors; the grey is below 3:1, so the Watching or Paused words carry the state.
+
+### Analytics dashboards
+
+Gateway's Insights (direction B, 2026-10-15 to 10-19) is the reference for a page of charts about the person's own use.
+
+- **Toolbar.** Tabs at the leading end, a period stepper at the trailing end. Six labelled periods are reachable, with the current one marked.
+- **Header card.** The figure or scope line, over a coverage line with a status dot and an "i" that says what the figures cover.
+- **One card per source.** Claude Code and Codex each get their own card; figures from different sources are never summed. Totals that cannot be split by source sit in a dashed box with their reason.
+- **Readouts.** Hovering a mark updates the readout in the legend; the category domain stays pinned so nothing reflows. A goal is a dashed line; met and not met are filled and outlined squares with a key. Lettered marker badges on the plot match marker cards below it.
+- **Drill rows.** Two lines each. A figure that cannot be opened is drawn plain, not dimmed and not as a link.
+- **Layout.** One column at the default 408 pt pane; two columns above 690, each at least 340. Title 15, group headings 13 semibold; gaps of 4, 8, 16 and 16 from a line to its group to its card to the next card.
+- **Explanations** go behind "i"; status, errors, prerequisites and irreversible warnings stay visible, and an "i" never sits inside a button (see *Writing and content*).
+- **Before any data,** the page shows a `GetStartedCard`, and sample content sits under its banner (NDS-39).
 
 [HIG: charts, charting data] [trace-commons: Indicators.swift GlassBarGraph, Insights]
 
@@ -189,11 +214,11 @@ Charts follow NDS-20. Use a chart to make one point. For lookup, use a `DataTabl
 - **Mono** (`<tier>-mono`) for figures that describe what leaves the device (sizes, byte counts, hashes) and for identifiers. Prose is never mono.
 - **Dates** as weekday, day, month: "Sat 12 Sep", adding the year only outside the current year ("Sat 12 Sep 2025"). Times follow the locale's 12- or 24-hour setting.
 - **Durations** with a space between number and unit: "12 s", "52 min", "1 h 18 min". Relative times count up from a real moment and never count down to a deadline the product cannot see.
-- **Stable days.** Read dates in the zone that keeps them stable for their meaning; Trace reads session dates in UTC so a session never moves to another day.
+- **Stable days.** Read dates in the zone that keeps them stable for their meaning; Gateway reads trace dates in UTC so a trace never moves to another day.
 - **Large numbers** use the locale's separators. A `StatCard` may compact them ("12.9K") with the full value in its accessible label and tooltip. Units follow a space ("18 KB").
-- **Counts and plurals** come composed from the product's copy source ("1 session", "2 sessions"). Components never branch on a count of one.
-- **Credit.** Trace treats credit as "a record, not a currency": no currency symbol and no money estimate. Pending credit appears only beside its condition.
-- **Projected values** carry the word and the condition ("+20 projected, if the commons accepts it") in `text-secondary` at regular weight, never styled like settled values.
+- **Counts and plurals** come composed from the product's copy source ("1 trace", "2 traces"). Components never branch on a count of one.
+- **Credit.** Gateway treats credit as "a record, not a currency": no currency symbol and no money estimate. Pending credit appears only beside its condition. Two current Gateway surfaces show fiat figures (the first-run total in dollars when the server sets a range, and the Not contributed card's inference-value range); whether they fit this rule is open.
+- **Projected values** carry the word and the condition ("+20 projected, if it is accepted"; "An estimated 3–8 points per accepted trace, not yet settled.") in `text-secondary` at regular weight, never styled like settled values.
 - **Priced and billed.** When nothing was charged, say "priced", never "billed" or "cost".
 - **Unknown** is "—" or the product's word, never 0 (see *Feedback and states*).
 

@@ -4,7 +4,7 @@ A two-series column chart drawn as a tapered dot matrix on an opaque plot: the f
 
 ## When to use
 
-- Two opposing counts per period that people compare at a glance: Shared and Kept sessions per day (Trace), calls answered and calls refused per hour, tokens in and tokens out.
+- Two opposing counts per period that people compare at a glance: Shared and Kept traces per day (Gateway), calls answered and calls refused per hour, tokens in and tokens out.
 - Small, glanceable plots in a pane footer, an inspector or a menu-bar panel, from 7 to about 42 columns.
 - For one series use a single `StatCard` or a plain column chart; for exact values use a `DataTable`; for trends over many points use a line chart.
 
@@ -14,7 +14,7 @@ A two-series column chart drawn as a tapered dot matrix on an opaque plot: the f
 2. **Axis**: one 1px rule in `chart-grid` across the plot at the column midline. No gridlines, no value axis: the readout carries exact numbers.
 3. **Column**: one per bucket, `space-6` apart (`space-2` when thin). Height 97: 7 rows above and 7 below at a `space-6` pitch, `space-6` clear at each end, and the 1px axis (2 x (7 x `space-6` + `space-6`) + 1).
 4. **Dots**: 4 (`space-4`) in 3 columns `space-2` apart; thin graphs (more than 14 buckets) use 1 column of 3 (`space-6` / 2). Unlit dots are `chart-grid`. Lit dots above are `data-1`, below `data-2`.
-5. **Taper**: a value lights `value / max x 7` dots from the axis out. Each lit dot's opacity is 0.35 + 0.65 x (row + 1) / tip, so dots brighten toward the tip; the last dot carries the remainder as a partial dot (at least 0.35), so 9 and 11 still differ. A count of one always lights a dot. The scale is the largest bucket, never below the product's floor (5 in Trace), so small counts stay short.
+5. **Taper**: a value lights `value / max x 7` dots from the axis out. Each lit dot's opacity is 0.35 + 0.65 x (row + 1) / tip, so dots brighten toward the tip; the last dot carries the remainder as a partial dot (at least 0.35), so 9 and 11 still differ. A count of one always lights a dot. The scale is the largest bucket, never below the product's floor (5 in Gateway), so small counts stay short.
 6. **Labels**: under each column, caption step (micro when thin), `text-tertiary`, never wrapped or cut; centred on the column and free to run past it. A thin graph labels a few columns only, and its first and last labels hug the outer edges.
 7. **Legend and readout**: a row of two `StatCard` legend cells above the plot (dot, series name, value). They show the totals at rest and the hovered or focused column's values while it is read.
 8. **Range line**: caption, `text-secondary`, under the plot: the window ("Oct 3 – Oct 13") or the column being read ("Sun, Oct 11").
@@ -55,8 +55,8 @@ A two-series column chart drawn as a tapered dot matrix on an opaque plot: the f
 
 ## Accessibility
 
-- The plot is a group named with a one-sentence summary from the product ("Sessions shared and kept per day, October 3 to 13"). Each column is one element whose name is the product's description ("Sun, Oct 11: 9 shared, 4 kept").
-- Identity never rests on color: the two series are told apart by position (above or below the axis) and named in the legend. Trace dark's pair (`data-1` purple, `data-2` blue) measures delta E 7.0 for deuteranopia, legal only with this secondary encoding.
+- The plot is a group named with a one-sentence summary from the product ("Traces shared and kept per day, October 3 to 13"). Each column is one element whose name is the product's description ("Sun, Oct 11: 9 shared, 4 kept").
+- Identity never rests on color: the two series are told apart by position (above or below the axis) and named in the legend. Gateway's Shared and Kept pair (purple #8a3dff over blue #3a7bd5 in dark, its own product colors since NDS-22) measures delta E 7.0 for deuteranopia, legal only with this secondary encoding.
 - Series dots at full strength hold 3:1 on `surface-chart`; the fainter dots near the axis are a taper, and the readout and the table view carry exact values.
 - Offer a table view (`DataTable`) of the same buckets as the text alternative (NDS-20).
 - The consumer supplies bucket labels, descriptions, series names, the summary and the range words.

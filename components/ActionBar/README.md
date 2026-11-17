@@ -4,7 +4,7 @@ The footer row that holds a surface's primary action, with any text about taking
 
 ## When to use
 
-- Use it at the end of a window, page, pane step or sheet that finishes in an action: Contribute, Continue, Turn on.
+- Use it at the end of a window, page, pane step or sheet that finishes in an action: Submit, Continue, Turn on.
 - Put text about taking the action in its notes: what it sends, what it does not authorize, why it waits. Never put that text in the scrolling content.
 - `Modal` draws its own footer with the same rules at the small CTA height (30).
 - Don't use it for actions on one item in a list; those belong in the row or its `Menu`.
@@ -26,7 +26,7 @@ The footer row that holds a surface's primary action, with any text about taking
 | Button type | `mac-body-strong` | `web-body-strong` | `ios-body-strong` | `android-label` | `web-label` |
 | Note type | `mac-label` | `web-label` | `ios-caption` | `android-caption` | `web-caption` |
 
-Every button in the bar takes `--nr-h-bar` whatever its kind, so Back, Cancel and Dismiss stand as tall as Contribute (owner ruling D-20). Each keeps its own fill, ink and weight.
+Every button in the bar takes `--nr-h-bar` whatever its kind, so Back, Cancel and Dismiss stand as tall as Submit (owner ruling D-20). Each keeps its own fill, ink and weight.
 
 ## Variants
 
@@ -51,8 +51,8 @@ Every button in the bar takes `--nr-h-bar` whatever its kind, so Back, Cancel an
 
 ## Accessibility
 
-- Notes come before the buttons in reading order, so a screen reader hears what Contribute sends before reaching it. Link the primary to its notes with `aria-describedby` when they state a consequence.
-- The consumer supplies every note and label from the product's copy (NDS-16). Notes state data consequences ("Contribute sends these 14 steps to Trace Commons.") and never promise privacy.
+- Notes come before the buttons in reading order, so a screen reader hears what Submit sends before reaching it. Link the primary to its notes with `aria-describedby` when they state a consequence.
+- The consumer supplies every note and label from the product's copy (NDS-16). Notes state data consequences ("Submit sends these 14 steps to the server that receives your traces.") and never promise privacy.
 - Notes use `text-secondary`, which holds 4.5:1 on every pane (7:1 in the `-hc` themes).
 - Touch targets follow `Button`: 44pt on Apple, 48dp on Android and touch web.
 

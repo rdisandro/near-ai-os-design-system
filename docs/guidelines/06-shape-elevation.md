@@ -7,8 +7,8 @@ Shapes come in three kinds: capsules for controls, fixed radii for containers, a
 | Token | Value | For |
 |---|---|---|
 | `radius-pill` | 999 (capsule) | Buttons, segments and their wells, switches, chips, tags, badges, search fields on touch, floating toolbars |
-| `radius-pane` | 20 | Panes, modals, the edge rail, menu-bar panels |
-| `radius-card` | 16 | Cards, popovers, node cards |
+| `radius-pane` | 20 | Panes, modals, the edge rail, the chat shell's cards and composer |
+| `radius-card` | 16 | Cards, popovers, node cards, popover notices |
 | `radius-card-quiet` | 14 | Quiet cards, menus |
 | `radius-control` | 11 | Text fields, text areas, selects on desktop, large tool tiles, rail tiles |
 | `radius-tile` | 6 | Small tiles, menu items, chips inside dense tables; the floor for concentric radii |
@@ -36,10 +36,25 @@ Where the formula would give a corner that looks pinched (an inner card at 8 ins
 
 All corners on Apple platforms are continuous (squircle). On the web use `border-radius` (circular arcs); the difference is invisible at these sizes.
 
+**Marketing pages** (NDS-45) draw squircles on the web with `corner-shape: squircle` where the browser supports it. A squircle of the same radius cuts the corner about half as deep, so the radii grow to read like the app's, and fall back to circular values elsewhere:
+
+| Marketing radius | Squircle | Circular fallback | For |
+|---|---|---|---|
+| Check | 7 | 4 | Checkbox, segment, copy icon |
+| Tile | 11 | 6 | Tool tiles, tags |
+| Control | 18 | 10 | Buttons, the menu button |
+| Window | 22 | 12 | Terminal windows |
+| Card | 28 | 16 | Plates, notes, callouts, the phone menu |
+| Pane | 36 | 20 | The header bar, the CTA panel, the tour frame |
+
+Marketing buttons are rounded rectangles at the control radius, not capsules; app buttons stay capsules. Any alternate app theme keeps the flat squircle radii (NDS-46).
+
+**The Near AI chat composer** uses `radius-pane` 20 rather than `radius-card` 16, so it matches the cards of the chat shell it docks into (NDS-44).
+
 ## Shape rules
 
 - Controls are capsules on every platform. Material 3 Expressive's square button shapes and its shape morph on press are allowed on Android and the web only, and only for buttons outside glass chrome.
-- Containers never become capsules; a capsule is a control.
+- Containers never become capsules; a capsule is a control. A refresh control is a capsule pill with its word (NDS-36).
 - The 35 Material Expressive shapes (cookies, bursts, pills) are for content-layer hero moments only: an avatar mask, an empty-state illustration, the Android loading indicator. Never for glass chrome, never for status.
 - Selected and unselected shapes are the same on Apple; selection changes fill and tint only.
 
@@ -52,7 +67,7 @@ Elevation is the layer an element lives in (see Glass and materials). Only two l
 | 0 | Scene, page content | none | `z-base` 0 |
 | 1 | Panes, bars | `shadow-float` (panes); bars use the scroll-edge treatment instead | `z-base`, `z-sticky` 100 for sticky bars |
 | 2 | Painted content inside a pane | none, ever | |
-| 3 | Floating: popovers, menus, node cards, floating toolbars, tooltips | `shadow-float` | `z-floating` 1000, `z-tooltip` 4000 |
+| 3 | Floating: popovers, menus, node cards, floating toolbars, tooltips, popover notices | `shadow-float` | `z-floating` 1000, `z-tooltip` 4000 |
 | 4 | Scrims | none | `z-scrim` 2000 |
 | 5 | Modals and sheets | `shadow-modal` | `z-modal` 2001 |
 | | Toasts | `shadow-float` | `z-toast` 3000 |
@@ -65,4 +80,5 @@ Elevation is the layer an element lives in (see Glass and materials). Only two l
 - `rule`: 1pt under a modal header, over its footer, under a tab row, beside a settings section title.
 - `edge-hc`: 1pt solid around every painted surface in the `-hc` themes.
 - Invalid fields: a 1pt inside ring in `critical`.
-- Never draw solid borders around cards, panes or controls in the standard themes; fills separate them.
+- Never draw solid borders around cards, panes or controls in the standard themes; fills separate them. Marketing pages, which have no fills to separate on the void ground, draw a 1px slate edge on plates, notes and the CTA panel (NDS-45).
+- A menu-bar panel follows the system window's corner (it is a system window), which may differ from `radius-pane`.

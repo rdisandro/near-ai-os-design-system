@@ -1,7 +1,7 @@
 {
   "$comment": "Near AI OS Design System token source. Edit this file, then run `make build` (scripts/build.py) to regenerate every file in dist/, and `make check` to hold the contrast floors. Values are pinned: product accents and increased-contrast inks were solved once with scripts/accent.py and the worst-case ground model, then written here.",
   "name": "Near AI OS Design System",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "themes": [
     {
       "id": "light",
@@ -32,18 +32,18 @@
       "product": "parent"
     },
     {
-      "id": "trace-light",
-      "name": "Trace light",
+      "id": "gateway-light",
+      "name": "Gateway light",
       "appearance": "light",
       "contrast": "standard",
-      "product": "trace"
+      "product": "gateway"
     },
     {
-      "id": "trace-dark",
-      "name": "Trace dark",
+      "id": "gateway-dark",
+      "name": "Gateway dark",
       "appearance": "dark",
       "contrast": "standard",
-      "product": "trace"
+      "product": "gateway"
     }
   ],
   "contrast": {
@@ -66,8 +66,8 @@
         "dark": "#070a1a",
         "light-hc": "#e6eaf1",
         "dark-hc": "#070a1a",
-        "trace-light": "#e6eaf1",
-        "trace-dark": "#070a1a"
+        "gateway-light": "#e6eaf1",
+        "gateway-dark": "#070a1a"
       }
     },
     "scene-warm": {
@@ -77,8 +77,8 @@
         "dark": "#11152b",
         "light-hc": "#f6f7fa",
         "dark-hc": "#11152b",
-        "trace-light": "#f6f7fa",
-        "trace-dark": "#11152b"
+        "gateway-light": "#f6f7fa",
+        "gateway-dark": "#11152b"
       }
     },
     "scene-glow-1": {
@@ -88,8 +88,8 @@
         "dark": "#3f6a8a",
         "light-hc": "#c4d7f2",
         "dark-hc": "#3f6a8a",
-        "trace-light": "#c4d7f2",
-        "trace-dark": "#3f6a8a"
+        "gateway-light": "#c4d7f2",
+        "gateway-dark": "#3f6a8a"
       }
     },
     "scene-glow-2": {
@@ -99,8 +99,8 @@
         "dark": "#6a3f7a",
         "light-hc": "#dcd3ee",
         "dark-hc": "#6a3f7a",
-        "trace-light": "#dcd3ee",
-        "trace-dark": "#6a3f7a"
+        "gateway-light": "#dcd3ee",
+        "gateway-dark": "#6a3f7a"
       }
     },
     "scene-glow-3": {
@@ -110,8 +110,63 @@
         "dark": "#2f6b5a",
         "light-hc": "#cde6dc",
         "dark-hc": "#2f6b5a",
-        "trace-light": "#cde6dc",
-        "trace-dark": "#2f6b5a"
+        "gateway-light": "#cde6dc",
+        "gateway-dark": "#2f6b5a"
+      }
+    },
+    "scene-glow-brand": {
+      "usage": "The one brand glow drawn straight on the scene: the welcome glow rising behind a composer, the first-run corner glow. Near AI blue at low alpha; never under body text without a card.",
+      "values": {
+        "light": "#0070c63d",
+        "dark": "#0091fd8c",
+        "light-hc": "#0070c600",
+        "dark-hc": "#0091fd00",
+        "gateway-light": "#0070c63d",
+        "gateway-dark": "#0091fd8c"
+      }
+    },
+    "scene-card": {
+      "usage": "A card drawn straight on the scene with no pane under it: the first-run stage's settings card, a welcome screen's card.",
+      "values": {
+        "light": "#ffffffc7",
+        "dark": "#171c33c7",
+        "light-hc": "#ffffff",
+        "dark-hc": "#171c33",
+        "gateway-light": "#ffffffc7",
+        "gateway-dark": "#171c33c7"
+      }
+    },
+    "scene-control": {
+      "usage": "A neutral control drawn straight on the scene (first-run Back). Lighter than `control`, whose dark well vanishes on the navy scene.",
+      "values": {
+        "light": "#ffffffb8",
+        "dark": "#ffffff17",
+        "light-hc": "#ffffffe6",
+        "dark-hc": "#ffffff26",
+        "gateway-light": "#ffffffb8",
+        "gateway-dark": "#ffffff17"
+      }
+    },
+    "scene-control-hover": {
+      "usage": "`scene-control` under the pointer.",
+      "values": {
+        "light": "#ffffffeb",
+        "dark": "#ffffff26",
+        "light-hc": "#ffffff",
+        "dark-hc": "#ffffff33",
+        "gateway-light": "#ffffffeb",
+        "gateway-dark": "#ffffff26"
+      }
+    },
+    "scene-rule": {
+      "usage": "A rule or dashed line drawn straight on the scene, stronger than `rule`.",
+      "values": {
+        "light": "#00000029",
+        "dark": "#ffffff2e",
+        "light-hc": "#00000073",
+        "dark-hc": "#ffffff66",
+        "gateway-light": "#00000029",
+        "gateway-dark": "#ffffff2e"
       }
     },
     "glass-veil": {
@@ -121,8 +176,8 @@
         "dark": "#070a1aad",
         "light-hc": "#e3e6ece6",
         "dark-hc": "#070a1ae6",
-        "trace-light": "#e3e6eca8",
-        "trace-dark": "#070a1aad"
+        "gateway-light": "#e3e6eca8",
+        "gateway-dark": "#070a1aad"
       }
     },
     "pane-fill": {
@@ -132,8 +187,8 @@
         "dark": "#ffffff0a",
         "light-hc": "#f4f6f914",
         "dark-hc": "#ffffff0a",
-        "trace-light": "#f4f6f914",
-        "trace-dark": "#ffffff0a"
+        "gateway-light": "#f4f6f914",
+        "gateway-dark": "#ffffff0a"
       }
     },
     "pane-base": {
@@ -143,8 +198,8 @@
         "dark": "#0d1124f5",
         "light-hc": "#f4f5f8f5",
         "dark-hc": "#0d1124f5",
-        "trace-light": "#f4f5f8f5",
-        "trace-dark": "#0d1124f5"
+        "gateway-light": "#f4f5f8f5",
+        "gateway-dark": "#0d1124f5"
       }
     },
     "pane-opaque": {
@@ -154,8 +209,8 @@
         "dark": "#0d1124",
         "light-hc": "#f2f3f6",
         "dark-hc": "#0d1124",
-        "trace-light": "#f2f3f6",
-        "trace-dark": "#0d1124"
+        "gateway-light": "#f2f3f6",
+        "gateway-dark": "#0d1124"
       }
     },
     "card": {
@@ -165,8 +220,8 @@
         "dark": "#0d112459",
         "light-hc": "#ffffff8c",
         "dark-hc": "#0d11248c",
-        "trace-light": "#ffffff59",
-        "trace-dark": "#0d112459"
+        "gateway-light": "#ffffff59",
+        "gateway-dark": "#0d112459"
       }
     },
     "card-quiet": {
@@ -176,8 +231,8 @@
         "dark": "#0d112447",
         "light-hc": "#ffffff80",
         "dark-hc": "#0d112480",
-        "trace-light": "#ffffff4a",
-        "trace-dark": "#0d112447"
+        "gateway-light": "#ffffff4a",
+        "gateway-dark": "#0d112447"
       }
     },
     "card-hover": {
@@ -187,8 +242,8 @@
         "dark": "#ffffff14",
         "light-hc": "#f7f8fbcc",
         "dark-hc": "#ffffff14",
-        "trace-light": "#f7f8fbcc",
-        "trace-dark": "#ffffff14"
+        "gateway-light": "#f7f8fbcc",
+        "gateway-dark": "#ffffff14"
       }
     },
     "card-on-opaque": {
@@ -198,8 +253,8 @@
         "dark": "#171c33",
         "light-hc": "#ffffff",
         "dark-hc": "#171c33",
-        "trace-light": "#ffffff",
-        "trace-dark": "#171c33"
+        "gateway-light": "#ffffff",
+        "gateway-dark": "#171c33"
       }
     },
     "card-quiet-on-opaque": {
@@ -209,8 +264,19 @@
         "dark": "#13182d",
         "light-hc": "#f8f9fb",
         "dark-hc": "#13182d",
-        "trace-light": "#f8f9fb",
-        "trace-dark": "#13182d"
+        "gateway-light": "#f8f9fb",
+        "gateway-dark": "#13182d"
+      }
+    },
+    "card-nested": {
+      "usage": "A card drawn on a card: the inner container that holds a detail or an estimate inside a card. One step from the card it sits on; never a third level.",
+      "values": {
+        "light": "#0000000b",
+        "dark": "#ffffff12",
+        "light-hc": "#0000000b",
+        "dark-hc": "#ffffff12",
+        "gateway-light": "#0000000b",
+        "gateway-dark": "#ffffff12"
       }
     },
     "control": {
@@ -220,8 +286,8 @@
         "dark": "#0000004c",
         "light-hc": "#ffffff99",
         "dark-hc": "#0000004c",
-        "trace-light": "#ffffff70",
-        "trace-dark": "#0000004c"
+        "gateway-light": "#ffffff70",
+        "gateway-dark": "#0000004c"
       }
     },
     "control-hover": {
@@ -231,8 +297,52 @@
         "dark": "#00000070",
         "light-hc": "#ebebedd6",
         "dark-hc": "#00000070",
-        "trace-light": "#ebebedd6",
-        "trace-dark": "#00000070"
+        "gateway-light": "#ebebedd6",
+        "gateway-dark": "#00000070"
+      }
+    },
+    "control-on-menu": {
+      "usage": "A neutral control or pill drawn on a menu, popover or other floating surface, where `control` would vanish into the floating fill.",
+      "values": {
+        "light": "#00000014",
+        "dark": "#ffffff1a",
+        "light-hc": "#00000014",
+        "dark-hc": "#ffffff1a",
+        "gateway-light": "#00000014",
+        "gateway-dark": "#ffffff1a"
+      }
+    },
+    "control-on-menu-hover": {
+      "usage": "`control-on-menu` under the pointer.",
+      "values": {
+        "light": "#00000021",
+        "dark": "#ffffff2e",
+        "light-hc": "#00000021",
+        "dark-hc": "#ffffff2e",
+        "gateway-light": "#00000021",
+        "gateway-dark": "#ffffff2e"
+      }
+    },
+    "control-on-selection": {
+      "usage": "A neutral control or pill drawn on a selected row (`selection`). Its label and glyph take `text-on-accent`.",
+      "values": {
+        "light": "#0000002e",
+        "dark": "#071a2e29",
+        "light-hc": "#0000002e",
+        "dark-hc": "#071a2e29",
+        "gateway-light": "#0000002e",
+        "gateway-dark": "#071a2e29"
+      }
+    },
+    "control-on-selection-hover": {
+      "usage": "`control-on-selection` under the pointer.",
+      "values": {
+        "light": "#00000047",
+        "dark": "#071a2e42",
+        "light-hc": "#00000047",
+        "dark-hc": "#071a2e42",
+        "gateway-light": "#00000047",
+        "gateway-dark": "#071a2e42"
       }
     },
     "well": {
@@ -242,8 +352,8 @@
         "dark": "#0000004c",
         "light-hc": "#8a93a56e",
         "dark-hc": "#0000004c",
-        "trace-light": "#8a93a56e",
-        "trace-dark": "#0000004c"
+        "gateway-light": "#8a93a547",
+        "gateway-dark": "#0000004c"
       }
     },
     "field": {
@@ -253,8 +363,8 @@
         "dark": "#0000004c",
         "light-hc": "#ffffffb2",
         "dark-hc": "#0000004c",
-        "trace-light": "#f4f6f999",
-        "trace-dark": "#0000004c"
+        "gateway-light": "#f4f6f999",
+        "gateway-dark": "#0000004c"
       }
     },
     "consent": {
@@ -264,30 +374,30 @@
         "dark": "#0000004c",
         "light-hc": "#f4f6f973",
         "dark-hc": "#0000004c",
-        "trace-light": "#f4f6f973",
-        "trace-dark": "#0000004c"
+        "gateway-light": "#f4f6f973",
+        "gateway-dark": "#0000004c"
       }
     },
     "popover": {
-      "usage": "A popover, node card or tooltip on the floating layer (over its own blur).",
+      "usage": "A popover, node card or tooltip on the floating layer (over its own blur). 94%: opaque enough that rows and pills under it never show through (owner, 2026-10-05 web and 2026-10-19 macOS).",
       "values": {
-        "light": "#f7f7f9d6",
-        "dark": "#0b0f22d1",
-        "light-hc": "#f7f7f9d6",
-        "dark-hc": "#0b0f22d1",
-        "trace-light": "#f7f7f9d6",
-        "trace-dark": "#0b0f22d1"
+        "light": "#f7f7f9f0",
+        "dark": "#0b0f22f0",
+        "light-hc": "#f7f7f9f0",
+        "dark-hc": "#0b0f22f0",
+        "gateway-light": "#f7f7f9f0",
+        "gateway-dark": "#0b0f22f0"
       }
     },
     "menu": {
-      "usage": "A menu on the floating layer (over its own blur).",
+      "usage": "A menu or dropdown on the floating layer (over its own blur). 94%, for the same reason as `popover`.",
       "values": {
-        "light": "#f7f7f9cc",
-        "dark": "#0b0f22d1",
-        "light-hc": "#f7f7f9cc",
-        "dark-hc": "#0b0f22d1",
-        "trace-light": "#f7f7f9cc",
-        "trace-dark": "#0b0f22d1"
+        "light": "#f7f7f9f0",
+        "dark": "#0b0f22f0",
+        "light-hc": "#f7f7f9f0",
+        "dark-hc": "#0b0f22f0",
+        "gateway-light": "#f7f7f9f0",
+        "gateway-dark": "#0b0f22f0"
       }
     },
     "scrim": {
@@ -297,8 +407,8 @@
         "dark": "#00000059",
         "light-hc": "#00000040",
         "dark-hc": "#00000059",
-        "trace-light": "#00000040",
-        "trace-dark": "#00000059"
+        "gateway-light": "#00000040",
+        "gateway-dark": "#00000059"
       }
     },
     "scrim-modal": {
@@ -308,8 +418,8 @@
         "dark": "#00000066",
         "light-hc": "#00000040",
         "dark-hc": "#00000066",
-        "trace-light": "#00000040",
-        "trace-dark": "#00000066"
+        "gateway-light": "#00000040",
+        "gateway-dark": "#00000066"
       }
     },
     "inactive-dim": {
@@ -319,8 +429,8 @@
         "dark": "#070a1a24",
         "light-hc": "#0000000a",
         "dark-hc": "#070a1a24",
-        "trace-light": "#0000000a",
-        "trace-dark": "#070a1a24"
+        "gateway-light": "#0000000a",
+        "gateway-dark": "#070a1a24"
       }
     },
     "hairline": {
@@ -330,8 +440,8 @@
         "dark": "#ffffff14",
         "light-hc": "#00000073",
         "dark-hc": "#ffffff66",
-        "trace-light": "#00000014",
-        "trace-dark": "#ffffff14"
+        "gateway-light": "#00000014",
+        "gateway-dark": "#ffffff14"
       }
     },
     "rule": {
@@ -341,8 +451,8 @@
         "dark": "#ffffff1f",
         "light-hc": "#00000073",
         "dark-hc": "#ffffff66",
-        "trace-light": "#0000001f",
-        "trace-dark": "#ffffff1f"
+        "gateway-light": "#0000001f",
+        "gateway-dark": "#ffffff1f"
       }
     },
     "edge-hc": {
@@ -352,8 +462,8 @@
         "dark": "#f2f2f466",
         "light-hc": "#1d1d1f8c",
         "dark-hc": "#f2f2f466",
-        "trace-light": "#1d1d1f8c",
-        "trace-dark": "#f2f2f466"
+        "gateway-light": "#1d1d1f8c",
+        "gateway-dark": "#f2f2f466"
       }
     },
     "row-hover": {
@@ -363,19 +473,41 @@
         "dark": "#ffffff0d",
         "light-hc": "#0000000a",
         "dark-hc": "#ffffff0d",
-        "trace-light": "#0000000a",
-        "trace-dark": "#ffffff0d"
+        "gateway-light": "#0000000a",
+        "gateway-dark": "#ffffff0d"
       }
     },
     "toggle-off": {
-      "usage": "A switch track when off.",
+      "usage": "The 16 to 18% ink behind things that are off or empty: a progress track, the spinner ring, the subtle badge. The switch track uses `toggle-track-off`.",
       "values": {
         "light": "#00000029",
         "dark": "#ffffff2e",
         "light-hc": "#00000029",
         "dark-hc": "#ffffff2e",
-        "trace-light": "#00000029",
-        "trace-dark": "#ffffff2e"
+        "gateway-light": "#00000029",
+        "gateway-dark": "#ffffff2e"
+      }
+    },
+    "toggle-track-off": {
+      "usage": "A switch track when off. In the dark themes it is 38% white so the navy off knob (`toggle-knob-off`) holds 3:1 on it (owner, 2026-10-22).",
+      "values": {
+        "light": "#00000029",
+        "dark": "#ffffff61",
+        "light-hc": "#00000029",
+        "dark-hc": "#ffffff61",
+        "gateway-light": "#00000029",
+        "gateway-dark": "#ffffff61"
+      }
+    },
+    "toggle-knob-off": {
+      "usage": "A switch knob when off. White in the light themes; in the dark themes the same navy as the on knob (`text-on-accent`), so on and off differ by track and position, not by knob.",
+      "values": {
+        "light": "#ffffff",
+        "dark": "#071a2e",
+        "light-hc": "#ffffff",
+        "dark-hc": "#071a2e",
+        "gateway-light": "#ffffff",
+        "gateway-dark": "#071a2e"
       }
     },
     "toolbar-glyph": {
@@ -385,8 +517,8 @@
         "dark": "#e6e6ec",
         "light-hc": "#1d1d1f",
         "dark-hc": "#e6e6ec",
-        "trace-light": "#1d1d1f",
-        "trace-dark": "#e6e6ec"
+        "gateway-light": "#1d1d1f",
+        "gateway-dark": "#e6e6ec"
       }
     },
     "toolbar-glyph-off": {
@@ -396,8 +528,8 @@
         "dark": "#8d8d97",
         "light-hc": "#2a2a2e",
         "dark-hc": "#d6d6dc",
-        "trace-light": "#8a8a90",
-        "trace-dark": "#83838c"
+        "gateway-light": "#75757b",
+        "gateway-dark": "#8d8d97"
       }
     },
     "toolbar-expanded": {
@@ -407,8 +539,8 @@
         "dark": "#55555a",
         "light-hc": "#d1d1d6",
         "dark-hc": "#55555a",
-        "trace-light": "#d1d1d6",
-        "trace-dark": "#6d14f3"
+        "gateway-light": "#035ca3",
+        "gateway-dark": "#7ebcff"
       }
     },
     "text-primary": {
@@ -418,8 +550,8 @@
         "dark": "#f2f3f8",
         "light-hc": "#1d1d1f",
         "dark-hc": "#f2f3f8",
-        "trace-light": "#1d1d1f",
-        "trace-dark": "#f2f3f8"
+        "gateway-light": "#1d1d1f",
+        "gateway-dark": "#f2f3f8"
       }
     },
     "text-secondary": {
@@ -429,8 +561,8 @@
         "dark": "#f2f3f8e0",
         "light-hc": "#2a2a2e",
         "dark-hc": "#e6e6ec",
-        "trace-light": "#3c3c43",
-        "trace-dark": "#f2f3f8e0"
+        "gateway-light": "#3c3c43",
+        "gateway-dark": "#f2f3f8e0"
       }
     },
     "text-tertiary": {
@@ -440,8 +572,8 @@
         "dark": "#f2f3f8d6",
         "light-hc": "#2a2a2e",
         "dark-hc": "#d6d6dc",
-        "trace-light": "#3d3d43",
-        "trace-dark": "#f2f3f8d6"
+        "gateway-light": "#3d3d43",
+        "gateway-dark": "#f2f3f8d6"
       }
     },
     "text-placeholder": {
@@ -451,8 +583,19 @@
         "dark": "#ffffffcc",
         "light-hc": "#2a2a2e",
         "dark-hc": "#e6e6ec",
-        "trace-light": "#000000a3",
-        "trace-dark": "#ffffffcc"
+        "gateway-light": "#000000a3",
+        "gateway-dark": "#ffffffcc"
+      }
+    },
+    "text-placeholder-on-opaque": {
+      "usage": "Placeholder text on an opaque ground (`pane-opaque`, `card-on-opaque`, phone and web shells with no glass). Quieter than `text-placeholder`, which is already at the 4.5:1 floor over the worst glass ground. Never on glass.",
+      "values": {
+        "light": "#6e6e74",
+        "dark": "#888b9a",
+        "light-hc": "#2a2a2e",
+        "dark-hc": "#e6e6ec",
+        "gateway-light": "#6e6e74",
+        "gateway-dark": "#888b9a"
       }
     },
     "text-on-status": {
@@ -462,8 +605,8 @@
         "dark": "#0c0c0e",
         "light-hc": "#ffffff",
         "dark-hc": "#0c0c0e",
-        "trace-light": "#0c0c0e",
-        "trace-dark": "#0c0c0e"
+        "gateway-light": "#0c0c0e",
+        "gateway-dark": "#0c0c0e"
       }
     },
     "accent": {
@@ -473,8 +616,8 @@
         "dark": "#7ebcff",
         "light-hc": "#01599f",
         "dark-hc": "#7ebcff",
-        "trace-light": "#15608a",
-        "trace-dark": "#6d14f3"
+        "gateway-light": "#035ca3",
+        "gateway-dark": "#7ebcff"
       }
     },
     "accent-pressed": {
@@ -484,8 +627,8 @@
         "dark": "#6aa8eb",
         "light-hc": "#00458b",
         "dark-hc": "#6aa8eb",
-        "trace-light": "#014c76",
-        "trace-dark": "#5900df"
+        "gateway-light": "#00488f",
+        "gateway-dark": "#6aa8eb"
       }
     },
     "text-on-accent": {
@@ -495,8 +638,8 @@
         "dark": "#071a2e",
         "light-hc": "#ffffff",
         "dark-hc": "#071a2e",
-        "trace-light": "#ffffff",
-        "trace-dark": "#ffffff"
+        "gateway-light": "#ffffff",
+        "gateway-dark": "#071a2e"
       }
     },
     "accent-text": {
@@ -506,8 +649,8 @@
         "dark": "#c6e1ff",
         "light-hc": "#013e71",
         "dark-hc": "#c6e1ff",
-        "trace-light": "#0c3f5c",
-        "trace-dark": "#e1d5ff"
+        "gateway-light": "#024175",
+        "gateway-dark": "#c6e1ff"
       }
     },
     "accent-soft": {
@@ -517,8 +660,8 @@
         "dark": "#0091fd",
         "light-hc": "#0070c6",
         "dark-hc": "#0091fd",
-        "trace-light": "#1f7aa8",
-        "trace-dark": "#8a3dff"
+        "gateway-light": "#0070c6",
+        "gateway-dark": "#0091fd"
       }
     },
     "accent-tint": {
@@ -528,8 +671,8 @@
         "dark": "#0091fd38",
         "light-hc": "#0070c624",
         "dark-hc": "#0091fd38",
-        "trace-light": "#7a2cf524",
-        "trace-dark": "#8a3dff38"
+        "gateway-light": "#0070c624",
+        "gateway-dark": "#0091fd38"
       }
     },
     "tab-ember": {
@@ -539,8 +682,8 @@
         "dark": "#0091fd",
         "light-hc": "#0070c6",
         "dark-hc": "#0091fd",
-        "trace-light": "#2a8fc4",
-        "trace-dark": "#8a3dff"
+        "gateway-light": "#0070c6",
+        "gateway-dark": "#0091fd"
       }
     },
     "tab-ember-halo": {
@@ -550,8 +693,8 @@
         "dark": "#0091fd4f",
         "light-hc": "#0070c638",
         "dark-hc": "#0091fd4f",
-        "trace-light": "#2a8fc44c",
-        "trace-dark": "#8a3dff4f"
+        "gateway-light": "#0070c638",
+        "gateway-dark": "#0091fd4f"
       }
     },
     "focus-ring": {
@@ -561,8 +704,8 @@
         "dark": "#7ebcff",
         "light-hc": "#01599f",
         "dark-hc": "#7ebcff",
-        "trace-light": "#15608a",
-        "trace-dark": "#c9b3ff"
+        "gateway-light": "#035ca3",
+        "gateway-dark": "#7ebcff"
       }
     },
     "selection": {
@@ -572,8 +715,8 @@
         "dark": "#7ebcff",
         "light-hc": "#01599f",
         "dark-hc": "#7ebcff",
-        "trace-light": "#15608a",
-        "trace-dark": "#6d14f3"
+        "gateway-light": "#035ca3",
+        "gateway-dark": "#7ebcff"
       }
     },
     "menu-hover": {
@@ -583,8 +726,8 @@
         "dark": "#7ebcffe6",
         "light-hc": "#01599f",
         "dark-hc": "#7ebcff",
-        "trace-light": "#15608ae6",
-        "trace-dark": "#6d14f3e6"
+        "gateway-light": "#035ca3e6",
+        "gateway-dark": "#7ebcffe6"
       }
     },
     "positive": {
@@ -594,8 +737,8 @@
         "dark": "#30d158",
         "light-hc": "#1a8f4c",
         "dark-hc": "#30d158",
-        "trace-light": "#1a8f4c",
-        "trace-dark": "#30d158"
+        "gateway-light": "#1a8f4c",
+        "gateway-dark": "#30d158"
       }
     },
     "positive-text": {
@@ -605,8 +748,8 @@
         "dark": "#acedbc",
         "light-hc": "#0b4628",
         "dark-hc": "#acedbc",
-        "trace-light": "#0b4628",
-        "trace-dark": "#acedbc"
+        "gateway-light": "#0b4628",
+        "gateway-dark": "#acedbc"
       }
     },
     "positive-tint": {
@@ -616,8 +759,30 @@
         "dark": "#30d1582e",
         "light-hc": "#1a8f4c24",
         "dark-hc": "#30d1582e",
-        "trace-light": "#1a8f4c24",
-        "trace-dark": "#30d1582e"
+        "gateway-light": "#1a8f4c24",
+        "gateway-dark": "#30d1582e"
+      }
+    },
+    "proof-text": {
+      "usage": "The word of a passed proof (Verified) and the seal's ink, on `proof-tint`. Calmer than `positive-text` so a proof never reads as a neon success.",
+      "values": {
+        "light": "#1a6b48",
+        "dark": "#85c9a1",
+        "light-hc": "#0f4a30",
+        "dark-hc": "#a8e0bf",
+        "gateway-light": "#1a6b48",
+        "gateway-dark": "#85c9a1"
+      }
+    },
+    "proof-tint": {
+      "usage": "The ground of a passed proof: the ProofTag pill, the proof pill in a header, the seal-match box. Opaque, so it reads the same on glass and on paint.",
+      "values": {
+        "light": "#d2f1df",
+        "dark": "#183124",
+        "light-hc": "#d2f1df",
+        "dark-hc": "#183124",
+        "gateway-light": "#d2f1df",
+        "gateway-dark": "#183124"
       }
     },
     "caution": {
@@ -627,8 +792,8 @@
         "dark": "#ffc75c",
         "light-hc": "#a8690f",
         "dark-hc": "#ffc75c",
-        "trace-light": "#a8690f",
-        "trace-dark": "#ffc75c"
+        "gateway-light": "#a8690f",
+        "gateway-dark": "#ffc75c"
       }
     },
     "caution-text": {
@@ -638,8 +803,8 @@
         "dark": "#ffd585",
         "light-hc": "#573403",
         "dark-hc": "#ffd585",
-        "trace-light": "#573403",
-        "trace-dark": "#ffd585"
+        "gateway-light": "#573403",
+        "gateway-dark": "#ffd585"
       }
     },
     "caution-tint": {
@@ -649,8 +814,8 @@
         "dark": "#ffc75c2e",
         "light-hc": "#a8690f24",
         "dark-hc": "#ffc75c2e",
-        "trace-light": "#a8690f24",
-        "trace-dark": "#ffc75c2e"
+        "gateway-light": "#a8690f24",
+        "gateway-dark": "#ffc75c2e"
       }
     },
     "critical": {
@@ -660,8 +825,8 @@
         "dark": "#ff6b6b",
         "light-hc": "#d0342c",
         "dark-hc": "#ff6b6b",
-        "trace-light": "#d0342c",
-        "trace-dark": "#ff6b6b"
+        "gateway-light": "#d0342c",
+        "gateway-dark": "#ff6b6b"
       }
     },
     "critical-text": {
@@ -671,8 +836,8 @@
         "dark": "#ffd3d3",
         "light-hc": "#771814",
         "dark-hc": "#ffd3d3",
-        "trace-light": "#771814",
-        "trace-dark": "#ffd3d3"
+        "gateway-light": "#771814",
+        "gateway-dark": "#ffd3d3"
       }
     },
     "critical-tint": {
@@ -682,8 +847,8 @@
         "dark": "#ff6b6b2e",
         "light-hc": "#d0342c1f",
         "dark-hc": "#ff6b6b2e",
-        "trace-light": "#d0342c1f",
-        "trace-dark": "#ff6b6b2e"
+        "gateway-light": "#d0342c1f",
+        "gateway-dark": "#ff6b6b2e"
       }
     },
     "neutral": {
@@ -693,8 +858,8 @@
         "dark": "#a9a9b0",
         "light-hc": "#8a8a90",
         "dark-hc": "#a9a9b0",
-        "trace-light": "#8a8a90",
-        "trace-dark": "#a9a9b0"
+        "gateway-light": "#8a8a90",
+        "gateway-dark": "#a9a9b0"
       }
     },
     "neutral-tint": {
@@ -704,8 +869,8 @@
         "dark": "#ffffff1a",
         "light-hc": "#0000000f",
         "dark-hc": "#ffffff1a",
-        "trace-light": "#0000000f",
-        "trace-dark": "#ffffff1a"
+        "gateway-light": "#0000000f",
+        "gateway-dark": "#ffffff1a"
       }
     },
     "destructive-text": {
@@ -715,8 +880,8 @@
         "dark": "#ffd0d0",
         "light-hc": "#791313",
         "dark-hc": "#ffd0d0",
-        "trace-light": "#791313",
-        "trace-dark": "#ffd0d0"
+        "gateway-light": "#791313",
+        "gateway-dark": "#ffd0d0"
       }
     },
     "badge-fill": {
@@ -726,8 +891,8 @@
         "dark": "#ff6b6b",
         "light-hc": "#b01218",
         "dark-hc": "#ff6b6b",
-        "trace-light": "#e04a42",
-        "trace-dark": "#ff6b6b"
+        "gateway-light": "#e04a42",
+        "gateway-dark": "#ff6b6b"
       }
     },
     "surface-chart": {
@@ -737,8 +902,8 @@
         "dark": "#0d1124",
         "light-hc": "#f7f8fa",
         "dark-hc": "#0d1124",
-        "trace-light": "#f7f8fa",
-        "trace-dark": "#0d1124"
+        "gateway-light": "#f7f8fa",
+        "gateway-dark": "#0d1124"
       }
     },
     "chart-grid": {
@@ -748,8 +913,8 @@
         "dark": "#ffffff1a",
         "light-hc": "#00000014",
         "dark-hc": "#ffffff1a",
-        "trace-light": "#00000014",
-        "trace-dark": "#ffffff1a"
+        "gateway-light": "#00000014",
+        "gateway-dark": "#ffffff1a"
       }
     },
     "data-1": {
@@ -759,8 +924,8 @@
         "dark": "#0091fd",
         "light-hc": "#2a78d6",
         "dark-hc": "#0091fd",
-        "trace-light": "#7a2cf5",
-        "trace-dark": "#8a3dff"
+        "gateway-light": "#2a78d6",
+        "gateway-dark": "#0091fd"
       }
     },
     "data-2": {
@@ -770,8 +935,8 @@
         "dark": "#d95926",
         "light-hc": "#cf5320",
         "dark-hc": "#d95926",
-        "trace-light": "#2f6bc4",
-        "trace-dark": "#3a7bd5"
+        "gateway-light": "#cf5320",
+        "gateway-dark": "#d95926"
       }
     },
     "data-3": {
@@ -781,8 +946,8 @@
         "dark": "#199e70",
         "light-hc": "#14906a",
         "dark-hc": "#199e70",
-        "trace-light": "#7d5ce0",
-        "trace-dark": "#a78bfa"
+        "gateway-light": "#14906a",
+        "gateway-dark": "#199e70"
       }
     },
     "data-4": {
@@ -792,8 +957,8 @@
         "dark": "#c98500",
         "light-hc": "#a97200",
         "dark-hc": "#c98500",
-        "trace-light": "#a97200",
-        "trace-dark": "#c98500"
+        "gateway-light": "#a97200",
+        "gateway-dark": "#c98500"
       }
     },
     "data-5": {
@@ -803,8 +968,8 @@
         "dark": "#d55181",
         "light-hc": "#c94a7c",
         "dark-hc": "#d55181",
-        "trace-light": "#c94a7c",
-        "trace-dark": "#d55181"
+        "gateway-light": "#c94a7c",
+        "gateway-dark": "#d55181"
       }
     },
     "data-6": {
@@ -814,8 +979,8 @@
         "dark": "#008300",
         "light-hc": "#2f8a1f",
         "dark-hc": "#008300",
-        "trace-light": "#2f8a1f",
-        "trace-dark": "#008300"
+        "gateway-light": "#2f8a1f",
+        "gateway-dark": "#008300"
       }
     },
     "data-7": {
@@ -825,8 +990,8 @@
         "dark": "#9085e9",
         "light-hc": "#5a48b8",
         "dark-hc": "#9085e9",
-        "trace-light": "#5a48b8",
-        "trace-dark": "#9085e9"
+        "gateway-light": "#5a48b8",
+        "gateway-dark": "#9085e9"
       }
     },
     "data-8": {
@@ -836,8 +1001,8 @@
         "dark": "#e66767",
         "light-hc": "#d33c3c",
         "dark-hc": "#e66767",
-        "trace-light": "#d33c3c",
-        "trace-dark": "#e66767"
+        "gateway-light": "#d33c3c",
+        "gateway-dark": "#e66767"
       }
     },
     "ink": {
@@ -847,19 +1012,31 @@
         "dark": "#ffffff",
         "light-hc": "#000000",
         "dark-hc": "#ffffff",
-        "trace-light": "#000000",
-        "trace-dark": "#ffffff"
+        "gateway-light": "#000000",
+        "gateway-dark": "#ffffff"
       }
     }
   },
   "brand": {
     "brand-blue": {
       "value": "#0091fd",
-      "usage": "The \"AI\" of the NEAR AI wordmark and the secondary lockup. Logos, illustration and brand moments; in the dark themes it is also data-1 and accent-soft. Not text on a light ground (2.9:1 on pane-opaque)."
+      "usage": "The \"AI\" of the Near AI wordmark and the secondary lockup. Logos, illustration and brand moments; in the dark themes it is also data-1 and accent-soft. Not text on a light ground (2.9:1 on pane-opaque)."
+    },
+    "brand-sky": {
+      "value": "#83dcff",
+      "usage": "Near AI Sky, from the near.ai/brand palette. The light steps of brand illustration (the marketing site's dithered art ramp). Logo, illustration and marketing use only; never text or controls."
+    },
+    "brand-deep-blue": {
+      "value": "#2385c7",
+      "usage": "Near AI Deep Blue, from the near.ai/brand palette. Mid steps of brand illustration. Illustration and marketing use only."
     },
     "brand-tile": {
       "value": "#0b8ff6",
-      "usage": "The ground of the NEAR AI tile (app-icon lockup). Logo use only."
+      "usage": "The ground of the Near AI tile (app-icon lockup). Logo use only."
+    },
+    "brand-tile-dark": {
+      "value": "#024175",
+      "usage": "The tile ground of the dark app-icon appearance (macOS and iOS Icon Composer documents). App icons only."
     },
     "brand-paper": {
       "value": "#f3f3f2",
@@ -869,9 +1046,9 @@
       "value": "#000000",
       "usage": "The \"near\" wordmark in the color lockup on light grounds. Logo use only."
     },
-    "trace-purple": {
+    "gateway-purple": {
       "value": "#6d14f3",
-      "usage": "Trace product brand purple: the Trace dark accent. Trace themes only."
+      "usage": "The old Trace purple: Gateway's dark accent until 2026-10-20 (NDS-22). It survives only in the old Trace mark and Gateway's Shared data series (#8a3dff dark, #7a2cf5 light). Never on controls."
     }
   },
   "shadow": {
@@ -884,8 +1061,8 @@
           "dark": "0 18px 36px #02030a99",
           "light-hc": "0 14px 30px #0000001f",
           "dark-hc": "0 18px 36px #02030a99",
-          "trace-light": "0 14px 30px #0000001f",
-          "trace-dark": "0 18px 36px #02030a99"
+          "gateway-light": "0 14px 30px #0000001f",
+          "gateway-dark": "0 18px 36px #02030a99"
         }
       },
       "shadow-modal": {
@@ -895,8 +1072,8 @@
           "dark": "0 24px 60px #00000080",
           "light-hc": "0 24px 60px #00000039",
           "dark-hc": "0 24px 60px #00000080",
-          "trace-light": "0 24px 60px #00000039",
-          "trace-dark": "0 24px 60px #00000080"
+          "gateway-light": "0 24px 60px #00000039",
+          "gateway-dark": "0 24px 60px #00000080"
         }
       },
       "shadow-check": {
@@ -906,8 +1083,8 @@
           "dark": "inset 0 0 0 1px #ffffff2e",
           "light-hc": "inset 0 0 0 1px #1d1d1f8c",
           "dark-hc": "inset 0 0 0 1px #f2f2f466",
-          "trace-light": "inset 0 0 0 1px #00000033",
-          "trace-dark": "inset 0 0 0 1px #ffffff2e"
+          "gateway-light": "inset 0 0 0 1px #00000033",
+          "gateway-dark": "inset 0 0 0 1px #ffffff2e"
         }
       },
       "edge-classic-pane": {
@@ -917,8 +1094,8 @@
           "dark": "inset 0 1px 0 #ffffff4d, inset 1px 0 0 #ffffff1f, inset 0 -1px 0 #00000033",
           "light-hc": "inset 0 1px 0 #ffffff99, inset 1px 0 0 #ffffff3d, inset 0 -1px 0 #0000001a",
           "dark-hc": "inset 0 1px 0 #ffffff4d, inset 1px 0 0 #ffffff1f, inset 0 -1px 0 #00000033",
-          "trace-light": "inset 0 1px 0 #ffffff99, inset 1px 0 0 #ffffff3d, inset 0 -1px 0 #0000001a",
-          "trace-dark": "inset 0 1px 0 #ffffff4d, inset 1px 0 0 #ffffff1f, inset 0 -1px 0 #00000033"
+          "gateway-light": "inset 0 1px 0 #ffffff99, inset 1px 0 0 #ffffff3d, inset 0 -1px 0 #0000001a",
+          "gateway-dark": "inset 0 1px 0 #ffffff4d, inset 1px 0 0 #ffffff1f, inset 0 -1px 0 #00000033"
         }
       },
       "edge-classic-control": {
@@ -928,19 +1105,19 @@
           "dark": "inset 0 1px 0 #ffffff52, inset 0 -1px 0 #0000002e, 0 1px 2px #0000002e",
           "light-hc": "inset 0 1px 0 #ffffffa3, inset 0 -1px 0 #00000015, 0 1px 2px #0000001a",
           "dark-hc": "inset 0 1px 0 #ffffff52, inset 0 -1px 0 #0000002e, 0 1px 2px #0000002e",
-          "trace-light": "inset 0 1px 0 #ffffffa3, inset 0 -1px 0 #00000015, 0 1px 2px #0000001a",
-          "trace-dark": "inset 0 1px 0 #ffffff52, inset 0 -1px 0 #0000002e, 0 1px 2px #0000002e"
+          "gateway-light": "inset 0 1px 0 #ffffffa3, inset 0 -1px 0 #00000015, 0 1px 2px #0000001a",
+          "gateway-dark": "inset 0 1px 0 #ffffff52, inset 0 -1px 0 #0000002e, 0 1px 2px #0000002e"
         }
       },
       "edge-classic-cta": {
-        "usage": "Classic (expressive) theme only: the primary button highlight and its accent glow (Trace purple glow shown).",
+        "usage": "Classic (expressive) theme only: the primary button highlight and its accent glow (Gateway purple glow shown).",
         "values": {
           "light": "inset 0 1px 0 #ffffff, inset 0 -2px 0 #00000017, 0 4px 12px #6d14f34d",
           "dark": "inset 0 1px 0 #ffffff80, inset 0 -2px 0 #00000033, 0 4px 12px #6d14f34d",
           "light-hc": "inset 0 1px 0 #ffffff, inset 0 -2px 0 #00000017, 0 4px 12px #6d14f34d",
           "dark-hc": "inset 0 1px 0 #ffffff80, inset 0 -2px 0 #00000033, 0 4px 12px #6d14f34d",
-          "trace-light": "inset 0 1px 0 #ffffff, inset 0 -2px 0 #00000017, 0 4px 12px #6d14f34d",
-          "trace-dark": "inset 0 1px 0 #ffffff80, inset 0 -2px 0 #00000033, 0 4px 12px #6d14f34d"
+          "gateway-light": "inset 0 1px 0 #ffffff, inset 0 -2px 0 #00000017, 0 4px 12px #6d14f34d",
+          "gateway-dark": "inset 0 1px 0 #ffffff80, inset 0 -2px 0 #00000033, 0 4px 12px #6d14f34d"
         }
       }
     }
@@ -1427,7 +1604,7 @@
       "spring-ember": {
         "stiffness": 322,
         "damping": 0.85,
-        "usage": "The main-tab ember gliding between tabs (Trace: response 0.35, damping fraction 0.85)."
+        "usage": "The main-tab ember gliding between tabs (Gateway: response 0.35, damping fraction 0.85)."
       }
     }
   },
@@ -1865,7 +2042,7 @@
         "macos/Sources/TCDesign"
       ]
     },
-    "synced": "2026-10-13",
-    "note": "Parent system: trace-commons flat glass + NEAR AI logo kit + Apple Liquid Glass/HIG, Unity Foundations/App UI and Material 3 Expressive research."
+    "synced": "2026-11-03",
+    "note": "Parent system: trace-commons flat glass + Near AI logo kit + Apple Liquid Glass/HIG, Unity Foundations/App UI and Material 3 Expressive research. Gateway themes re-synced to trace-commons main@e2a1ad9d7 (2026-11-03); NDS-22 to NDS-50 from the owner's product sessions (research/sessions-2026-11.md). 2.0.0: the trace-light, trace-dark themes and trace-purple are renamed gateway-light, gateway-dark and gateway-purple (NDS-48)."
   }
 }

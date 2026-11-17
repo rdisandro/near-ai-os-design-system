@@ -1,6 +1,6 @@
 # Navigation and commands
 
-NEAR AI products share one information architecture and one command registry. Each platform renders them with its own idioms (NDS-3): a floating glass `TabBar` on iPhone, a `NavigationRail` on Android tablets and the web, a `Sidebar` or the three-pane window on the desktop, a menu bar on macOS and iPadOS, and a `CommandPalette` where there is no menu bar. This section sets which component carries navigation at each layout class, how deep a hierarchy may go, how Back works, where search lives, and how one command reaches menus, palettes, shortcuts and the system.
+Near AI products share one information architecture and one command registry. Each platform renders them with its own idioms (NDS-3): a floating glass `TabBar` on iPhone, a `NavigationRail` on Android tablets and the web, a `Sidebar` or the three-pane window on the desktop, a menu bar on macOS and iPadOS, and a `CommandPalette` where there is no menu bar. This section sets which component carries navigation at each layout class, how deep a hierarchy may go, how Back works, where search lives, and how one command reaches menus, palettes, shortcuts and the system.
 
 ## The navigation model
 
@@ -29,7 +29,7 @@ Measure the window or the container, never the device (NDS-12). The class decide
 - **Desktop.** A `Sidebar` (`size-sidebar` 280) or the three-pane window, plus a `Toolbar` and the menu bar or `CommandPalette`. See Desktop patterns.
 - **Spatial.** visionOS moves the tab bar into a vertical ornament on the window's leading edge. See Spatial patterns.
 
-Choose the desktop structure by the shape of the information. Use a `Sidebar` when the app moves among more than five areas or among collections people create (conversations, projects, agents). Use the three-pane window when the app has up to five top-level areas that share one overview: a fixed main pane carrying `Tabs`, a flexible content pane and an inspector. The Trace monitor is the reference: Home, Inference and Traces in the main pane, the map in the content pane, the session review in the inspector.
+Choose the desktop structure by the shape of the information. Use a `Sidebar` when the app moves among more than five areas or among collections people create (conversations, projects, agents). Use the three-pane window when the app has up to five top-level areas that share one overview: a fixed main pane carrying `Tabs`, a flexible content pane and an inspector. The Gateway monitor is the reference: Home, Private AI, Traces and Insights in the main pane, the map in the content pane, the trace review in the inspector.
 
 ### Crosswalk
 
@@ -53,11 +53,11 @@ Keep navigation shallow and put depth in content.
 
 - Hold three to five destinations in a `TabBar` (iPad defaults to five or fewer so compact and regular widths match) and three to seven in a `NavigationRail`.
 - Show at most two levels in a `Sidebar`: group headings and items. For anything deeper add a list column (list-detail) or a tree in the content pane.
-- Never disable a tab or a rail item, and never hide one to report state. A destination with nothing to show opens to its `EmptyState` ("No agents yet"). A product may show a reduced set before setup finishes (Trace shows only Inference until first run completes); it never shows a disabled one.
-- Report counts that need action with a `Badge` on the destination. Trace counts decisions owed, caps at 99+, and draws a dash when the count is unknown. Never badge queue depth or credit.
-- Drill down inside a pane with a `Breadcrumb` (Home › History › Session). The back chevron and Esc go up one level. Stop at three crumbs; a fourth level opens in its own window or `Sheet`.
+- Never disable a tab or a rail item, and never hide one to report state. A destination with nothing to show opens to its `EmptyState` ("No agents yet"). A product may show a reduced set before setup finishes (Gateway shows only Private AI until first run completes); it never shows a disabled one.
+- Report counts that need action with a `Badge` on the destination. Gateway counts decisions owed and caps at 99+; a tab draws a dash when the count is unknown, and the menu-bar `StatusItem` hides its badge instead (NDS-33). Never badge queue depth or credit.
+- Drill down inside a pane with a `Breadcrumb` (Traces › History › Gateway; Gateway's own shell draws the separator as "/"). A sub-page lives under the tab whose content it extends: Gateway's History sits inside Traces. The back chevron and Esc go up one level. Stop at three crumbs; a fourth level opens in its own window or `Sheet`.
 - In list-detail, show the back button only in single-pane mode and the selected row only in two-pane mode. Widening with no selection shows the detail `EmptyState`; narrowing with a selection shows the detail.
-- Draw data hierarchies (folders and sessions, a run and its tool calls) as a tree of `ListRow`s in the content pane, one tab stop with arrow keys. A tree is content; it never replaces primary navigation.
+- Draw data hierarchies (folders and traces, a run and its tool calls) as a tree of `ListRow`s in the content pane, one tab stop with arrow keys. A tree is content; it never replaces primary navigation.
 - Keep each destination's state when people leave and return: scroll position, selection, sub-page, pane visibility. Restore it per window on relaunch.
 - Show the selected destination with two cues: the indicator (fill, ember or pill) and a filled glyph or heavier label.
 
@@ -91,10 +91,10 @@ Keep navigation shallow and put depth in content.
 | Web | `SearchField` in the top `Toolbar`; the `CommandPalette` searches commands and destinations | Full-screen at compact; a docked results panel at medium and up | Mod+K for the palette. Leave Mod+F to the browser unless content is virtualized, where in-app find replaces it and says so |
 | Windows, Linux shells | Top row field and the `CommandPalette` | Docked results panel | Ctrl+K palette, Ctrl+F in-view find |
 
-- One place searches everything. A local field filters only its view, and its placeholder names the scope ("Search sessions in near-agents").
+- One place searches everything. A local field filters only its view, and its placeholder names the scope ("Search traces in near-agents").
 - Show recent searches before typing and suggestions while typing. Let people clear recents, and keep them off shared surfaces such as the menu-bar panel, the edge rail and widgets.
 - Search as people type when results are local. When results need a server or a model, show suggestions at once and results on Return.
-- When one field can both search and ask an agent, show the mode on the field and send nothing to a model until that mode is chosen. The palette's explicit "Ask NEAR AI" row is the pattern.
+- When one field can both search and ask an agent, show the mode on the field and send nothing to a model until that mode is chosen. The palette's explicit "Ask Near AI" row is the pattern.
 - Esc clears the field; a second Esc leaves search. Announce the result count politely to assistive technology.
 
 [HIG: search fields, searching] [M3: search]
@@ -105,11 +105,11 @@ Every action an app offers is declared once and rendered on every surface that s
 
 ### The command record
 
-| Field | Meaning | Trace example |
+| Field | Meaning | Gateway example |
 |---|---|---|
-| Id | Stable identifier | `traces.session.review` |
+| Id | Stable identifier | `traces.trace.review` |
 | Label | Words from the product's copy source: a verb, or a verb and object (NDS-16) | Look inside |
-| Accessible name | Label plus object when the control repeats | Look inside session from 09:14 |
+| Accessible name | Label plus object when the control repeats | Look inside trace from 09:14 |
 | Symbol | One glyph from the icon registry (see Iconography) | Eye |
 | Shortcut | Written `Mod+Key`; optional | Return, inside the tree |
 | Enablement | When it can run, and the sentence that says why when it cannot | Needs the watcher to answer |
@@ -119,27 +119,27 @@ Every action an app offers is declared once and rendered on every surface that s
 | Menu | Its menu and group in the menu bar | Traces |
 
 - Put every toolbar item and every context-menu item in the menu bar on macOS and iPadOS, and in the `CommandPalette` on web, Windows and Linux.
-- Give irreversible sends and consent actions (Trace's Contribute, Go public) no shortcut and no Return key. The palette may list them; choosing one opens the review where the action lives. Never expose them as one-step App Intents.
+- Give irreversible sends and consent actions (Gateway's Submit, Go public) no shortcut and no Return key. The palette may list them; choosing one opens the review where the action lives. A row's Submit pill is the one place a send is a single click (NDS-31), and only for a folder the person has already set to share. Never expose sends as one-step App Intents.
 - Use the same label on every surface. The shell may adapt case and punctuation to the platform: title case and a trailing ellipsis for macOS and iPadOS menu-bar items that need more input, sentence case everywhere else, no ellipsis on Windows.
 - Toggle commands change their label with state (Show inspector, Hide inspector) or carry a checkmark in menus.
-- A command that cannot run explains why: in its `Tooltip`, on the palette row's second line, and as a dimmed menu-bar item.
+- A command that cannot run explains why: in its `Tooltip`, on the palette row's second line, and as a dimmed menu-bar item. In rows and cards it is hidden instead (NDS-41).
 - Read shortcuts for tooltips, menus and the palette from the registry. Never hard-code a shortcut string in a component.
 
 ### The menu bar on macOS and iPadOS
 
-Keep the system order: App, File, Edit, Format, View, the app's own menus, Window, Help. Every NEAR AI desktop app ships App, File, Edit, View, Window and Help. Format appears only when the app edits rich text.
+Keep the system order: App, File, Edit, Format, View, the app's own menus, Window, Help. Every Near AI desktop app ships App, File, Edit, View, Window and Help. Format appears only when the app edits rich text.
 
-| Menu | NEAR AI baseline | Rules |
+| Menu | Near AI baseline | Rules |
 |---|---|---|
 | App (Near.ai) | About Near.ai · Settings… ⌘, · app items · Services · Hide Near.ai ⌘H · Hide Others ⌥⌘H · Show All · Quit Near.ai ⌘Q | About first and alone; app name 16 characters or fewer; Settings lives here |
 | File | New Chat or New Window ⌘N · Open in New Window · Close ⌘W · Export Conversation… | Name the type created; keep File even without documents, for windows |
-| Edit | Undo [action] ⌘Z · Redo [action] ⇧⌘Z · Cut · Copy · Paste · Paste and Match Style ⌥⇧⌘V · Delete · Select All ⌘A · Find ▸ | Undo and Redo name their target ("Undo Keep") |
+| Edit | Undo [action] ⌘Z · Redo [action] ⇧⌘Z · Cut · Copy · Paste · Paste and Match Style ⌥⇧⌘V · Delete · Select All ⌘A · Find ▸ | Undo and Redo name their target ("Undo Ignore") |
 | View | Show or Hide Sidebar ⌃⌘S · Show or Hide Inspector ⌥⌘I · areas ⌘1 to ⌘9 · Show or Hide Toolbar ⌥⌘T · Enter Full Screen ⌃⌘F | Always present; labels follow the current state |
-| App menus (one to three) | Trace: Traces (Look Inside, Submit All, Dismiss). An agent app: Conversation (Send, Stop ⌘., Regenerate, Branch) and Model | Between View and Window; list every custom command; order from general to specific |
+| App menus (one to three) | Gateway: Traces (Look Inside, Submit, Submit As…, Dismiss). An agent app: Conversation (Send, Stop ⌘., Regenerate, Branch) and Model | Between View and Window; list every custom command; order from general to specific |
 | Window | Minimize ⌘M · Zoom · Bring All to Front · open windows | Always present, even with one window; windows listed alphabetically; no panels or modals |
 | Help | Near.ai Help · Release Notes | Trailing |
 
-- Disable unavailable items in the menu bar; never hide them. Context menus do the opposite.
+- Disable unavailable items in the menu bar; never hide them. Context menus, row menus and cards do the opposite: they hide what cannot run (NDS-41).
 - Use one-word menu titles. Dynamic items (a modifier reveals an alternate) use one modifier and are never the only path.
 - On iPadOS the bar stays hidden until people point to or swipe from the top edge. Everything in it must also be reachable in the interface. Settings opens the app's page in the Settings app; in-app settings go in an item under it. List the top-level areas in View with ⌘1 to ⌘9.
 - The menu-bar panel (an extra) is covered in Desktop patterns. Never rely on it being visible; mirror its commands in the Dock menu and the main window.
@@ -157,7 +157,7 @@ There is no global menu bar. The `CommandPalette` carries the whole registry, gr
 - Hide unavailable items. macOS keeps Cut, Copy and Paste visible and dimmed.
 - Put destructive items last, after a separator, in `destructive-text`.
 - Show shortcuts in context menus on Windows, Linux and the web; omit them on Apple platforms.
-- Give icons to every item in a group or to none. Add a title only to clarify scope ("3 sessions").
+- Give icons to every item in a group or to none. Add a title only to clarify scope ("3 traces").
 - Every item also exists in the main interface. On iOS an item has a context menu or an edit menu, never both.
 - A message in a conversation offers Copy, Regenerate, Edit, Share, a separator, then Delete.
 
@@ -195,7 +195,7 @@ The `CommandPalette` opens with Mod+K and from a visible search button in the to
 
 ### Shortcuts the system reserves
 
-Every NEAR AI app keeps these bindings. A product never rebinds them.
+Every Near AI app keeps these bindings. A product never rebinds them.
 
 | Command | macOS | Windows and Linux shells | Web | Rule |
 |---|---|---|---|---|
@@ -210,7 +210,7 @@ Every NEAR AI app keeps these bindings. A product never rebinds them.
 | Command palette | ⌘K (optional) | Ctrl+K | Mod+K | |
 | Stop a running generation | Esc, ⌘. | Esc | Esc | When focus is in the composer or transcript and no transient surface is open; ⌘. works anywhere in the window |
 | Close the topmost transient surface | Esc | Esc | Esc | Busy modals ignore it |
-| Switch top-level area | ⌘1 to ⌘9 | Ctrl+1 to Ctrl+9 | None (the browser switches tabs) | Trace: ⌘1 Home, ⌘2 Inference, ⌘3 Traces |
+| Switch top-level area | ⌘1 to ⌘9 | Ctrl+1 to Ctrl+9 | None (the browser switches tabs) | Gateway: ⌘1 Home, ⌘2 Private AI, ⌘3 Traces, ⌘4 Insights (the default order; Home stays first, NDS-37) |
 | Back, forward | ⌘[, ⌘] | Alt+Left, Alt+Right | Browser keeps them | In pro tools, selection history |
 | Show or hide inspector | ⌥⌘I | Palette | Palette | |
 | Full screen | ⌃⌘F | F11 | F11 (browser) | |

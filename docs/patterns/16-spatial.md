@@ -1,12 +1,12 @@
 # Spatial patterns
 
-NEAR AI products are tools for reading, deciding and directing agents, so in space they are windows. On Apple Vision Pro they run in the Shared Space beside other apps; on Android XR they run as spatial panels in home space. Immersion, volumes and 3D are exceptions a product must justify.
+Near AI products are tools for reading, deciding and directing agents, so in space they are windows. On Apple Vision Pro they run in the Shared Space beside other apps; on Android XR they run as spatial panels in home space. Immersion, volumes and 3D are exceptions a product must justify.
 
 A visionOS point measures an angle. Dynamic scale keeps a window the same apparent size at any distance, so the parent's pt values carry over. The default visionOS window (1280 by 720 pt) is in the large class, and the default Android XR panel (1024 by 720 dp) is in the expanded class (NDS-12).
 
 ## Spatial surfaces
 
-| Surface | visionOS | Android XR | NEAR AI use |
+| Surface | visionOS | Android XR | Near AI use |
 |---|---|---|---|
 | Window or panel | Upright glass plane; default 1280 by 720 pt, opening about 2 m away; close button, window bar and resize controls from the system | Spatial panel; default 1024 by 720 dp at 1.75 m, 32 dp corners; up to 2560 by 1800 dp | Every product surface: chat, agent runs, Traces, Private AI, Settings |
 | Ornament or orbiter | Controls on a plane just in front of the window; system tab bars and toolbars are ornaments | Orbiters hold the rail, app bar and navigation bar | Navigation and the window's toolbar |
@@ -29,7 +29,7 @@ visionOS windows use the system's glass, the original glass material. It is unmo
 | Section grouping: `card`, the sidebar or list column | Regular material |
 | `well`, `field` drawn on top of regular | Thick material |
 | `text-primary`, `text-secondary`, `text-tertiary` | Vibrant label, secondary label, tertiary label (tertiary for inactive text only) |
-| `accent`, status marks (`positive`, `caution`, `critical`), `data-1` to `data-8` | The values of `dark`, or `trace-dark` for Trace, because window glass reads dark |
+| `accent`, status marks (`positive`, `caution`, `critical`), `data-1` to `data-8` | The values of `dark`, or `gateway-dark` for Gateway, because window glass reads dark |
 | Charts (`BarGraph`, `StatCard` sparkline) | The dark theme's opaque `surface-chart`, inset as a card. Charts never plot on glass |
 
 - Buttons on a window use the thin material. Only buttons floating free in space use glass.
@@ -79,7 +79,7 @@ Navigation and frequent controls move out of the window, onto ornaments (visionO
 
 **Input.** Prefer indirect input: look, then pinch with the hand at rest. Use direct touch only for near, brief manipulation. Support a keyboard, a trackpad, a game controller and voice, and never require a particular hand or both hands. Dictation is a first-class way to fill the `PromptComposer`; the system keyboard opens as its own movable window.
 
-**Visual calm.** Keep motion and bright, high-contrast objects out of the periphery. Never fill the field of view with a repeating pattern, which creates false depth. Trace's flow map draws a tiled NEAR AI "N" texture behind its nodes; on visionOS, drop the texture and keep the plain ground.
+**Visual calm.** Keep motion and bright, high-contrast objects out of the periphery. Never fill the field of view with a repeating pattern, which creates false depth. Gateway's flow map draws a tiled Near AI "N" texture behind its nodes; on visionOS, drop the texture and keep the plain ground.
 
 **Look to Scroll.** Opt into Look to Scroll for reading views: a long agent answer, a transcript in "Look inside". Leave it off in dense, control-heavy panes such as the Traces tree and Settings.
 
@@ -97,10 +97,10 @@ Navigation and frequent controls move out of the window, onto ornaments (visionO
 
 ## Volumes
 
-A volume is for content that is genuinely three-dimensional. NEAR AI surfaces are text, lists, cards and charts, which stay in windows.
+A volume is for content that is genuinely three-dimensional. Near AI surfaces are text, lists, cards and charts, which stay in windows.
 
 - Use a volume when an agent returns a 3D artifact (a USDZ model, a scanned object) or a person inspects one.
-- Keep charts and the Trace map in windows. A 2D chart turned into 3D is harder to read and has no text alternative.
+- Keep charts and the Gateway map in windows. A 2D chart turned into 3D is harder to read and has no text alternative.
 - Prefer dynamic scale unless the object is shown at real size. Pin 2D labels to points on the model as attachments, billboarded so they always face the viewer.
 - The volume's close button and window bar turn to face the viewer; keep the baseplate and its glow.
 
@@ -108,7 +108,7 @@ A volume is for content that is genuinely three-dimensional. NEAR AI surfaces ar
 
 Use the least immersion each moment needs, and let people choose when to enter and leave.
 
-| Mode | Where | Use in NEAR AI products |
+| Mode | Where | Use in Near AI products |
 |---|---|---|
 | Shared Space | Beside other apps | The default for every product surface; launch here |
 | Dimmed passthrough | Shared or Full Space | A focus mode for a long agent session or a "Look inside" review |
@@ -137,28 +137,28 @@ visionOS uses SF Pro through the system text styles and Dynamic Type. Body is 17
 
 [HIG: typography]
 
-## How NEAR AI windows translate
+## How Near AI windows translate
 
 ### The three-pane window
 
 The Mac's floating three-pane window becomes one visionOS window with columns. The panes stay inside that one window, because one window is one glass and three windows for one task are too many.
 
-| Mac (Trace monitor) | visionOS | Android XR |
+| Mac (Gateway monitor) | visionOS | Android XR |
 |---|---|---|
 | Window, default 1193 by 614 | One window, default 1280 by 720, resizable; layout by class | One panel, 1024 by 720 (expanded: two panes) |
-| Tabs in the main pane: Home / Inference / Traces | Vertical tab bar ornament on the leading edge, with the decisions-owed badge on Traces | Rail orbiter on the leading edge |
+| Tabs in the main pane: Home / Private AI / Traces / Insights | Vertical tab bar ornament on the leading edge, with the decisions-owed badge on Traces | Rail orbiter on the leading edge |
 | Main pane: notices, list controls, the Traces tree | List column, about `size-pane-main` 440 | List pane |
 | Content pane: the map | Detail column, flexible. The floating Traces / Private AI `SegmentedControl` stays in the window on thin material | Detail pane |
 | Inspector, `size-pane-inspector` 293 | `.inspector` column | Side pane, or a second panel |
-| Toolbar capsule: View, Graph, Map, Inspector, Settings | Toolbar ornament along the bottom. View's one item becomes a "Show ignored folders" toggle in the list column | App bar orbiter |
+| Toolbar capsule: Graph, Map, Inspector, Settings | Toolbar ornament along the bottom. "Show ignored folders" stays in the list's filter menu | App bar orbiter |
 | "Look inside" review sheet | An auxiliary window beside the main one, with Close | A second panel |
-| Confirmations (Dismiss a session, arm a folder) | System alert or a sheet centered in view | Basic dialog |
+| Confirmations (Dismiss a trace, arm a folder) | System alert or a sheet centered in view | Basic dialog |
 | Settings window | Its own window (NDS-21) | Its own panel |
 | Menu-bar panel and edge rail | No equivalent. A widget carries the glance: Waiting and Contributed counts, Watching or Paused | Not applicable |
 
 At 1280 pt the three columns fit with room to spare (440 + 293 leaves 547 for the map). When people narrow the window, the columns collapse in the same order as on iPad: the inspector first, then the map into the navigation stack.
 
-Inside the window, the Mac's floating panes and the gaps between them become columns of one glass, separated by the regular material and `rule` lines. Cards, notices and the session review card sit on the regular material; their buttons sit on the thin material. Trace's purple accent comes from `trace-dark`.
+Inside the window, the Mac's floating panes and the gaps between them become columns of one glass, separated by the regular material and `rule` lines. Cards, notices and the trace review card sit on the regular material; their buttons sit on the thin material. Gateway's accent comes from `gateway-dark`, the parent's blue since NDS-22.
 
 ### Chat and agent runs
 

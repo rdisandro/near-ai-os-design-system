@@ -30,7 +30,7 @@ A multi-line field for text that can run past one line, such as a note for revie
 
 - **Growing** (default): grows line by line from the minimum, then scrolls at the maximum.
 - **Fixed**: a set height that scrolls from the start, for long text in a layout that must not move. M3 prefers this on the web.
-- **With counter**: for a limit the person can see. The product decides what is counted (characters, or bytes as Trace's bio does) and supplies the numbers.
+- **With counter**: for a limit the person can see. The product decides what is counted (characters, or bytes as Gateway's bio does) and supplies the numbers.
 
 ## States
 

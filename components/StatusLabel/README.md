@@ -1,6 +1,6 @@
 # StatusLabel
 
-A status dot beside its words, for any live state a person reads at a glance (Watching, Paused, Ask me, Leaves for an outside model); it is the only way the system shows status.
+A status dot beside its words, for any live state a person reads at a glance (Watching, Paused, Ask, Leaves for an outside model); it is the only way the system shows status.
 
 ## When to use
 
@@ -31,15 +31,15 @@ The label takes the height of its row. It is not a control and has no target of 
 
 ## Variants
 
-| Tone | Mark | Means | Trace examples |
+| Tone | Mark | Means | Gateway examples |
 |---|---|---|---|
 | Positive | `positive` | On, working as asked | Watching, Verified, Shared |
-| Caution | `caution` | Waits on the person, needs a look | Ask me, Pending, Sign-in needed |
+| Caution | `caution` | Waits on the person, needs a look | Ask, Pending, Sign-in needed |
 | Critical | `critical` | Failed, or data leaves the device | Leaves for an outside model, No proof, Stopped |
 | Neutral | `neutral` | Off, paused, not used | Paused, Never, Kept |
 
 - **Strong.** Semibold words. The title of a `Notice`.
-- **Lead.** Ringed dot, a body-strong line and a caption sub-line ("Watching" over "3 sessions waiting for you"). The head of a status card.
+- **Lead.** Ringed dot, a body-strong line and a caption sub-line ("Watching" over "3 traces waiting for you"). The head of a status card.
 - **Legend.** Halo dots in a row (Shared, Kept) beside a chart or count.
 - **Lone dot.** A dot with no visible words, on a tab title or a picker pill. Allowed only when the host's accessible value carries the words and the same words are visible one step away (the inspector, the expanded pill).
 

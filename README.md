@@ -1,20 +1,20 @@
 # Near AI OS Design System
 
-The parent design system for NEAR AI products on desktop, web, tablet and phone. It carries the flat glass look of the Trace macOS app (frosted panes, flat painted fills, one accent for the one action) into shared tokens, components and pattern libraries, and lets each product bring its own accent.
+The parent design system for Near AI products on desktop, web, tablet and phone. It carries the flat glass look of the Gateway macOS app (frosted panes, flat painted fills, one accent for the one action) into shared tokens, components and pattern libraries, and lets each product bring its own accent.
 
 This repository is the source. The browsable reference is published as a Design System page: <https://claude.ai/artifact/NTUqkQNo8D8MQ6kSey959M> (private; share it from the page's Share menu).
 
 ## What is here
 
 ```
-tokens/near-ai.tokens.json   the token source: 72 color roles x 6 themes, brand colors, scales, type, springs
+tokens/near-ai.tokens.json   the token source: 87 color roles x 6 themes, brand colors, scales, type, springs
 css/*.css                    component styles, one file per component group (nr- classes)
-components/<Name>/           56 components: README.md (spec) and preview.html (live card), plus the Cover
+components/<Name>/           59 components: README.md (spec) and preview.html (live card), plus the Cover
 docs/brand-book.md           the brand book: principles, token usage, voice, visual foundations
 docs/guidelines/             color, glass, type, layout and density, shape, motion, icons, accessibility, writing
 docs/patterns/               navigation, desktop, web, tablet, phone, spatial, dense tools, AI, feedback, forms
 docs/reference/              platform crosswalk, implementation, decisions and open questions
-assets/logos/                NEAR AI lockups from the logo kit (unchanged)
+assets/logos/                Near AI lockups from the logo kit (unchanged)
 dist/                        generated outputs (committed; regenerate with make build)
 scripts/                     build, check, previews, accent derivation, page assembly
 research/                    the research the system was built from
@@ -41,7 +41,7 @@ Generated outputs in `dist/`:
 ```html
 <link rel="stylesheet" href="dist/css/tokens.css">
 <link rel="stylesheet" href="dist/css/near-ai.css">
-<html data-theme="dark">   <!-- light, dark, light-hc, dark-hc, trace-light, trace-dark; omit to follow the system -->
+<html data-theme="dark">   <!-- light, dark, light-hc, dark-hc, gateway-light, gateway-dark; omit to follow the system -->
 ```
 
 ```html
@@ -95,15 +95,17 @@ make artifact   # assemble the published page's files in build/artifact/
 
 - Text is at least 4.5:1, and 7:1 in the increased-contrast themes, on every ground it is drawn on, measured over the worst desktop the glass can show (white under dark glass, #333333 under light glass).
 - A mark that shows a state on its own (a selected fill, the focus ring, a chart series) is at least 3:1.
-- No designer overrides. Three Trace values miss today and are reported as flagged: the dark selected purple (1.09:1 on the worst pane) and the hidden-toolbar glyph (2.27:1 light, 2.63:1 dark). `make accent SEED=#6d14f3` proposes a passing dark accent (#b5aaff with dark text).
+- No designer overrides. A product value that misses a floor is reported as flagged and blocks that theme. None is flagged today: Gateway took the parent accent (NDS-22) and the parent's hidden-toolbar greys (NDS-50).
 
 ## Decisions
 
-The register is `docs/reference/23-decisions.md`: NDS-1 to NDS-8 are the owner's decisions of 2026-10-13, NDS-9 to NDS-21 are defaults set when the system was written, and seven questions are open.
+The register is `docs/reference/23-decisions.md`: NDS-1 to NDS-8 are the owner's decisions of 2026-10-13, NDS-9 to NDS-21 are defaults set when the system was written, NDS-22 to NDS-50 are the owner's decisions from designing Gateway, the private chat and the Near AI Gateway site (2026-09-30 to 2026-11-04), and eleven questions are open. `research/sessions-2026-11.md` records where each of the later decisions came from.
 
 ## Relationship to trace-commons
 
-trace-commons keeps its own token source (`design-tokens/glass.tokens.json`) and generator for the Trace macOS app. This system took that file's flat theme as its baseline and its accent family as the Trace theme; `docs/guidelines/01-architecture.md` maps every name. Nothing here changes trace-commons.
+trace-commons keeps its own token source (`design-tokens/glass.tokens.json`) and generator for the Gateway macOS app. This system took that file's flat theme as its baseline and its accent family as the Gateway theme; since 2026-10-20 Gateway has used the parent's accent and chart values in turn (NDS-22). `docs/guidelines/01-architecture.md` maps every name. Nothing here changes trace-commons.
+
+The private chat (nearai/LibreChat) maps the parent's light and dark roles into its theme config, and the Near AI Gateway marketing site (nearai-gateway-website) follows the marketing rules in `docs/patterns/13-web.md` (NDS-45).
 
 ## Requirements
 

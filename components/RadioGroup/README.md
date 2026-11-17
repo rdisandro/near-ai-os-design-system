@@ -53,7 +53,7 @@ Options sit `space-6` apart in a column. In a row they sit `space-12` apart with
 - `role="radiogroup"` labelled by the group label, holding native radios that share a `name`. Browsers then give one tab stop and arrow keys.
 - The row variant offers a way back to no answer: a "none" choice named by the consumer for assistive tech, or a separate Clear.
 - The consumer supplies the group label, titles and sub-lines.
-- State is never color alone: the dot marks the choice. In Trace dark the accent fill sits at 1.09:1 on the pane (flagged), and the white dot carries it.
+- State is never color alone: the dot marks the choice. In Gateway dark the accent fill sits at 1.09:1 on the pane (flagged), and the white dot carries it.
 
 ## Platforms
 

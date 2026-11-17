@@ -8,7 +8,7 @@
    --------------------------------------------------------------------------- */
 
 html { color-scheme: light; }
-[data-theme="dark"], [data-theme="dark-hc"], [data-theme="trace-dark"] { color-scheme: dark; }
+[data-theme="dark"], [data-theme="dark-hc"], [data-theme="gateway-dark"] { color-scheme: dark; }
 
 body {
   margin: 0;
@@ -290,6 +290,21 @@ body {
 
 /* A glass button that is the chosen one of a set. */
 .nr-button--glass[aria-pressed="true"] { background: var(--accent); color: var(--text-on-accent); }
+
+/* Refresh: the word, then the glyph, at the round button's height (NDS-36). */
+.nr-button--refresh { min-height: var(--size-control-large); padding: 0 var(--space-10); gap: var(--space-4); font-weight: 500; }
+.nr-button--refresh.nr-button--small { min-height: var(--size-control); padding: 0 var(--space-8); }
+.nr-button--refresh svg { flex: none; width: var(--space-12); height: var(--space-12); }
+.nr-button--refresh:not(:disabled):not([aria-disabled="true"]):hover { background: var(--control-hover); }
+.nr-button--refresh[aria-busy="true"] svg { animation: nr-button-spin var(--duration-spin) var(--ease-linear) infinite; }
+.nr-touch .nr-button--refresh { min-height: var(--nr-h-control); }
+
+/* Ground-aware fills (NDS-38): a pill on a menu or on a selected row. */
+:is(.nr-menu, .nr-popover) :is(.nr-button--glass, .nr-button--submit, .nr-button--refresh) { background: var(--control-on-menu); }
+:is(.nr-menu, .nr-popover) :is(.nr-button--glass, .nr-button--submit, .nr-button--refresh):not(:disabled):not([aria-disabled="true"]):hover { background: var(--control-on-menu-hover); }
+[aria-selected="true"] :is(.nr-button--glass, .nr-button--submit, .nr-button--refresh, .nr-icon-button--kebab) { background: var(--control-on-selection); color: var(--text-on-accent); }
+[aria-selected="true"] :is(.nr-button--glass, .nr-button--submit, .nr-button--refresh):not(:disabled):not([aria-disabled="true"]):hover,
+[aria-selected="true"] .nr-icon-button--kebab:not(:disabled):hover { background: var(--control-on-selection-hover); color: var(--text-on-accent); }
 
 /* Sizes: bar (every button in an action bar), small (a modal's or card's CTA). */
 .nr-button--bar { min-height: var(--nr-h-bar); padding: 0 var(--space-16); }
@@ -933,7 +948,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .nr-button, .nr-icon-button, .nr-split-button__action, .nr-split-button__menu,
   .nr-split-button__menu svg { transition: none; }
-  .nr-button__spinner { animation: none; }
+  .nr-button__spinner, .nr-button--refresh[aria-busy="true"] svg { animation: none; }
   .nr-modal-layer,
   :is(.nr-menu, .nr-command-palette, .nr-popover, .nr-tooltip):popover-open { animation: none; }
   .nr-sheet-layer > .nr-sheet { animation: none !important; }
@@ -1480,7 +1495,7 @@ body {
   margin: 0;
   border: 0;
   border-radius: var(--radius-pill);
-  background: var(--toggle-off);
+  background: var(--toggle-track-off);
   font: inherit;
   cursor: inherit;
   transition: background-color var(--duration-fast) var(--ease-standard),
@@ -1494,7 +1509,7 @@ body {
   width: var(--nr-switch-knob);
   height: var(--nr-switch-knob);
   border-radius: 50%;
-  background: var(--nr-switch-knob-off, var(--text-on-accent));
+  background: var(--toggle-knob-off);
   transition: transform var(--duration-spring-spatial-fast) var(--spring-spatial-fast),
               background-color var(--duration-fast) var(--ease-standard);
 }
@@ -1508,10 +1523,8 @@ body {
   transform: translateX(calc(var(--size-toggle-width) - var(--size-toggle-height)));
   background: var(--text-on-accent);
 }
-/* The off knob is the theme's light ink: text-on-accent is white in the
-   light and Trace themes, dark navy in dark and dark-hc. */
-[data-theme="dark"] .nr-switch,
-[data-theme="dark-hc"] .nr-switch { --nr-switch-knob-off: var(--text-primary); }
+/* The off knob is white in the light themes and the on knob's navy in the
+   dark ones (owner, 2026-10-22); the dark off track is 38% white for 3:1. */
 .nr-switch:not(:has(:disabled)):active .nr-switch__track { filter: brightness(0.92); }
 .nr-switch:not(:has(:disabled)):active .nr-switch__track:checked { filter: none; background: var(--accent-pressed); }
 .nr-switch:has(.nr-switch__track:disabled) { cursor: default; }
@@ -1953,7 +1966,15 @@ body {
               background-color var(--duration-fast) var(--ease-standard);
 }
 .nr-tabs__tab:hover { color: var(--text-primary); }
-.nr-tabs__tab:active { background: var(--neutral-tint); }
+/* No press fill on any tab (owner, 2026-11-02). Movable tabs lift on a held press. */
+.nr-tabs__tab--lifted {
+  z-index: 2;
+  background: var(--control);
+  box-shadow: var(--shadow-float);
+  transform: translateY(calc(-1 * var(--space-2))) scale(1.06);
+  transition: transform var(--duration-spring-spatial-fast) var(--spring-spatial-fast),
+              box-shadow var(--duration-fast) var(--ease-standard);
+}
 .nr-tabs__tab[aria-selected="true"] { color: var(--text-primary); font-weight: 600; }
 .nr-tabs__title { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .nr-tabs__ember {
@@ -1999,6 +2020,9 @@ body {
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
+.nr-tabs__badge--positive { background: var(--positive-tint); color: var(--positive-text); }
+.nr-tabs__badge--caution { background: var(--caution-tint); color: var(--caution-text); }
+.nr-tabs__badge--critical { background: var(--critical-tint); color: var(--critical-text); }
 .nr-tabs__badge--alert { background: var(--badge-fill); color: var(--text-on-status); }
 .nr-tabs__dot {
   flex: none;
@@ -2062,6 +2086,7 @@ body {
   content: "\203A" / "";
   color: var(--text-tertiary);
 }
+.nr-breadcrumb--slash .nr-breadcrumb__item + .nr-breadcrumb__item::before { content: "/" / ""; }
 .nr-breadcrumb__crumb {
   position: relative;
   color: var(--text-secondary);
@@ -2715,6 +2740,55 @@ body {
   background: var(--rule);
 }
 .nr-steps--vertical .nr-steps__step--done:not(:last-child)::after { background: var(--accent-soft); }
+/* Thread (first-run stage): labels joined by 38-wide stretches; travelled
+   stretches glow in accent-soft, the newest leads to a lighter tint, the
+   rest are dotted. Passed steps are buttons back. */
+.nr-steps--thread { justify-content: center; align-items: center; gap: var(--space-8); }
+.nr-steps--thread .nr-steps__step {
+  flex: none;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-8);
+  color: var(--text-tertiary);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+.nr-steps--thread .nr-steps__node { display: none; }
+.nr-steps--thread .nr-steps__step + .nr-steps__step::before {
+  position: static;
+  flex: none;
+  width: calc(var(--space-32) + var(--space-6));
+  height: 0;
+  border-top: 2px dotted var(--scene-rule);
+  border-radius: 0;
+  background: none;
+}
+.nr-steps--thread .nr-steps__step.nr-steps__step--done::before {
+  height: 2px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  box-shadow: 0 0 var(--space-6) var(--accent-soft);
+}
+.nr-steps--thread .nr-steps__step.nr-steps__step[aria-current="step"]::before {
+  height: 2px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--accent-soft), color-mix(in srgb, var(--accent-soft) 55%, white));
+  box-shadow: 0 0 var(--space-6) var(--accent-soft);
+}
+.nr-steps--thread .nr-steps__step--done { color: var(--text-secondary); }
+.nr-steps--thread .nr-steps__step[aria-current="step"] { color: var(--text-primary); }
+.nr-steps__back {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.nr-steps__back:hover { color: var(--text-primary); }
 
 /* ===========================================================================
    EdgeRail (macOS): a glanceable rail on the screen's right edge. Closed, a
@@ -2794,6 +2868,8 @@ body {
 .nr-edge-rail__dot { flex: none; width: var(--space-8); height: var(--space-8); border-radius: 50%; background: var(--neutral); }
 .nr-edge-rail__dot--positive { background: var(--positive); }
 .nr-edge-rail__dot--caution { background: var(--caution); }
+.nr-edge-rail__dot--shared { background: var(--data-1); }
+.nr-edge-rail__dot--kept { background: var(--data-2); }
 .nr-edge-rail__button {
   appearance: none;
   position: relative;
@@ -2815,6 +2891,34 @@ body {
 .nr-edge-rail__button:active { filter: brightness(0.92); }
 .nr-edge-rail__link { color: var(--accent-text); font-weight: 600; text-decoration: none; }
 .nr-edge-rail__link:hover { text-decoration: underline; }
+/* The peek's header: the section's title and state, then the panel's round buttons. */
+.nr-edge-rail__head { display: flex; align-items: center; gap: var(--space-8); min-width: 0; }
+.nr-edge-rail__head .nr-edge-rail__title { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: var(--inline-gap); }
+.nr-edge-rail__app svg { width: var(--space-20); height: var(--space-20); color: var(--brand-blue); }
+/* Traces peek: every watched folder, scrolling past seven rows. */
+.nr-edge-rail__list {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(var(--size-list-row) * 7);
+  overflow-y: auto;
+  border-radius: var(--radius-card);
+  background: var(--card);
+}
+.nr-edge-rail__folder {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-width: 0;
+  min-height: var(--size-list-row);
+  padding: 0 var(--space-8) 0 var(--space-6);
+}
+.nr-edge-rail__folder + .nr-edge-rail__folder { box-shadow: inset 0 1px 0 var(--hairline); }
+.nr-edge-rail__folder--session { padding-inline-start: calc(var(--space-6) + var(--space-16) + var(--space-8)); }
+.nr-edge-rail__chevron { flex: none; width: var(--space-16); color: var(--text-secondary); }
+.nr-edge-rail__chevron svg { display: block; width: var(--space-10); height: var(--space-10); margin: 0 auto; }
+.nr-edge-rail__folder[aria-expanded="true"] .nr-edge-rail__chevron svg { transform: rotate(90deg); }
+.nr-edge-rail__folder-text { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+.nr-edge-rail__folder-text > * { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* Documentation stand-in for a screen whose right edge the rail sits on. */
 .nr-edge-rail__screen {
   position: relative;
@@ -2856,6 +2960,64 @@ body {
 /* Documentation only: draws a window at a fraction of its size. */
 .nr-pane-layout--miniature { zoom: 0.6; }
 
+/* ===========================================================================
+   StatusItem (macOS menu bar): the N at 14, 4 apart, a 17 x 17 micro bar
+   graph of the last 24 hours (six 4-hour steps, each two touching 1pt bars),
+   then the badge slot. 22 tall, nothing filled behind it; it takes the
+   menu bar's ink. The bar stand-in is for documentation only.
+   =========================================================================== */
+.nr-status-item__bar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-12);
+  height: var(--space-24);
+  padding: 0 var(--space-12);
+  border-radius: var(--radius-tile);
+  background: var(--pane-base);
+  color: var(--text-primary);
+}
+.nr-status-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: calc(var(--space-20) + var(--space-2));
+  color: var(--text-primary);
+}
+.nr-status-item__mark { flex: none; width: var(--space-14); height: var(--space-14); }
+.nr-status-item__graph { flex: none; width: calc(var(--space-16) + 1px); height: calc(var(--space-16) + 1px); shape-rendering: crispEdges; }
+.nr-status-item__axis { fill: currentColor; opacity: 0.35; }
+.nr-status-item__shared { fill: var(--data-1); }
+.nr-status-item__kept { fill: var(--data-2); }
+.nr-status-item__verified { fill: var(--positive); }
+.nr-status-item__calls { fill: var(--caution); }
+.nr-status-item--paused :is(.nr-status-item__shared, .nr-status-item__kept) { fill: var(--neutral); }
+.nr-status-item__badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(var(--space-10) + 1px);
+  height: calc(var(--space-10) + 1px);
+  padding: 0 calc(var(--space-2) + 0.5px);
+  border-radius: var(--radius-pill);
+  background: var(--badge-fill);
+  color: var(--text-on-status);
+  font-size: calc(var(--space-6) + 1px);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.nr-status-item__attention {
+  box-sizing: border-box;
+  flex: none;
+  width: var(--space-8);
+  height: var(--space-8);
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+
 /* ---- Forced colors and Reduce Motion -------------------------------------- */
 @media (forced-colors: active) {
   .nr-tabs__ember::after { background: Highlight; }
@@ -2867,14 +3029,15 @@ body {
   .nr-edge-rail__tile[aria-current="true"] { background: Highlight; color: HighlightText; forced-color-adjust: none; }
   .nr-steps__step--done .nr-steps__node,
   .nr-steps__step[aria-current="step"] .nr-steps__node { background: Highlight; }
+  .nr-status-item__badge { background: Highlight; color: HighlightText; forced-color-adjust: none; }
   .nr-tabbar__tabs, .nr-tabbar__search, .nr-tabbar__accessory,
   .nr-toolbar--floating, .nr-toolbar__group { border: 1px solid CanvasText; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .nr-tabs__ember, .nr-tabs__tab, .nr-breadcrumb__back, .nr-breadcrumb__crumb,
+  .nr-tabs__ember, .nr-tabs__tab, .nr-tabs__tab--lifted, .nr-breadcrumb__back, .nr-breadcrumb__crumb,
   .nr-sidebar__item, .nr-rail__menu, .nr-rail__item, .nr-rail__indicator,
   .nr-tabbar__tab, .nr-tabbar__indicator, .nr-toolbar__button, .nr-toolbar__button::before,
-  .nr-toolbar__prominent, .nr-edge-rail__tile, .nr-edge-rail__button { transition: none; }
+  .nr-toolbar__prominent, .nr-edge-rail__tile, .nr-edge-rail__button, .nr-steps--thread .nr-steps__step { transition: none; }
 }
 
 /* ---------------------------------------------------------------------------
@@ -3142,6 +3305,10 @@ a.nr-list-row { cursor: pointer; }
 
 .nr-list-row[aria-selected="true"] :is(.nr-list-row__title, .nr-list-row__sub, .nr-list-row__disclosure,
   .nr-list-row__tile, .nr-list-row__meta, .nr-list-row__chevron, .nr-list-row__menu) { color: var(--text-on-accent); }
+/* On a selected row the pill and the open menu take the selection's own fill (NDS-38). */
+.nr-list-row[aria-selected="true"] .nr-list-row__pill { background: var(--control-on-selection); color: var(--text-on-accent); }
+.nr-list-row[aria-selected="true"] .nr-list-row__pill:hover,
+.nr-list-row[aria-selected="true"] .nr-list-row__menu[aria-expanded="true"] { background: var(--control-on-selection-hover); }
 
 /* ===== DataTable =========================================================== */
 
@@ -3652,8 +3819,104 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
 @keyframes nr-bar-graph-from-trailing { from { opacity: 0; transform: translateX(var(--space-24)); } to { opacity: 1; transform: none; } }
 @keyframes nr-bar-graph-from-leading { from { opacity: 0; transform: translateX(calc(0px - var(--space-24))); } to { opacity: 1; transform: none; } }
 
+/* ===== Nested card ========================================================= */
+/* One detail inside a card (NDS-38). One level only. */
+.nr-card__nested {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-card-quiet);
+  background: var(--card-nested);
+  color: var(--text-secondary);
+}
+
+/* ===== GetStartedCard ====================================================== */
+/* One card for every surface that explains how it starts (NDS-39):
+   a head, numbered steps (title over one line, "i" after it), one link.
+   Derived: step inset = space-10; disc = space-16 + space-2 (18). */
+.nr-get-started {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  min-width: 0;
+  padding: var(--card-padding-y) var(--card-padding-x);
+  border-radius: var(--radius-card);
+  background: var(--card);
+}
+.nr-get-started__head { display: flex; align-items: flex-start; gap: var(--space-8); min-width: 0; }
+.nr-get-started__heading { flex: 1 1 auto; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+.nr-get-started__title { margin: 0; color: var(--text-primary); }
+.nr-get-started__lead { margin: 0; color: var(--text-secondary); font-weight: 400; }
+.nr-get-started__close {
+  position: relative;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: var(--space-20);
+  height: var(--space-20);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+.nr-get-started__close svg { width: var(--space-12); height: var(--space-12); }
+.nr-get-started__close:hover { color: var(--text-primary); }
+.nr-get-started__close:active { filter: brightness(0.92); }
+.nr-get-started__close::after {
+  content: "";
+  position: absolute;
+  inset: calc((var(--space-20) - var(--nr-target, var(--target-pointer))) / 2);
+}
+.nr-get-started__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  margin: 0;
+  padding: 0 var(--space-10);
+  list-style: none;
+}
+.nr-get-started__step { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--space-10); align-items: start; }
+.nr-get-started__number {
+  display: inline-grid;
+  place-items: center;
+  width: calc(var(--space-16) + var(--space-2));
+  height: calc(var(--space-16) + var(--space-2));
+  border-radius: 50%;
+  background: var(--accent-tint);
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+}
+.nr-get-started__text { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.nr-get-started__step-title { color: var(--text-primary); }
+.nr-get-started__line { color: var(--text-secondary); font-weight: 400; }
+.nr-get-started__link { align-self: flex-start; display: inline-flex; align-items: center; gap: var(--space-4); margin-top: var(--space-6); color: var(--accent-text); text-decoration: none; }
+.nr-get-started__link:hover { text-decoration: underline; }
+.nr-get-started__link svg { width: var(--space-10); height: var(--space-10); }
+
+/* Sample data: a banner, then the sample dimmed and inert. */
+.nr-sample-banner {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+  min-width: 0;
+  padding: var(--space-8) var(--space-12);
+  border-radius: var(--radius-control);
+  background: var(--caution-tint);
+}
+.nr-sample-banner__glyph { flex: none; width: var(--space-14); height: var(--space-14); margin-top: var(--space-2); color: var(--caution-text); }
+.nr-sample-banner__text { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.nr-sample-banner__title { color: var(--text-primary); }
+.nr-sample-banner__line { color: var(--text-secondary); font-weight: 400; }
+.nr-sample { opacity: 0.55; pointer-events: none; user-select: none; }
+
 /* ===== Increased contrast: painted surfaces and wells get the 1pt edge ===== */
-[data-theme$="-hc"] :is(.nr-stat-card, .nr-consent-block, .nr-code-block, .nr-bar-graph, .nr-property-inspector__field) {
+[data-theme$="-hc"] :is(.nr-stat-card, .nr-consent-block, .nr-code-block, .nr-bar-graph, .nr-property-inspector__field,
+  .nr-get-started, .nr-card__nested, .nr-sample-banner) {
   box-shadow: inset 0 0 0 1px var(--edge-hc);
 }
 [data-theme$="-hc"] .nr-property-inspector__field[aria-invalid="true"],
@@ -3672,7 +3935,7 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
 @media (prefers-reduced-motion: reduce) {
   .nr-card--interactive, .nr-list-row, .nr-list-row__disclosure, .nr-list-row__pill, .nr-list-row__menu,
   .nr-data-table__sort-glyph, .nr-expander__summary, .nr-expander__chevron, .nr-property-inspector__field,
-  .nr-code-block__copy, .nr-bar-graph__column { transition: none; }
+  .nr-code-block__copy, .nr-bar-graph__column, .nr-get-started__close { transition: none; }
   .nr-expander[open] > .nr-expander__content,
   .nr-bar-graph__plot--from-trailing, .nr-bar-graph__plot--from-leading { animation: none; }
 }
@@ -3811,6 +4074,50 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
 .nr-notice-stack { display: flex; flex-direction: column; gap: var(--card-gap); min-width: 0; }
 .nr-notice-stack__head { display: flex; justify-content: flex-end; }
 [data-theme$="-hc"] .nr-notice { box-shadow: inset 0 0 0 1px var(--edge-hc); }
+
+/* Popover notice (desktop default): an opaque plate over the top of its tab,
+   a tone coin leading, an X trailing. Pushes nothing down. */
+.nr-notice--popover {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-10);
+  padding: var(--space-12);
+  border-radius: var(--radius-card);
+  background: var(--pane-opaque);
+  box-shadow: var(--shadow-float);
+}
+.nr-notice__coin {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--space-24) + var(--space-6));
+  height: calc(var(--space-24) + var(--space-6));
+  border: var(--space-2) solid currentColor;
+  border-radius: 50%;
+  background: var(--pane-opaque);
+}
+.nr-notice__coin svg { width: var(--space-14); height: var(--space-14); }
+.nr-notice__coin--caution  { color: var(--caution); }
+.nr-notice__coin--critical { color: var(--critical); }
+.nr-notice__coin--neutral  { color: var(--neutral); }
+.nr-notice__coin--positive { color: var(--positive); }
+.nr-notice__main { display: flex; flex-direction: column; gap: var(--space-6); min-width: 0; }
+.nr-notice__title { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-6); margin: 0; color: var(--text-primary); }
+.nr-notice--popover .nr-notice__body { color: var(--text-secondary); }
+.nr-notice--popover .nr-expander { margin-inline-start: calc(-1 * var(--space-4)); }
+[data-theme$="-hc"] .nr-notice--popover { box-shadow: var(--shadow-float), inset 0 0 0 1px var(--edge-hc); }
+
+/* The stack: newest in front, two earlier plates peeking 8 behind it. */
+.nr-notice-pile { position: relative; display: grid; min-width: 0; padding-bottom: calc(2 * var(--space-8)); }
+.nr-notice-pile > .nr-notice { grid-area: 1 / 1; transform-origin: 50% 100%; }
+.nr-notice-pile > .nr-notice:nth-child(2) { transform: translateY(var(--space-8)) scale(0.96); opacity: 0.9; z-index: -1; }
+.nr-notice-pile > .nr-notice:nth-child(3) { transform: translateY(calc(2 * var(--space-8))) scale(0.92); opacity: 0.7; z-index: -2; }
+.nr-notice-pile > .nr-notice:nth-child(n+2) > * { visibility: hidden; }
+.nr-notice-pile > .nr-notice:nth-child(n+4) { display: none; }
+.nr-notice-pile { isolation: isolate; }
 
 /* ---- InlineAlert ----------------------------------------------------------- */
 /* A failed request's line: unboxed, under the control it is about. */
@@ -4252,6 +4559,15 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
   gap: var(--space-8);
   min-width: 0;
 }
+/* One assistant: the head is read, not shown, so the thread is one voice (NDS-44). */
+.nr-message--headless .nr-message__head {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .nr-message__time { color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
 .nr-message__bubble { max-width: var(--size-readable-width); }
 .nr-message__body {
@@ -4531,7 +4847,7 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
   white-space: nowrap;
   vertical-align: middle;
 }
-.nr-proof-tag--verified { background: var(--positive-tint); color: var(--positive-text); }
+.nr-proof-tag--verified { background: var(--proof-tint); color: var(--proof-text); }
 .nr-proof-tag--pending { background: var(--caution-tint); color: var(--caution-text); }
 .nr-proof-tag--outside { background: var(--critical-tint); color: var(--critical-text); }
 /* A failed check is its own pill: outlined, so it never reads as outside. */
@@ -4590,8 +4906,118 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
   overflow-wrap: anywhere;
   color: var(--text-primary);
 }
+/* Seal-bearing tags (NDS-43): the reply tag leads the action row and is
+   itself the popover button; the header pill folds to its seal. */
+.nr-proof-tag--seal {
+  gap: var(--space-6);
+  min-height: var(--space-24);
+  padding: 0 var(--space-10) 0 var(--space-6);
+  border: 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+.nr-proof-tag--header {
+  gap: var(--space-6);
+  min-height: calc(var(--space-32) + var(--space-4));
+  padding: 0 var(--space-12) 0 var(--space-8);
+  border: 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+.nr-proof-tag--folded { padding: 0 var(--space-8); }
+.nr-proof-tag--seal:focus-visible,
+.nr-proof-tag--header:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 [data-theme$="-hc"] .nr-proof-tag { box-shadow: inset 0 0 0 1px var(--edge-hc); }
 [data-theme$="-hc"] .nr-proof-tag--failed { box-shadow: inset 0 0 0 2px currentColor; }
+
+/* ===========================================================================
+   ProofSeal: a guilloché drawn from the signing key (NDS-43)
+   =========================================================================== */
+.nr-proof-seal {
+  --nr-seal: 44px;
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: var(--nr-seal);
+  height: var(--nr-seal);
+  border-radius: 50%;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.nr-proof-seal svg { display: block; width: 100%; height: 100%; }
+.nr-proof-seal--14 { --nr-seal: 14px; }
+.nr-proof-seal--20 { --nr-seal: 20px; }
+.nr-proof-seal--56 { --nr-seal: 56px; }
+.nr-proof-seal--160 { --nr-seal: 160px; }
+.nr-proof-seal__band,
+.nr-proof-seal__rose,
+.nr-proof-seal__empty {
+  fill: none;
+  stroke-width: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+.nr-proof-seal__band { stroke: var(--proof-text); }
+.nr-proof-seal__rose { stroke: var(--accent-soft); }
+.nr-proof-seal__empty { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 3; }
+.nr-proof-seal__badge { fill: var(--proof-text); }
+.nr-proof-seal__mark {
+  fill: none;
+  stroke: var(--proof-tint);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* At glyph sizes the rose drops out; the bands and the badge carry it. */
+.nr-proof-seal--14 .nr-proof-seal__rose,
+.nr-proof-seal--20 .nr-proof-seal__rose { display: none; }
+.nr-proof-seal--14 .nr-proof-seal__band,
+.nr-proof-seal--20 .nr-proof-seal__band { stroke-width: 1.2; }
+.nr-proof-seal--failed .nr-proof-seal__badge { fill: var(--critical); }
+.nr-proof-seal--failed .nr-proof-seal__mark { stroke: var(--card-on-opaque); }
+.nr-proof-seal--none .nr-proof-seal__mark,
+.nr-proof-seal--checking .nr-proof-seal__mark { stroke: var(--text-tertiary); }
+.nr-proof-seal__spin {
+  fill: none;
+  stroke: var(--text-secondary);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 60 200;
+  transform-origin: 0 0;
+  animation: nr-proof-seal-spin var(--duration-spin) var(--ease-linear) infinite;
+}
+@keyframes nr-proof-seal-spin { to { transform: rotate(360deg); } }
+/* The stamp runs once, when the evidence arrives; never on a timer. */
+.nr-proof-seal--stamp { animation: nr-proof-seal-stamp var(--duration-spring-expressive) var(--spring-expressive) both; }
+.nr-proof-seal--stamp::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, var(--proof-tint) 50%, transparent 65%);
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: nr-proof-seal-shine 900ms var(--ease-standard) 250ms;
+}
+@keyframes nr-proof-seal-stamp { from { transform: scale(0.9); opacity: 0.4; } to { transform: none; opacity: 1; } }
+@keyframes nr-proof-seal-shine {
+  from { transform: translateX(-100%); opacity: 0.7; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+.nr-proof-seal-code {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-width: 0;
+}
+.nr-proof-seal-code__value { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.nr-proof-seal-match {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-8) var(--space-10);
+  border-radius: var(--radius-control);
+  background: var(--proof-tint);
+  color: var(--proof-text);
+}
 
 /* ===========================================================================
    AgentRun
@@ -4858,6 +5284,9 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
   .nr-prompt-composer__box,
   .nr-tool-call__command { border: 1px solid CanvasText; }
   .nr-proof-tag { border: 1px solid CanvasText; }
+  .nr-proof-seal__band, .nr-proof-seal__rose, .nr-proof-seal__empty { stroke: CanvasText; }
+  .nr-proof-seal__badge { fill: CanvasText; }
+  .nr-proof-seal__mark { stroke: Canvas; }
   .nr-agent-run__fill { background: Highlight; }
 }
 
@@ -4866,7 +5295,8 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
   .nr-message__caret,
   .nr-message__spinner,
   .nr-agent-run__spinner,
-  .nr-agent-run__progress--indeterminate .nr-agent-run__fill { animation: none; }
+  .nr-agent-run__progress--indeterminate .nr-agent-run__fill,
+  .nr-proof-seal__spin, .nr-proof-seal--stamp, .nr-proof-seal--stamp::after { animation: none; }
   .nr-message__action, .nr-message__cite, .nr-prompt-composer__pill,
   .nr-prompt-composer__icon, .nr-prompt-composer__send, .nr-prompt-composer__chip-remove,
   .nr-proof-tag__info, .nr-agent-run__button, .nr-agent-run__fill,
@@ -4879,8 +5309,8 @@ button.nr-property-inspector__field:hover { background: var(--control-hover); }
 .nr-logo--tile { height: 40px; }
 .nr-logo-showcase { gap: var(--space-24); padding: var(--space-20) var(--space-24); }
 .nr-logo--for-dark { display: none; }
-[data-theme="dark"] .nr-logo--for-light, [data-theme="dark-hc"] .nr-logo--for-light, [data-theme="trace-dark"] .nr-logo--for-light { display: none; }
-[data-theme="dark"] .nr-logo--for-dark, [data-theme="dark-hc"] .nr-logo--for-dark, [data-theme="trace-dark"] .nr-logo--for-dark { display: block; }
+[data-theme="dark"] .nr-logo--for-light, [data-theme="dark-hc"] .nr-logo--for-light, [data-theme="gateway-dark"] .nr-logo--for-light { display: none; }
+[data-theme="dark"] .nr-logo--for-dark, [data-theme="dark-hc"] .nr-logo--for-dark, [data-theme="gateway-dark"] .nr-logo--for-dark { display: block; }
 .nr-logo-ground { box-sizing: border-box; border-radius: var(--radius-card); padding: var(--space-20) var(--space-24); }
 .nr-logo-ground--light { background: var(--brand-paper); }
 .nr-logo-ground--dark { background: var(--brand-ink); }

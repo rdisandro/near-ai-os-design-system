@@ -37,7 +37,7 @@ In touch density the actions stack full width, the confirming action on top.
 | Reversible | edit 3 files, with a checkpoint | Deny, Always allow, **Allow once** (`accent`) | Allow once | offered, scoped |
 | Irreversible send | push a branch, send an email, post a reply | Deny, **Push** (`accent`, prominent) | nothing | never |
 | Destructive | delete 214 files | Deny, **Delete 214 files** (`destructive-text` on `control`) | nothing | never |
-| Consent | share a trace with Trace Commons | Deny, **Contribute** (`accent`, after the gate) | nothing | never |
+| Consent | share a trace with the server that receives your traces | Deny, **Submit** (`accent`, after the gate) | nothing | never |
 | Purchase | buy usage for a run | Deny, **Open checkout** | nothing | never; the person pays in the product's checkout |
 
 Destructive is never the default. Agent actions ask the first time even when reversible, because the person didn't start them; after Always allow they act at once and offer Undo.

@@ -12,3 +12,4 @@ The findings the system was built from, gathered on 2026-10-13. They are backgro
 | `m3.md` | Material 3 and M3 Expressive guidance from m3.material.io, with the hybrid breakpoint, component and conflict tables (§8) |
 | `m3-components-A.md` to `-D.md` | Per-component M3 Expressive specs: buttons and toolbars; navigation and menus; cards, lists, sheets and dialogs; selection, pickers and progress |
 | `material-web.md` | The material-web repository: status, token tables, component APIs, web recommendations |
+| `sessions-2026-11.md` | The owner's design sessions for trace-commons, nearai/LibreChat and nearai-gateway-website (2026-09-15 to 2026-11-03): where NDS-22 to NDS-47 came from |

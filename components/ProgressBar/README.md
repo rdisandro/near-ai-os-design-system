@@ -4,13 +4,13 @@ A thin track that fills from the leading edge as measured work advances, with it
 
 ## When to use
 
-- A known total: bytes of a model download, sessions in an upload, steps in an agent run with a known plan ("Step 3 of 7").
+- A known total: bytes of a model download, traces in an upload, steps in an agent run with a known plan ("Step 3 of 7").
 - The opening phase of work that will become measured: start indeterminate, then switch the same bar to determinate. Never switch between a ring and a bar.
 - Use `Spinner` for short waits with no measure. Use `StepProgress` for steps a person moves through. One bar for a group of tasks, never one per row.
 
 ## Anatomy
 
-1. **Label.** Label step in `text-primary`: what is happening, specifically ("Uploading 3 of 8 sessions").
+1. **Label.** Label step in `text-primary`: what is happening, specifically ("Uploading 3 of 8 traces").
 2. **Value.** Caption in `text-secondary`, tabular numerals, trailing: a percent, a count of a total, or the step.
 3. **Track.** `well`, 4px tall (`space-4`), `radius-pill`.
 4. **Fill.** `accent-soft`, same radius. `neutral` when paused, `critical` when failed.
@@ -57,7 +57,7 @@ Under the `-hc` themes the track gets the 1px `edge-hc` inset edge.
 
 ## Accessibility
 
-- `role="progressbar"` on the track, named by the label (`aria-labelledby`), with `aria-valuemin`, `aria-valuemax`, `aria-valuenow` and an `aria-valuetext` in words ("3 of 8 sessions"). Indeterminate omits `aria-valuenow`.
+- `role="progressbar"` on the track, named by the label (`aria-labelledby`), with `aria-valuemin`, `aria-valuemax`, `aria-valuenow` and an `aria-valuetext` in words ("3 of 8 traces"). Indeterminate omits `aria-valuenow`.
 - Announce milestones politely (started, halfway, done, failed), never every percent.
 - The value is always in words beside the bar, so the track needs no stop dot. The fill (`accent-soft`) holds 3:1 on `pane-opaque`.
 - The consumer supplies the label, value, status and button words from the product's copy.
@@ -81,4 +81,4 @@ Under the `-hc` themes the track gets the 1px `edge-hc` inset edge.
 
 ## Source
 
-Intentional addition. trace-commons has no determinate progress component (its research inventory notes "No determinate progress bar component exists"); its only progress shapes are the indeterminate `GlassSpinner` and `GlassStepProgress` for first-run steps. NEAR AI products need a measured indicator for downloads, uploads and agent plans. The HIG progress indicators page prefers determinate progress, asks for even pacing, specific words and Stop or Pause; M3 uses progress indicators for waits over 5 s and adds the wavy shape for expressive moments; Unity Foundations places the bar after the control that starts the work and uses one bar for a sequence.
+Intentional addition. trace-commons has no determinate progress component (its research inventory notes "No determinate progress bar component exists"); its only progress shapes are the indeterminate `GlassSpinner` and `GlassStepProgress` for first-run steps. Near AI products need a measured indicator for downloads, uploads and agent plans. The HIG progress indicators page prefers determinate progress, asks for even pacing, specific words and Stop or Pause; M3 uses progress indicators for waits over 5 s and adds the wavy shape for expressive moments; Unity Foundations places the bar after the control that starts the work and uses one bar for a sequence.

@@ -33,7 +33,7 @@ Draw edge to edge on both platforms and apply the system insets: `safeAreaInset`
 - The bar may hide on scroll down and return on scroll up, but never while TalkBack is on.
 - Never show the navigation bar and a navigation rail together.
 
-**Both.** Tabs are places; actions never go in the tab bar. Badges count only what needs the person: Trace's Traces tab counts decisions owed, capped at 99+, and shows a dash when the count is unknown. In a chat thread the `PromptComposer` takes the bottom edge, and the tab bar hides while the thread is pushed. Keep the composer, Send and Stop in the same place on every screen that has them.
+**Both.** Tabs are places; actions never go in the tab bar. Badges count only what needs the person: Gateway's Traces tab counts decisions owed, capped at 99+, and shows a dash when the count is unknown. In a chat thread the `PromptComposer` takes the bottom edge, and the tab bar hides while the thread is pushed. Keep the composer, Send and Stop in the same place on every screen that has them.
 
 **Back.** iOS pushes screens with a Back button at the leading edge of the toolbar, a symbol with no "Back" text, plus the edge swipe. Android uses the system Back with predictive back: the gesture previews the screen it returns to. Every pushed screen is reachable by the platform's Back.
 
@@ -59,7 +59,7 @@ Draw edge to edge on both platforms and apply the system insets: `safeAreaInset`
 - **Android.** Put a search bar (56 dp pill) at the top, or a search action in the top bar. Focused search opens full screen and Back closes it.
 - Show the scope in the placeholder ("Search traces", "Search chats and runs"). One search covers the whole app; a list's own filter only narrows that list.
 - Show recent searches before typing, with a way to clear them. Never show them on shared surfaces such as widgets.
-- If one field can both search and ask NEAR AI, make the mode explicit: the results list ends with an "Ask NEAR AI" row, and nothing is sent until the person picks it.
+- If one field can both search and ask Near AI, make the mode explicit: the results list ends with an "Ask Near AI" row, and nothing is sent until the person picks it.
 
 ## Sheets, full-screen tasks and alerts
 
@@ -81,7 +81,7 @@ Draw edge to edge on both platforms and apply the system insets: `safeAreaInset`
 
 **Alerts.** Confirmations follow the ladder (NDS-15): reversible actions act at once and offer Undo; irreversible and consent actions confirm. Use the system alert on iOS and the M3 basic dialog on Android, with Cancel leading and the action trailing (NDS-19), destructive drawn as destructive and never the default. On iOS 26, action sheets anchor to the button that opened them.
 
-**Trace worked example: "Look inside".** The read-only review becomes a full-screen task with Close only. Under the title sit the sizes card ("would send 48 KB · on disk 212 KB", in `ios-mono`) and a `SegmentedControl`: Transcript / Search original / Turn index / Search. The Search segment focuses its field when chosen. Contribute, Keep and Dismiss stay on the session screen, never inside the review.
+**Gateway worked example: "Look inside".** The read-only review becomes a full-screen task with Close only. Under the title sit the sizes card ("would send 48 KB · on disk 212 KB", in `ios-mono`) and a `SegmentedControl`: Transcript / Search original / Turn index / Search. The Search segment focuses its field when chosen. Submit stays on the trace's screen and Dismiss in its menu, never inside the review (NDS-31).
 
 [HIG: sheets] [M3: bottom sheets]
 
@@ -95,7 +95,7 @@ Draw edge to edge on both platforms and apply the system insets: `safeAreaInset`
 - Put the same actions, in the same order, in the context menu (long press) and the row's overflow menu. The top of the context menu matches the swipe actions.
 - At most three actions per edge, each with a label and a symbol.
 - A full swipe may run a reversible action at once, followed by an undo `Toast`. A destructive action only reveals its button, and then confirms if the product's ladder says so.
-- Trace's session rows: swipe leading for Look inside; swipe trailing for Keep (acts at once, with Undo) and Dismiss (confirms in a `Modal` with Keep as the cancel and Dismiss as the destructive action).
+- Gateway's trace rows: swipe leading for Look inside; swipe trailing for Dismiss (confirms in a `Modal`, Cancel leading and Dismiss the destructive action). Submit stays a visible button on the row, never a swipe, because it sends.
 
 **Pull to refresh.** Use it on lists that read from a server or a daemon: History, Submissions, agent runs, the model list. Never on a list that already updates live.
 
@@ -202,7 +202,7 @@ An agent run can outlast a person's attention. The phone carries it outside the 
 
 **Widgets.** A widget is a glance card: one idea, deep-linked to the exact screen.
 
-- Good fits: agent status (Running, Idle, Needs you), recent threads, a New chat button. For Trace: Waiting and Contributed counts, each a number with its word, plus the Watching / Paused status as a dot with words.
+- Good fits: agent status (Running, Idle, Needs you), recent threads, a New chat button. For Gateway: Waiting and Contributed counts, each a number with its word, plus the Watching / Paused status as a dot with words.
 - Widgets are periodic, never live. Show when the data was read ("Updated 14:02"), and use a Live Activity for real-time progress.
 - An unknown count shows a dash, never zero. Stale data is labeled, never hidden behind a placeholder; the gallery placeholder is a `Skeleton`.
 - On the Lock Screen, redact thread titles and show counts only. Anything on the Lock Screen is visible to others.
@@ -210,20 +210,20 @@ An agent run can outlast a person's attention. The phone carries it outside the 
 - Write the gallery description as a verb phrase for all sizes ("See what's waiting for your review.").
 - Android uses resizable Glance widgets with the same content rules.
 
-**Controls.** A Control Center or Lock Screen control (iOS) and a Quick Settings tile (Android) run one action without opening the app. Trace's watcher fits: a toggle between Watching and Paused, with on and off symbols, an in-progress state while the change applies, and the value read back from the daemon, never assumed. Consequential actions require unlocking.
+**Controls.** A Control Center or Lock Screen control (iOS) and a Quick Settings tile (Android) run one action without opening the app. Gateway's watcher fits: a toggle between Watching and Paused, with on and off symbols, an in-progress state while the change applies, and the value read back from the daemon, never assumed. Consequential actions require unlocking.
 
 ## Onboarding and permissions
 
 Defer commitment. Nothing stands between a new person and the product's value: no sign-in, setup, permission prompt, tutorial or upsell before it is needed.
 
-- A NEAR AI chat app opens on the `PromptComposer` with a few starter prompts, never on a carousel.
-- Ask for an account at the first action that needs one, passkey first, with the NEAR AI account as the account (see Web patterns).
+- A Near AI chat app opens on the `PromptComposer` with a few starter prompts, never on a carousel.
+- Ask for an account at the first action that needs one, passkey first, with the Near AI account as the account (see Web patterns).
 - Teach in context: a tip near the feature, one or two sentences, at most one tip a day, gone once the feature has been used.
 - Ask for a permission when the feature that needs it is first used, after one line that names the consequence ("Microphone access lets you dictate prompts."). Ask during onboarding only for a permission the product cannot work without.
 - When a permission is declined, the feature shows an `EmptyState` with a "Review settings" button that opens the system settings. Never ask again on your own.
 - The launch screen matches the first screen with no logo or text on iOS; Android shows the system splash with the app icon on the first screen's color. Restore the last thread, scroll position and draft on relaunch.
 
-**Trace worked example: the first-run step frame.** The 450-wide pane becomes the full screen. `StepProgress` sits at the top, then the two-weight `ios-display` headline, then scrolling cards, then the `ActionBar` pinned above the home indicator: Back leading, the primary action trailing ("Skip" until signed in, then "Continue"). The step's failure shows as an `InlineAlert` after the cards. On the consent step the required scope is ticked, locked and tagged "required"; Start is prominent but never answers Return.
+**Gateway worked example: the first run.** The desktop stage (NDS-32) becomes the full screen. The step thread sits at the top (hidden on Welcome), then the step's graphic, then the title under it in two weights with one bold phrase and no period, then the content-width card, then the `ActionBar` pinned above the home indicator: Back leading, the primary action trailing ("Get started", "Continue", and "Start sharing" at Join). Sign-in is the last step and has no Skip; nothing before it is held back for an account, and an Automatic picked earlier reads "Turns on once you sign in." Nothing starts ticked, and Continue waits for one tool. The step's failure shows as an `InlineAlert` after the card. On Uses the required scope is ticked and locked, with "required" inline after its title in `positive-text` (NDS-42); Start sharing is prominent but never answers Return.
 
 [HIG: onboarding] [HIG: managing accounts]
 
@@ -232,7 +232,7 @@ Defer commitment. Nothing stands between a new person and the product's value: n
 - Keep showing what was loaded, with its time, and add a status `Notice`: "You're offline. Showing values from 14:02."
 - An unknown value is a dash, never zero, never "on".
 - Keep drafts in the `PromptComposer`. Send waits for the connection and says why it is unavailable; a queued prompt is never sent later without the person sending it again.
-- Reversible decisions may queue and apply on reconnect (Keep). Irreversible ones are unavailable offline, with the reason beside them ("Contributing needs a connection.").
+- Reversible decisions may queue and apply on reconnect (Keep). Irreversible ones are unavailable offline, with the reason beside them ("Submitting needs a connection.").
 - Retry reads automatically with backoff, offer a Retry button, and reopen a closed event stream after 5 seconds.
 - Pull to refresh while offline shows the offline notice and keeps the rows.
 

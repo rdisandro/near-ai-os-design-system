@@ -4,7 +4,7 @@ One line of `critical-text` caption, unboxed, directly under the control it is a
 
 ## When to use
 
-- An action that failed or was refused: Contribute didn't go through, an undo was refused, a write to a row was rejected.
+- An action that failed or was refused: Submit didn't go through, an undo was refused, a write to a row was rejected.
 - A field's invalid reason, under the field whose `TextField` invalid ring it explains.
 - Inside a `Notice` or `Toast`, under their buttons, when their own action fails.
 - Use `Notice` when the failure belongs to a whole section. Never use a `Toast` or a `Modal` for a failure people can fix in place.
@@ -60,7 +60,7 @@ Place it in the same column as the control, directly under the row of buttons or
 
 ## Do and don't
 
-- Do say what failed, why, and what to do: "Contribute didn't go through. The watcher isn't answering, so nothing was sent. Try again once it's back."
+- Do say what failed, why, and what to do: "Submit didn't go through. The watcher isn't answering, so nothing was sent. Try again once it's back."
 - Do state what happened to the data.
 - Do put the line under the exact control that failed.
 - Don't box the line or put it in a well; a boxed line reads as a disabled text field.

@@ -7,6 +7,11 @@
   --color-scene-glow-1: var(--scene-glow-1);
   --color-scene-glow-2: var(--scene-glow-2);
   --color-scene-glow-3: var(--scene-glow-3);
+  --color-scene-glow-brand: var(--scene-glow-brand);
+  --color-scene-card: var(--scene-card);
+  --color-scene-control: var(--scene-control);
+  --color-scene-control-hover: var(--scene-control-hover);
+  --color-scene-rule: var(--scene-rule);
   --color-glass-veil: var(--glass-veil);
   --color-pane-fill: var(--pane-fill);
   --color-pane-base: var(--pane-base);
@@ -16,8 +21,13 @@
   --color-card-hover: var(--card-hover);
   --color-card-on-opaque: var(--card-on-opaque);
   --color-card-quiet-on-opaque: var(--card-quiet-on-opaque);
+  --color-card-nested: var(--card-nested);
   --color-control: var(--control);
   --color-control-hover: var(--control-hover);
+  --color-control-on-menu: var(--control-on-menu);
+  --color-control-on-menu-hover: var(--control-on-menu-hover);
+  --color-control-on-selection: var(--control-on-selection);
+  --color-control-on-selection-hover: var(--control-on-selection-hover);
   --color-well: var(--well);
   --color-field: var(--field);
   --color-consent: var(--consent);
@@ -31,6 +41,8 @@
   --color-edge-hc: var(--edge-hc);
   --color-row-hover: var(--row-hover);
   --color-toggle-off: var(--toggle-off);
+  --color-toggle-track-off: var(--toggle-track-off);
+  --color-toggle-knob-off: var(--toggle-knob-off);
   --color-toolbar-glyph: var(--toolbar-glyph);
   --color-toolbar-glyph-off: var(--toolbar-glyph-off);
   --color-toolbar-expanded: var(--toolbar-expanded);
@@ -38,6 +50,7 @@
   --color-text-secondary: var(--text-secondary);
   --color-text-tertiary: var(--text-tertiary);
   --color-text-placeholder: var(--text-placeholder);
+  --color-text-placeholder-on-opaque: var(--text-placeholder-on-opaque);
   --color-text-on-status: var(--text-on-status);
   --color-accent: var(--accent);
   --color-accent-pressed: var(--accent-pressed);
@@ -53,6 +66,8 @@
   --color-positive: var(--positive);
   --color-positive-text: var(--positive-text);
   --color-positive-tint: var(--positive-tint);
+  --color-proof-text: var(--proof-text);
+  --color-proof-tint: var(--proof-tint);
   --color-caution: var(--caution);
   --color-caution-text: var(--caution-text);
   --color-caution-tint: var(--caution-tint);
@@ -75,10 +90,13 @@
   --color-data-8: var(--data-8);
   --color-ink: var(--ink);
   --color-brand-blue: var(--brand-blue);
+  --color-brand-sky: var(--brand-sky);
+  --color-brand-deep-blue: var(--brand-deep-blue);
   --color-brand-tile: var(--brand-tile);
+  --color-brand-tile-dark: var(--brand-tile-dark);
   --color-brand-paper: var(--brand-paper);
   --color-brand-ink: var(--brand-ink);
-  --color-trace-purple: var(--trace-purple);
+  --color-gateway-purple: var(--gateway-purple);
   --spacing-pane-gap: 10px;
   --spacing-pane-padding: 12px;
   --spacing-card-padding-y: 12px;

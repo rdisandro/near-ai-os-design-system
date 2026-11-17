@@ -274,7 +274,7 @@ def swift(src, art):
     themes = src['themes']
     roles = list(src['color'])
     L = ['// %s' % HEADER, '// %s %s' % (src['name'], src['version']), '', 'import SwiftUI', '',
-         '/// The six themes: the parent, its increased-contrast pair, and the Trace product.',
+         '/// The six themes: the parent, its increased-contrast pair, and the Gateway product.',
          'public enum NearAITheme: String, CaseIterable, Sendable {']
     for t in themes:
         L.append('    case %s = "%s"' % (camel(t['id']), t['id']))

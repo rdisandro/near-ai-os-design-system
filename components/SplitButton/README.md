@@ -1,10 +1,10 @@
 # SplitButton
 
-A two-part button whose leading part runs an action and whose trailing chevron opens a `Menu` of variants of that same action, such as Submit all with Submit all as… beside it.
+A two-part button whose leading part runs an action and whose trailing chevron opens a `Menu` of variants of that same action, such as Submit 3 with Submit as… beside it.
 
 ## When to use
 
-- Use it when one action is the usual choice and two to five close variants exist: Submit all / Submit all as…, Run agent / Run on a schedule….
+- Use it when one action is the usual choice and two to five close variants exist: Submit {count} / Submit as… (NDS-31), Run agent / Run on a schedule….
 - Use the glass split inline in cards and rows; use the filled split only when the action is the surface's one primary action.
 - Use a `Menu` from a kebab for unrelated actions, and a plain `Button` when there are no variants.
 - Keep the leading label to one or two words.
@@ -48,6 +48,8 @@ A two-part button whose leading part runs an action and whose trailing chevron o
 - The parts are two Tab stops: action, then menu. Order mirrors in right-to-left layouts.
 - Click, Space or Return on the action part runs the action. It never opens the menu.
 - Click, Space, Return or Down arrow on the menu part opens the menu with focus on its first item. Esc closes it and returns focus to the menu part.
+- The menu floats over everything around the button and is never clipped by the card or row it sits in (see `Menu`). At the end of a scrolling card list, room opens under the button and the list scrolls to show the menu.
+- In a row, the split button's Submit sends at once for a folder the person has already set to share (NDS-31). A variant that needs a dialog (Submit as…) opens it in the main window, also from the edge rail.
 - The chevron turn is the only movement; under Reduce Motion it flips at once.
 
 ## Accessibility
@@ -66,7 +68,7 @@ A two-part button whose leading part runs an action and whose trailing chevron o
 
 ## Do and don't
 
-- Do keep the variants close to the action. "Submit all as…" belongs; "Delete folder" does not.
+- Do keep the variants close to the action. "Submit as…" belongs; "Delete folder" does not.
 - Do keep the chevron as the only trailing glyph; it turns, it is never replaced.
 - Don't put a destructive variant first in the menu or make it the leading action.
 - Don't use two filled splits on one surface.
@@ -74,4 +76,4 @@ A two-part button whose leading part runs an action and whose trailing chevron o
 
 ## Source
 
-`GlassSplitButton` in `macos/Sources/TCDesign/Components/Controls.swift` (owner, 2026-10-10): the inline glass pill split by a hairline, with the chevron opening a native `Menu`. The filled variant, the 2dp gap between halves, the rotating chevron and the 4dp menu offset come from the M3 Expressive split button (m3-components-A §3); the Apple mapping from HIG Pull-down buttons.
+`GlassSplitButton` in `macos/Sources/TCDesign/Components/Controls.swift` (owner, 2026-10-10): the inline glass pill split by a hairline, with the chevron opening a native `Menu`. Labels "Submit {count}" and "Submit as…" (owner, 2026-10-08); the Decisions card's menu drawn over the inspector column, not inside the card (owner, 2026-10-29, #1902). The filled variant, the 2dp gap between halves, the rotating chevron and the 4dp menu offset come from the M3 Expressive split button (m3-components-A §3); the Apple mapping from HIG Pull-down buttons.

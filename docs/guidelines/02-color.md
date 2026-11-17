@@ -4,7 +4,7 @@ Color does four jobs here: it separates layers (scene, glass, paint), carries te
 
 ## Neutrals
 
-The neutrals are trace-commons' flat glass values: a navy-black dark appearance and a cool grey light one. Both lean blue, so the NEAR blue accent sits in the same family.
+The neutrals are trace-commons' flat glass values: a navy-black dark appearance and a cool grey light one. Both lean blue, so the Near AI blue accent sits in the same family.
 
 | Role | Light | Dark | Use |
 |---|---|---|---|
@@ -21,9 +21,16 @@ The neutrals are trace-commons' flat glass values: a navy-black dark appearance 
 | `control` | white at 44% | black at 30% | Neutral buttons, pickers, toolbar groups |
 | `well` | #8a93a5 at 43% | black at 30% | Segment tracks, legend cells, unchecked boxes |
 | `field` | #f4f6f9 at 60% | black at 30% | Inputs |
-| `popover` / `menu` | #f7f7f9 at 84% / 80% | #0b0f22 at 82% | Floating layer |
+| `popover` / `menu` | #f7f7f9 at 94% | #0b0f22 at 94% | Floating layer, opaque enough that nothing under it shows through (NDS-24) |
+| `card-nested` | black at 4.5% | white at 7% | A card on a card: the inner container that holds a detail or an estimate |
+| `control-on-menu` | black at 8% (13% hover) | white at 10% (18% hover) | A neutral control or pill on a menu or popover |
+| `control-on-selection` | black at 18% (28% hover) | #071a2e at 16% (26% hover) | A neutral control or pill on a selected row |
 
 Dark cards on glass are darker than the pane (pane navy laid over it), not lighter; light cards are whiter. On an opaque ground the glass card fill would match the pane exactly, so cards there take `card-on-opaque` and `card-quiet-on-opaque`, one tonal step lighter (1.11:1), the way Material's surface containers step. Cards and controls are told apart by fill alone; they carry no rims or borders. This is the flat theme's rule (owner, 2026-10-10).
+
+A fill follows the ground it sits on (NDS-38). `control` vanishes into a menu's fill and into a selected row, so a pill or a "…" button there takes `control-on-menu` or `control-on-selection`, and on a selected row its label and glyph take `text-on-accent`. A card inside a card takes `card-nested`, one step from its parent; there is no third level.
+
+Content drawn straight on the scene, with no pane under it (the first-run stage, a chat's welcome), uses the scene roles: `scene-card` (#171c33 at 78% dark, white at 78% light), `scene-control` for a neutral button such as Back (white at 9% dark, 72% light), `scene-rule` for rules and dashed paths, and `scene-glow-brand` for the one brand glow (Near AI blue at 55% dark, 24% light) that rises behind a composer or from the stage's corner. The glow never sits under body text without a card. App tokens fade into the navy scene, which is why these exist (owner, 2026-10-22: "all of the card backgrounds are hard to see").
 
 ## Text
 
@@ -33,13 +40,16 @@ Dark cards on glass are darker than the pane (pane navy laid over it), not light
 | `text-secondary` | #3c3c43 | #f2f3f8 at 88% | 4.98 / 4.84 |
 | `text-tertiary` | #3d3d43 | #f2f3f8 at 84% | 4.91 / 4.58 |
 | `text-placeholder` | black at 64% | white at 80% | 4.79 / 4.75 |
+| `text-placeholder-on-opaque` | #6e6e74 | #888b9a | 4.57 / 4.96 (opaque grounds only) |
 | `accent-text` | #024175 | #c6e1ff | 4.74 / 4.70 |
 
 Worst case means the lowest ratio across the pane, card, quiet card, field, control, popover, menu and opaque pane, each over the worst desktop the glass can show (white under dark glass, #333333 under light glass). The secondary and tertiary inks sit close together in light because that ground is dark; hierarchy comes from type weight and size as much as from ink. Never use `neutral` or a status mark color for words.
 
+`text-placeholder` already sits at the 4.5:1 floor over the worst glass ground, so it cannot get quieter there. On an opaque ground (a phone screen, the chat's opaque web shell, a composer on `card-on-opaque`) use `text-placeholder-on-opaque`, the greyer prompt the owner asked for (2026-11-03: "grey out the placeholder text"). Never use it on glass.
+
 ## Accent
 
-The parent accent is NEAR AI blue. `brand-blue` #0091fd, the "AI" of the wordmark, is 2.9:1 on a light opaque pane and 3.3:1 under white text, so the roles step it in lightness at the same hue (OKLCH 251):
+The parent accent is Near AI blue. `brand-blue` #0091fd, the "AI" of the wordmark, is 2.9:1 on a light opaque pane and 3.3:1 under white text, so the roles step it in lightness at the same hue (OKLCH 251):
 
 | Role | Light | Dark | Rule |
 |---|---|---|---|
@@ -66,11 +76,12 @@ Status never follows the product theme. Each status has a mark color (dots, glyp
 | Status | Means | Mark (L / D) | Text (L / D) | Tint |
 |---|---|---|---|---|
 | `positive` | On, watching, automatic, verified, contributed | #1a8f4c / #30d158 | #0b4628 / #acedbc | 14% / 18% |
-| `caution` | Ask me, pending, worth a second look | #a8690f / #ffc75c | #573403 / #ffd585 | 14% / 18% |
+| `caution` | Ask, pending, worth a second look | #a8690f / #ffc75c | #573403 / #ffd585 | 14% / 18% |
 | `critical` | Failed, leaves for an outside model, no proof | #d0342c / #ff6b6b | #771814 / #ffd3d3 | 12% / 18% |
 | `neutral` | Off, never, not used | #8a8a90 / #a9a9b0 | (never text) | black 6% / white 10% |
 
-- Show status as a dot plus words (`StatusLabel`), a tag (`Tag`, tint ground with text ink) or a notice title with a dot (`Notice`). Never as a fill on a card, and never by color alone.
+- Show status as a dot plus words (`StatusLabel`), a tag (`Tag`, tint ground with text ink), a count pill in the status tint on a tab (NDS-37) or a notice's tone coin (`Notice`, NDS-25). Never as a fill on a card, and never by color alone.
+- A passed proof has its own pair, calmer than the success greens so a proof never reads as a neon success (owner, 2026-11-03: "too light and neon", "too faint"): `proof-text` on `proof-tint`, #1a6b48 on #d2f1df in light (5.37:1) and #85c9a1 on #183124 in dark (7.23:1). The tint is opaque so the pill reads the same on glass and on paint. `ProofTag`, the header proof pill and `ProofSeal` use it; a pending, gateway-only or failed proof keeps the status families (NDS-43).
 - `destructive-text` (#791313 / #ffd0d0) labels destructive buttons and menu items; it is not a status.
 - `badge-fill` with `text-on-status` is the one badge: decisions owed. Light #e04a42 with a dark count (4.86:1), dark #ff6b6b (7.04:1).
 - Green and red differ in lightness as well as hue, and every status carries words, so the set is safe for color-vision deficiency.
@@ -90,23 +101,22 @@ Charts plot on `surface-chart` (light #f7f8fa, dark #0d1124), never directly on 
 | `data-7` | #5a48b8 | #9085e9 |
 | `data-8` | #d33c3c | #e66767 |
 
-Both sets pass the six palette checks: OKLCH lightness band, chroma floor, adjacent-pair separation under protanopia and deuteranopia (worst ΔE 9.2 light, 8.4 dark), the normal-vision floor (worst ΔE 17.2 light, 19.3 dark) and 3:1 against `surface-chart`. Scatter plots, maps and small multiples can tell apart only the first three slots; fold anything beyond into "Other" or facet. Gridlines are `chart-grid`; labels and values are text roles, never the series color. Status colors are reserved for series that mean good or bad (an error rate), and then they carry an icon and a label. Trace replaces the first three slots with its own series: shared, kept and inference.
+Both sets pass the six palette checks: OKLCH lightness band, chroma floor, adjacent-pair separation under protanopia and deuteranopia (worst ΔE 9.2 light, 8.4 dark), the normal-vision floor (worst ΔE 17.2 light, 19.3 dark) and 3:1 against `surface-chart`. Scatter plots, maps and small multiples can tell apart only the first three slots; fold anything beyond into "Other" or facet. Gridlines are `chart-grid`; labels and values are text roles, never the series color. Status colors are reserved for series that mean good or bad (an error rate), and then they carry an icon and a label. Gateway's Insights charts use these slots as they are (NDS-22). Only its Shared and Kept graph keeps its own pair: Shared purple (#8a3dff dark, #7a2cf5 light) over Kept blue (#3a7bd5, #2f6bc4). The menu-bar status item draws four product colors measured at 3:1 on the menu bar (see `StatusItem`). A paused series turns grey while its legend keeps its colors, so the readout beside it, not the grey, says it is paused.
 
 ## Increased contrast
 
 The `-hc` themes deepen the veil to 90%, raise card, field and control fills, and solve every text role to 7:1 on every ground. Every painted surface gains a 1px `edge-hc` edge and hairlines rise to 40-45%, so surfaces read apart by edges, not by shade. The accent darkens to #01599f in light; in dark the accent already clears 7:1 under its dark text. The light badge becomes deep red #b01218 with a white count (7:1).
 
-## The Trace theme
+## The Gateway theme
 
-`trace-light` and `trace-dark` are trace-commons' flat themes, unchanged. Dark selection and the primary action are the brand purple #6d14f3 with white text (6.9:1); light uses the blue #15608a, adopted on 2026-10-12 because purple read muddy on the cool grey. Accent text is #e1d5ff in dark and #0c3f5c in light. Three Trace values miss the parent floors and stay exact, flagged in their token notes, until the Trace team fixes them:
+`gateway-light` and `gateway-dark` are trace-commons' flat themes. Gateway, then called Trace, first carried purple (#6d14f3 in dark) and a teal-blue (#15608a in light); on 2026-10-19 the owner moved it to the parent's Near AI blue in both appearances (NDS-22), and since 2026-10-20 trace-commons tracks the parent's accent, chart and `surface-chart` values. The Gateway themes now differ from the parent in two fills only:
 
-| Theme | Pair | Ratio | Floor |
+| Role | Parent (L / D) | Gateway (L / D) | Why |
 |---|---|---|---|
-| `trace-dark` | `accent` (selected fill #6d14f3) on the pane over a white desktop | 1.09:1 | 3:1 |
-| `trace-dark` | `toolbar-glyph-off` #83838c on a control | 2.63:1 | 3:1 |
-| `trace-light` | `toolbar-glyph-off` #8a8a90 on a control | 2.27:1 | 3:1 |
+| `toolbar-expanded` | #d1d1d6 / #55555a | #035ca3 / #7ebcff | An open toolbar menu fills with the accent |
+| `well` | #8a93a5 at 43% / black at 30% | #8a93a5 at 28% / black at 30% | A lighter light well (owner, 2026-10-12) |
 
-The parent `light` and `dark` themes solve the toolbar glyph to #75757b and #8d8d97.
+The parent took Gateway's navy off knob and 38% dark switch track (NDS-38). Purple survives in the old Trace mark (`gateway-purple`) and Gateway's Shared data series. The Gateway themes also take the parent's hidden-toolbar greys, #75757b and #8d8d97 (2026-11-04; NDS-50), so no Gateway value misses a floor.
 
 ## Mapping to platform color systems
 
@@ -124,4 +134,4 @@ The parent `light` and `dark` themes solve the toolbar glyph to #75757b and #8d8
 | `critical` / `critical-text` | error / onErrorContainer | systemRed (stepped) |
 | `positive`, `caution` | (custom: M3 has no success or warning role) | systemGreen, systemOrange (stepped) |
 
-Apple's default system colors are tuned for opaque backgrounds and mostly miss 4.5:1 as text on light glass; use the parent text roles, not raw system colors, for words. Material's dynamic (wallpaper) color is opt-in on Android for personal surfaces only; NEAR products use the static scheme so the accent stays theirs.
+Apple's default system colors are tuned for opaque backgrounds and mostly miss 4.5:1 as text on light glass; use the parent text roles, not raw system colors, for words. Material's dynamic (wallpaper) color is opt-in on Android for personal surfaces only; Near AI products use the static scheme so the accent stays theirs.

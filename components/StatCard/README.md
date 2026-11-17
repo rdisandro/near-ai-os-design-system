@@ -15,7 +15,8 @@ A single figure with its name: an eyebrow label over a bold tabular value on a c
 1. **Card**: `card` fill, `radius-card` 16, padding `space-10` by `space-12`.
 2. **Label**: eyebrow step, uppercase, `text-tertiary`; wraps at spaces to at most two lines, never inside a word.
 3. **Value**: heading step, bold, tabular figures, `text-primary`, one line, truncated at the end (units stay with the figure: "4.21 NEAR").
-4. **Note** (optional): caption, `text-secondary`, `space-2` under the value: the condition behind a figure ("Shown once the commons accepts.") or a change in words ("12 more than last week").
+4. **Note** (optional): caption, `text-secondary`, `space-2` under the value: the condition behind a figure ("Shown once it is accepted."), a second scope ("{amount} across your account" under this Mac's figure) or a change in words ("12 more than last week").
+5. **Watermark** (optional): the card's glyph at 58, −12°, 55% `accent-soft`, bleeding off the trailing bottom corner behind the words and clipped by the card (see `Card`). Gateway's Home tiles use it in place of an icon column.
 
 **Legend cell** (`.nr-stat-card--legend`)
 1. **Well**: `well` fill, `radius-pill`, height `size-control-large` 28, padding `space-10`.
@@ -56,7 +57,8 @@ One hero figure per screen may use `hero-figure` (web and tablet) instead of a s
 
 - Static by default; no tab stop.
 - Values update in place without animation; tabular figures keep the width steady while counts tick.
-- A change is described in words in the note. The value is never colored to show good or bad.
+- A change is described in words in the note. The value is never colored to show good or bad. (Gateway's Credit tile has colored its day-over-day change green or red since 2026-10-12; that is a product exception the parent does not adopt, and Gateway later dropped the "since yesterday" line, owner 2026-10-29.)
+- An unknown figure reads "—". While the figure waits on sign-in the card is head-only and says so in words (see *Feedback and states*, signed out).
 - Nothing moves.
 
 ## Accessibility
@@ -81,4 +83,4 @@ One hero figure per screen may use `hero-figure` (web and tablet) instead of a s
 
 ## Source
 
-`GlassStatCard` in StatCard.swift (eyebrow label wrapping at spaces over a heading-bold tabular value, 10 by 12 padding, card tier) and `GlassLegendCell` in Containers.swift (28pt well pill, haloed 8pt dot, label shrinking then truncating, tabular semibold value); Home's three stat cards and the Private AI ledger's Calls / Verified / Priced cells [trace-commons §4.8, §5.5, §5.6]. Tabular figures are kept for stat values because they update live.
+`GlassStatCard` in StatCard.swift (eyebrow label wrapping at spaces over a heading-bold tabular value, 10 by 12 padding, card tier) and `GlassLegendCell` in Containers.swift (28pt well pill, haloed 8pt dot, label shrinking then truncating, tabular semibold value); Home's three stat cards and the Private AI ledger's Calls / Verified / Priced cells [trace-commons §4.8, §5.5, §5.6]; the watermark and the account-wide Credit note from #1460 and #1888. Tabular figures are kept for stat values because they update live.

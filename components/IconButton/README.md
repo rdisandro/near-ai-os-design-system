@@ -4,7 +4,8 @@ A button whose glyph names the action, drawn round, as a pill, as a glyph in a t
 
 ## When to use
 
-- Use it for frequent actions with a well-known glyph: Close, Add folder, Previous week, Show inspector, Send, Refresh balance.
+- Use it for frequent actions with a well-known glyph: Close, Add folder, Previous week, Show inspector, Send.
+- Refresh is not an icon button: every re-read is the labelled Refresh pill (`Button`, NDS-36).
 - Group view toggles in an `IconButton` group on a toolbar (`role="toolbar"`).
 - Use the kebab for a row's menu (the `Menu` opens from it).
 - Use a text `Button` when no glyph is unmistakable. A glyph never replaces a label for a primary or destructive decision.
@@ -31,11 +32,11 @@ A button whose glyph names the action, drawn round, as a pill, as a glyph in a t
 
 - **Round**: `control` fill, `text-primary` glyph. Close in a modal header is the small round button.
 - **Primary**: `accent` fill, `text-on-accent` glyph. The one accent icon action: Send in a composer, Done in a sheet.
-- **Toggle**: a round button with `aria-pressed`; on, it takes the `accent` fill.
+- **Toggle**: a round button with `aria-pressed`; on, it takes the `accent` fill and `text-on-accent` glyph. In a toolbar its tooltip is the name, then the state on a second line ("3 of 7 folders automatic"), which assistive tech reads as the hint. A toggle whose state is not yet known stays hidden until it is (NDS-41). Gateway's Automatic-sharing eye in the Traces toolbar is one.
 - **Pill**: the graph's period steppers (Previous week, Next week).
 - **Toolbar**: no fill, `toolbar-glyph` ink. `aria-pressed="false"` dims the glyph to `toolbar-glyph-off` while its pane is hidden. `aria-expanded="true"` fills it with `toolbar-expanded` while its menu is open.
-- **Kebab**: three dots in `text-tertiary`. Hover or open lights it: `control-hover` fill, `text-primary` dots.
-- **Bare**: a glyph in `text-secondary` with no container (Refresh balance).
+- **Kebab**: three dots in `text-tertiary`. Hover or open lights it: `control-hover` fill, `text-primary` dots. On a selected row it takes `control-on-selection` and `text-on-accent` dots (NDS-38).
+- **Bare**: a glyph in `text-secondary` with no container, such as the close X on a `GetStartedCard` (12 glyph in a 20 frame).
 
 ## States
 
@@ -46,7 +47,7 @@ A button whose glyph names the action, drawn round, as a pill, as a glyph in a t
 | Focus | 2px `focus-ring`, 2px outside, keyboard only (NDS-5). Turning it off with `.nr-focus-off` fails WCAG 2.4.7. |
 | Selected | Toggle `aria-pressed="true"`: `accent` and `text-on-accent`. Toolbar: normal ink when its pane shows. |
 | Expanded | Toolbar `toolbar-expanded` fill; kebab lit. |
-| Disabled | `opacity-disabled`, no hover. |
+| Disabled | `opacity-disabled`, no hover. In a row or card, hide an action that cannot run instead (NDS-41); toolbar toggles keep their place and disable. |
 | Increased contrast | Filled variants, groups and an open kebab get a 1px `edge-hc` inset edge. |
 
 ## Behavior
@@ -60,7 +61,7 @@ A button whose glyph names the action, drawn round, as a pill, as a glyph in a t
 
 - Name every icon button with `aria-label` (SwiftUI `accessibilityLabel`) from the product's copy, naming the action and its object where needed ("More for near-agents"). The same words feed the tooltip.
 - Toggles expose `aria-pressed`; menu triggers expose `aria-haspopup="menu"` and `aria-expanded`.
-- Glyphs are marks that carry meaning on their own, so they hold 3:1 against their fill (NDS-6). `toolbar-glyph-off` is flagged below that floor in the Trace themes (2.27:1 trace-light, 2.63:1 trace-dark); the button's name and `aria-pressed` carry the state.
+- Glyphs are marks that carry meaning on their own, so they hold 3:1 against their fill (NDS-6). The button's name and `aria-pressed` also carry the state.
 - Targets: 28 pointer, 44pt Apple, 48dp Android and touch web, 60pt visionOS. On touch the kebab becomes a full round button.
 
 ## Platforms
@@ -83,4 +84,4 @@ A button whose glyph names the action, drawn round, as a pill, as a glyph in a t
 
 ## Source
 
-`GlassRoundButton`, `GlassPillIconButton`, `GlassToolbarButton`, `GlassToolbarGroup` and `GlassKebab` in `macos/Sources/TCDesign/Components/Controls.swift`, and `GlassRefreshButton` in `Containers.swift`. The kebab's unlit dots move from `statusOff` ink to `text-tertiary` so an icon-only control holds 3:1 (NDS-6). The primary and toggle variants come from M3 icon buttons (filled, toggle) and Liquid Glass prominent buttons; touch sizes from HIG Buttons and M3.
+`GlassRoundButton`, `GlassPillIconButton`, `GlassToolbarButton`, `GlassToolbarGroup` and `GlassKebab` in `macos/Sources/TCDesign/Components/Controls.swift`, `GlassRoundButton(isOn:help:)` for the toolbar toggle (owner, 2026-11-02). `GlassRefreshButton` became `GlassRefreshPill` in `Containers.swift` (#1888), so refresh left this component. The kebab's unlit dots move from `statusOff` ink to `text-tertiary` so an icon-only control holds 3:1 (NDS-6). The primary and toggle variants come from M3 icon buttons (filled, toggle) and Liquid Glass prominent buttons; touch sizes from HIG Buttons and M3.

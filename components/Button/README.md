@@ -1,10 +1,10 @@
 # Button
 
-A capsule that starts one action now, in six kinds (primary, secondary, glass, destructive, link, submit) and four heights (submit 24, inline 28, small 30, bar 34), so each surface shows one primary action and quieter alternatives.
+A capsule that starts one action now, in six kinds (primary, secondary, glass, destructive, link, submit) plus the Refresh pill, and four heights (submit 24, inline 28, small 30, bar 34), so each surface shows one primary action and quieter alternatives.
 
 ## When to use
 
-- Use a button for an action that happens when pressed: Contribute, Look inside, Turn on, Withdraw.
+- Use a button for an action that happens when pressed: Submit, Look inside, Turn on, Withdraw.
 - Give each surface at most one `primary` button (NDS-19). Draw the other actions as `glass` and the lowest-priority choice as `link`.
 - Use `destructive` for an action that loses data and cannot be undone. A reversible action acts at once and offers Undo instead (NDS-15).
 - Use `IconButton` when a glyph names the action, `SplitButton` when one action has close variants, and `Menu` for three or more related actions.
@@ -31,23 +31,25 @@ Heights come from `--nr-h-bar` (34 / 44 / 28) and `--nr-h-control` (28 / 44 / 20
 ## Variants
 
 - **Primary**: `accent` fill, `text-on-accent` label. The one action of the surface.
-- **Secondary**: `accent-tint` fill, `accent-text` label. A strong action that is not the surface's one (Download).
-- **Glass**: `control` fill, `text-primary` label. Every other action. With `aria-pressed="true"` it is the chosen one of a set and takes the `accent` fill.
+- **Secondary**: `accent-tint` fill, `accent-text` label. A strong action that is not the surface's one, used sparingly. Download and install buttons are not secondary: they are glass, never colored (NDS-42). In the owner's rulings, "secondary" means the glass kind.
+- **Glass**: `control` fill, `text-primary` label. Every other action, including Download and Choose folder. With `aria-pressed="true"` it is the chosen one of a set and takes the `accent` fill.
 - **Destructive**: `control` fill, `destructive-text` label. Never the default action.
 - **Link**: no container, `accent-text`. The lowest-priority choice ("Not this one").
-- **Submit**: the 24 pill on tree rows ("Submit · 3"). `data-done` turns the label `positive-text` ("Sent").
+- **Submit**: the 24 pill on tree rows ("Submit 3" on a folder, "Submit" on a trace). On a trace row it sends at once and the row dims with a spinner while it sends (NDS-31). `data-done` turns the label `positive-text` ("Sent").
+- **Refresh** (`--refresh`): a glass capsule at the height of the round button it replaces (26 small, 28 inline), padding 8 small or 10, holding the word "Refresh" in label medium and then the `arrow.clockwise` glyph (11 small, 13), 4 apart. The glyph turns while the re-read runs and holds still under Reduce Motion. Every re-read uses it, including the ones that said Retry (NDS-36).
+- **On another ground** (NDS-38): a glass or submit pill on a selected row takes `control-on-selection` (hover `control-on-selection-hover`) and its label and glyph take `text-on-accent`; on a menu or popover it takes `control-on-menu` (hover `control-on-menu-hover`), so the pill never vanishes into the surface under it.
 - **Classic treatment** (optional, NDS-2): primary adds `edge-classic-cta`, glass and destructive add `edge-classic-control`. Flat glass draws no edges.
 
 ## States
 
 | State | Rule |
 |---|---|
-| Hover | Glass and destructive replace the fill with `control-hover`. Link underlines. Primary, secondary and submit keep their fill. |
+| Hover | Glass, destructive and Refresh replace the fill with `control-hover` (or the ground's own hover, NDS-38). Link underlines. Primary, secondary and submit keep their fill. |
 | Pressed | Accent fills turn `accent-pressed`; neutral fills darken with `filter: brightness(0.92)`. Never a fade, which reads as disabled. |
-| Focus | 2px `focus-ring`, 2px outside, keyboard focus only (NDS-5). Trace turns it off with `.nr-focus-off`, which fails WCAG 2.4.7. |
+| Focus | 2px `focus-ring`, 2px outside, keyboard focus only (NDS-5). Gateway turns it off with `.nr-focus-off`, which fails WCAG 2.4.7. |
 | Selected | Glass with `aria-pressed="true"`: `accent` fill, `text-on-accent`. |
 | Disabled | The whole button at `opacity-disabled`, no hover. Say why nearby or in a `Tooltip` (use `aria-disabled` so the tooltip can show). |
-| Busy | `aria-busy="true"`: inert at full strength, a spinner before the consumer's progress label ("Sending…"). |
+| Busy | `aria-busy="true"`: inert at full strength, a spinner before the consumer's progress label ("Sending…"). Refresh keeps its word and turns its glyph instead. |
 | Done | Submit only: `positive-text` label. |
 | Increased contrast | A 1px `edge-hc` inset edge on every kind except link. |
 
@@ -62,7 +64,8 @@ Heights come from `--nr-h-bar` (34 / 44 / 28) and `--nr-h-control` (28 / 44 / 20
 
 - Use the native button on every platform. The visible label is the accessible name; the consumer supplies it from the product's copy (NDS-16). Labels name the action: a verb, or a verb and an object.
 - A selected glass button exposes `aria-pressed` (SwiftUI `.isSelected`). A busy button sets `aria-busy` and changes its label; announce the change politely when focus is elsewhere.
-- Contrast: `text-on-accent` on `accent` measures 6.85:1 light, 8.8:1 dark, 6.9:1 Trace dark and 7.17:1 light-hc. `destructive-text` holds 4.5:1 over the worst ground behind glass. In Trace dark the accent fill is 1.09:1 against the pane, so the label carries the button (flagged in the contrast report).
+- Contrast: `text-on-accent` on `accent` measures 6.85:1 light, 8.8:1 dark and 7.17:1 light-hc; Gateway uses the parent accent, so the same (NDS-22). `destructive-text` holds 4.5:1 over the worst ground behind glass, and a pill's label on `control-on-selection` holds 4.5:1.
+- Refresh: the accessible name and tooltip say what is refreshed ("Refresh your tools"); the visible word stays "Refresh".
 - Targets: 28 pointer, 44pt Apple touch, 48dp Android and touch web. The submit pill and link grow their hit area, never their drawing.
 
 ## Platforms
@@ -76,7 +79,7 @@ Heights come from `--nr-h-bar` (34 / 44 / 28) and `--nr-h-control` (28 / 44 / 20
 
 ## Do and don't
 
-- Do keep one primary per surface, with Cancel leading as glass (NDS-19).
+- Do keep one primary per surface, with Cancel leading as glass (NDS-19). A notice's call to action is primary too (NDS-25).
 - Do make every button in an action bar the CTA's height (`ActionBar`, owner ruling D-20).
 - Do show preference with the kind. Don't use size to rank buttons in a set.
 - Don't make a destructive action primary or the default.
@@ -85,4 +88,4 @@ Heights come from `--nr-h-bar` (34 / 44 / 28) and `--nr-h-control` (28 / 44 / 20
 
 ## Source
 
-`GlassButtonStyle` with `GlassButtonKind` (primary, secondary, glass, submit, link, destructive), `GlassButtonSize` (inline, bar), `small` and `selected` in `macos/Sources/TCDesign/Components/Controls.swift`; owner ruling D-20 sets bar-sized buttons. The parent maps Trace's dark purple secondary gradient to the tonal `accent-tint` fill so product accents can override it (NDS-1), and moves the CTA glow to the Classic treatment. Busy state from HIG Buttons (activity indicator in the button); touch heights from HIG (44pt) and M3 (40dp in a 48dp target); dense corners from Unity Editor.
+`GlassButtonStyle` with `GlassButtonKind` (primary, secondary, glass, submit, link, destructive), `GlassButtonSize` (inline, bar), `small` and `selected` in `macos/Sources/TCDesign/Components/Controls.swift`; owner ruling D-20 sets bar-sized buttons. The parent maps Gateway's old dark purple secondary gradient to the tonal `accent-tint` fill so product accents can override it (NDS-1), and moves the CTA glow to the Classic treatment; Gateway now draws the parent accent (NDS-22). `GlassRefreshPill` in `Containers.swift` (owner, 2026-11-02, #1888); download buttons neutral (owner, 2026-10-08); ground-aware fills (owner, 2026-10-22, #1585). Busy state from HIG Buttons (activity indicator in the button); touch heights from HIG (44pt) and M3 (40dp in a 48dp target); dense corners from Unity Editor.

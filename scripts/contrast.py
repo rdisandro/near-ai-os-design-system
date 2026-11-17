@@ -32,7 +32,11 @@ def grounds(src, theme):
         'pane-opaque': [v['pane-opaque']],
         'card-on-opaque': [v['pane-opaque'], v['card-on-opaque']],
         'card-quiet-on-opaque': [v['pane-opaque'], v['card-quiet-on-opaque']],
+        'scene-card': [v['scene'], v['scene-card']],
     }
+
+
+OPAQUE = ('pane-opaque', 'card-on-opaque', 'card-quiet-on-opaque')
 
 
 def _pair(fg, bg):
@@ -55,6 +59,9 @@ def checks(src):
         for t in TEXT_ROLES:
             ratio, where = min((cr(v[t], *g), n) for n, g in gr.items())
             add(t, '%s on %s (worst ground)' % (t, where), ratio, tfloor)
+        ratio, where = min((cr(v['text-placeholder-on-opaque'], *gr[n]), n) for n in OPAQUE)
+        add('text-placeholder-on-opaque', 'text-placeholder-on-opaque on %s (opaque grounds only)' % where, ratio, tfloor)
+        add('proof-text', 'proof-text on proof-tint', _pair(v['proof-text'], v['proof-tint']), tfloor)
         add('text-on-accent', 'text-on-accent on accent', _pair(v['text-on-accent'], v['accent']), tfloor)
         add('text-on-accent', 'text-on-accent on accent-pressed', _pair(v['text-on-accent'], v['accent-pressed']), tfloor)
         hover = flatten(*(gr['menu'] + [v['menu-hover']]))
@@ -68,6 +75,10 @@ def checks(src):
             add(s, '%s mark on pane-opaque' % s, cr(v[s], v['pane-opaque']), floors['mark'])
         for i in range(1, 9):
             add('data-%d' % i, 'data-%d on surface-chart' % i, cr(v['data-%d' % i], v['surface-chart']), floors['mark'])
+        if theme['appearance'] == 'dark':
+            ratio, where = min((cr(v['toggle-knob-off'], *(gr[n] + [v['toggle-track-off']])), n)
+                               for n in ('pane', 'card', 'pane-opaque'))
+            add('toggle-knob-off', 'toggle-knob-off on toggle-track-off over %s' % where, ratio, floors['mark'])
         ratio = min(cr(v['toolbar-glyph-off'], *(gr['pane'] + [v['control']])), cr(v['toolbar-glyph-off'], v['pane-opaque']))
         add('toolbar-glyph-off', 'toolbar-glyph-off on control', ratio, floors['mark'])
         if theme['contrast'] == 'increased':

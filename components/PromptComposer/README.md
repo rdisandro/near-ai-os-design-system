@@ -12,8 +12,8 @@ The field where a person writes to an agent: multi-line text, context chips, att
 1. **Starters** (empty thread only): up to four product-curated pills on `control`, label type. Choosing one fills the field; it does not send.
 2. **Box**: `field` fill, `radius-card`, padding 10 top, 8 trailing, 8 bottom, 14 leading. Keyboard focus in the text draws the ring on the box (2px `focus-ring`, offset 2).
 3. **Context chips**: scope chips ("@near-agents") on `accent-tint` with `accent-text`; attachment chips on `neutral-tint` with `text-secondary`, a 10 file glyph and a mono name. Max width `size-popover-width`, then truncate. Each has a 16 remove button.
-4. **Text**: transparent, `text-primary`, placeholder `text-placeholder`. Grows from one line to eight (`calc(1lh * 8)`, derived), then scrolls.
-5. **Bar**: Attach (round, `--nr-h-control`, `text-secondary` glyph), the model picker (quiet pill, mono model name, 10 chevron), and a trailing group with the optional counter and Send. The chip row and bar sit 4 and 6 outside the text inset so glyphs line up with the text (derived).
+4. **Text**: transparent, `text-primary`, placeholder `text-placeholder`, or the quieter `text-placeholder-on-opaque` when the box sits on an opaque ground (phones, the Near AI chat shell; NDS-44). Grows from one line to eight (`calc(1lh * 8)`, derived), then scrolls.
+5. **Bar**: Attach (round, `--nr-h-control`, `text-secondary` glyph), the model picker right after it (quiet pill, mono model name, 10 chevron; hover `control-hover` with `text-primary`, open `toolbar-expanded`), and a trailing group with the optional counter and Send. The chip row and bar sit 4 and 6 outside the text inset so glyphs line up with the text (derived).
 6. **Send**: round, `--nr-h-control`, `accent` fill with a `text-on-accent` arrow. The one accent action on the surface. While the agent answers, the same slot is **Stop** (square glyph).
 7. **Route note** (caption, `text-tertiary`, inset 14 to align with the text): where the message goes and what goes with it. An outside model turns it into a `critical` dot and `critical-text` words.
 8. **Reason line** (caption, `text-secondary`, `caution` dot): why Send can't act, with one action link.
@@ -27,6 +27,7 @@ The field where a person writes to an agent: multi-line text, context chips, att
 | Model | `mac-mono` 11 | `web-mono` 12 | `ios-mono` 13 | `android-mono` 12 | `mac-mono` 11 |
 | Send, Attach | 28 | 28 | 44 | 44, target 48 | 20 |
 | Box radius | `radius-card` 16 | 16 | 16 | 16 | `radius-control` 11 |
+| Box radius, chat shell | | `radius-pane` 20 | 20, top corners only when docked | 20 | |
 
 ## Variants
 
@@ -34,6 +35,9 @@ The field where a person writes to an agent: multi-line text, context chips, att
 - **Inline reply**: no starters; the route note shows only when it differs from the thread's.
 - **Edit mode**: replaces a user `Message`; Cancel leading, Save and resend trailing (NDS-19).
 - **Side panel**: the picker collapses to its glyph with the model as its name and tooltip.
+- **Chat shell** (NDS-44): the box takes `radius-pane` 20 on `card-on-opaque` to match the shell's cards, with the text inset 20.
+- **Folded** (phones): while the draft is empty or one line and there are no chips, the box folds to one 54-tall pill row (attach, text, send on one center line). The model picker moves to the top bar, so it is in exactly one place.
+- **Welcome**: on an empty chat the band behind the box is transparent and one `scene-glow-brand` arch rises from the box's top edge, clipped so no light falls below or beside it (see AI and agent patterns, *The welcome*).
 
 ## States
 
@@ -66,7 +70,7 @@ Controls: hover `control-hover`, pressed `brightness(0.92)` (Send: `accent-press
 - The mention list uses the combobox pattern: `aria-autocomplete="list"`, `aria-expanded`, `aria-activedescendant`.
 - Send and Stop are one button whose name changes; announce "Stopped" politely.
 - Blocked Send uses `aria-disabled`, so it stays in the tab order and reads its reason.
-- Placeholder `text-placeholder` holds 4.5:1 on `field`. In `trace-dark` the purple `accent` fill is 1.09:1 against the pane (flagged in the contrast report); the white glyph and the name carry Send there, never the fill.
+- Placeholder `text-placeholder` holds 4.5:1 on `field` over the worst glass ground; `text-placeholder-on-opaque` holds 4.5:1 on the opaque grounds only and never goes on glass. Gateway now uses the parent accent (NDS-22), so Send's fill holds 3:1 in every theme.
 - Send, Attach, the picker and chip remove buttons reach `--nr-target` through invisible hit areas.
 - The consumer supplies every word: placeholder, starters, chip labels, model names, the note, the reason and its action.
 
@@ -93,4 +97,4 @@ Custom composite on every platform.
 
 ## Source
 
-Intentional addition: trace-commons has no composer. The well, placeholder token and focus treatment come from `GlassTextField` (Controls.swift) and `GlassTextArea` (Forms.swift), chips from `GlassChip` (Indicators.swift), Send from `GlassButtonStyle(.primary)`, and the route note from the Private AI banned-words rule (sends its calls here, answers). Anatomy and states follow Unity App UI `ThreadComposer` (max length with a counter, attachments, drop zone, paste handling, sending state, edit mode with Cancel and Save, mentions through `IMentionProvider` and `MentionPicker`). HIG Generative AI asks for curated starters and for saying what leaves the device; HIG keyboards map Esc and Cmd-. to cancel and forbid moving focus.
+Intentional addition: trace-commons has no composer. The chat-shell radius, the folded phone row, the picker placement and the quieter placeholder come from the Near AI chat (nearai/LibreChat PR #5, open; owner, 2026-11-03). Its placeholder "Ask Near AI anything" is a prompt rather than an example of valid input and is left open. The well, placeholder token and focus treatment come from `GlassTextField` (Controls.swift) and `GlassTextArea` (Forms.swift), chips from `GlassChip` (Indicators.swift), Send from `GlassButtonStyle(.primary)`, and the route note from the Private AI banned-words rule (sends its calls here, answers). Anatomy and states follow Unity App UI `ThreadComposer` (max length with a counter, attachments, drop zone, paste handling, sending state, edit mode with Cancel and Save, mentions through `IMentionProvider` and `MentionPicker`). HIG Generative AI asks for curated starters and for saying what leaves the device; HIG keyboards map Esc and Cmd-. to cancel and forbid moving focus.

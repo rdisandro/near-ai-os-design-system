@@ -1,23 +1,32 @@
-<!-- @dsCard group="Navigation" height=176 subtitle="First-run steps: reached, not chosen" -->
+<!-- @dsCard group="Navigation" height=236 subtitle="First-run steps: reached, not chosen ahead" -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>StepProgress — preview</title></head>
 <body>
 <div class="nr-preview nr-scene">
-  <section class="nr-pane nr-compact nr-stack" style="width: 450px" aria-label="First run, macOS">
-    <ol class="nr-steps" aria-label="Setup progress">
-      <li class="nr-steps__step nr-steps__step--done mac-eyebrow nr-upper"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">Join</span><span class="nr-visually-hidden">, done</span></li>
-      <li class="nr-steps__step nr-steps__step--done mac-eyebrow nr-upper"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">Tools</span><span class="nr-visually-hidden">, done</span></li>
-      <li class="nr-steps__step mac-eyebrow nr-upper" aria-current="step"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">Rules</span><span class="nr-visually-hidden">, current step</span></li>
-      <li class="nr-steps__step mac-eyebrow nr-upper"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">Uses</span><span class="nr-visually-hidden">, not started</span></li>
+  <section class="nr-compact nr-stack" style="width: 450px" aria-label="First-run stage, macOS">
+    <ol class="nr-steps nr-steps--thread" aria-label="Setup progress">
+      <li class="nr-steps__step nr-steps__step--done mac-label"><button class="nr-steps__label nr-steps__back">Tools</button><span class="nr-visually-hidden">, done</span></li>
+      <li class="nr-steps__step nr-steps__step--done mac-label"><button class="nr-steps__label nr-steps__back">Uses</button><span class="nr-visually-hidden">, done</span></li>
+      <li class="nr-steps__step mac-label" aria-current="step"><span class="nr-steps__label">Traces</span><span class="nr-visually-hidden">, current step</span></li>
+      <li class="nr-steps__step mac-label"><span class="nr-steps__label">Private AI</span><span class="nr-visually-hidden">, not started</span></li>
+      <li class="nr-steps__step mac-label"><span class="nr-steps__label">Join</span><span class="nr-visually-hidden">, not started</span></li>
     </ol>
-    <div class="mac-display">Choose how each project is shared</div>
-    <div class="mac-caption nr-text-secondary">Automatic asks for a confirmation first. Nothing is sent unless you say so.</div>
+    <div class="mac-caption nr-text-secondary">Thread, on the first-run scene: travelled stretches glow, the next ones are dotted, passed steps go back.</div>
+  </section>
+
+  <section class="nr-pane nr-regular nr-stack" style="width: 450px" aria-label="Setup, web">
+    <ol class="nr-steps" aria-label="Setup progress">
+      <li class="nr-steps__step nr-steps__step--done web-eyebrow nr-upper"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">Account</span><span class="nr-visually-hidden">, done</span></li>
+      <li class="nr-steps__step web-eyebrow nr-upper" aria-current="step"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">Tools</span><span class="nr-visually-hidden">, current step</span></li>
+      <li class="nr-steps__step web-eyebrow nr-upper"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">Uses</span><span class="nr-visually-hidden">, not started</span></li>
+    </ol>
+    <div class="web-caption nr-text-secondary">Nodes, in a pane: a short setup flow elsewhere.</div>
   </section>
 
   <section class="nr-pane nr-touch nr-stack" style="width: 264px" aria-label="First run, phone">
     <ol class="nr-steps nr-steps--vertical" aria-label="Setup progress">
-      <li class="nr-steps__step nr-steps__step--done ios-label"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">Join NEAR AI</span><span class="nr-visually-hidden">, done</span></li>
+      <li class="nr-steps__step nr-steps__step--done ios-label"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">Join Near AI</span><span class="nr-visually-hidden">, done</span></li>
       <li class="nr-steps__step ios-label" aria-current="step"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">Choose folders to watch</span><span class="nr-visually-hidden">, current step</span></li>
       <li class="nr-steps__step ios-label"><span class="nr-steps__node" aria-hidden="true"></span><span class="nr-steps__label">How traces may be used</span><span class="nr-visually-hidden">, not started</span></li>
     </ol>

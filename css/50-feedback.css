@@ -133,6 +133,50 @@
 .nr-notice-stack__head { display: flex; justify-content: flex-end; }
 [data-theme$="-hc"] .nr-notice { box-shadow: inset 0 0 0 1px var(--edge-hc); }
 
+/* Popover notice (desktop default): an opaque plate over the top of its tab,
+   a tone coin leading, an X trailing. Pushes nothing down. */
+.nr-notice--popover {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-10);
+  padding: var(--space-12);
+  border-radius: var(--radius-card);
+  background: var(--pane-opaque);
+  box-shadow: var(--shadow-float);
+}
+.nr-notice__coin {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--space-24) + var(--space-6));
+  height: calc(var(--space-24) + var(--space-6));
+  border: var(--space-2) solid currentColor;
+  border-radius: 50%;
+  background: var(--pane-opaque);
+}
+.nr-notice__coin svg { width: var(--space-14); height: var(--space-14); }
+.nr-notice__coin--caution  { color: var(--caution); }
+.nr-notice__coin--critical { color: var(--critical); }
+.nr-notice__coin--neutral  { color: var(--neutral); }
+.nr-notice__coin--positive { color: var(--positive); }
+.nr-notice__main { display: flex; flex-direction: column; gap: var(--space-6); min-width: 0; }
+.nr-notice__title { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-6); margin: 0; color: var(--text-primary); }
+.nr-notice--popover .nr-notice__body { color: var(--text-secondary); }
+.nr-notice--popover .nr-expander { margin-inline-start: calc(-1 * var(--space-4)); }
+[data-theme$="-hc"] .nr-notice--popover { box-shadow: var(--shadow-float), inset 0 0 0 1px var(--edge-hc); }
+
+/* The stack: newest in front, two earlier plates peeking 8 behind it. */
+.nr-notice-pile { position: relative; display: grid; min-width: 0; padding-bottom: calc(2 * var(--space-8)); }
+.nr-notice-pile > .nr-notice { grid-area: 1 / 1; transform-origin: 50% 100%; }
+.nr-notice-pile > .nr-notice:nth-child(2) { transform: translateY(var(--space-8)) scale(0.96); opacity: 0.9; z-index: -1; }
+.nr-notice-pile > .nr-notice:nth-child(3) { transform: translateY(calc(2 * var(--space-8))) scale(0.92); opacity: 0.7; z-index: -2; }
+.nr-notice-pile > .nr-notice:nth-child(n+2) > * { visibility: hidden; }
+.nr-notice-pile > .nr-notice:nth-child(n+4) { display: none; }
+.nr-notice-pile { isolation: isolate; }
+
 /* ---- InlineAlert ----------------------------------------------------------- */
 /* A failed request's line: unboxed, under the control it is about. */
 .nr-inline-alert {

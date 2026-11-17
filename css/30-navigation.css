@@ -79,7 +79,15 @@
               background-color var(--duration-fast) var(--ease-standard);
 }
 .nr-tabs__tab:hover { color: var(--text-primary); }
-.nr-tabs__tab:active { background: var(--neutral-tint); }
+/* No press fill on any tab (owner, 2026-11-02). Movable tabs lift on a held press. */
+.nr-tabs__tab--lifted {
+  z-index: 2;
+  background: var(--control);
+  box-shadow: var(--shadow-float);
+  transform: translateY(calc(-1 * var(--space-2))) scale(1.06);
+  transition: transform var(--duration-spring-spatial-fast) var(--spring-spatial-fast),
+              box-shadow var(--duration-fast) var(--ease-standard);
+}
 .nr-tabs__tab[aria-selected="true"] { color: var(--text-primary); font-weight: 600; }
 .nr-tabs__title { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .nr-tabs__ember {
@@ -125,6 +133,9 @@
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
+.nr-tabs__badge--positive { background: var(--positive-tint); color: var(--positive-text); }
+.nr-tabs__badge--caution { background: var(--caution-tint); color: var(--caution-text); }
+.nr-tabs__badge--critical { background: var(--critical-tint); color: var(--critical-text); }
 .nr-tabs__badge--alert { background: var(--badge-fill); color: var(--text-on-status); }
 .nr-tabs__dot {
   flex: none;
@@ -188,6 +199,7 @@
   content: "\203A" / "";
   color: var(--text-tertiary);
 }
+.nr-breadcrumb--slash .nr-breadcrumb__item + .nr-breadcrumb__item::before { content: "/" / ""; }
 .nr-breadcrumb__crumb {
   position: relative;
   color: var(--text-secondary);
@@ -841,6 +853,55 @@
   background: var(--rule);
 }
 .nr-steps--vertical .nr-steps__step--done:not(:last-child)::after { background: var(--accent-soft); }
+/* Thread (first-run stage): labels joined by 38-wide stretches; travelled
+   stretches glow in accent-soft, the newest leads to a lighter tint, the
+   rest are dotted. Passed steps are buttons back. */
+.nr-steps--thread { justify-content: center; align-items: center; gap: var(--space-8); }
+.nr-steps--thread .nr-steps__step {
+  flex: none;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-8);
+  color: var(--text-tertiary);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+.nr-steps--thread .nr-steps__node { display: none; }
+.nr-steps--thread .nr-steps__step + .nr-steps__step::before {
+  position: static;
+  flex: none;
+  width: calc(var(--space-32) + var(--space-6));
+  height: 0;
+  border-top: 2px dotted var(--scene-rule);
+  border-radius: 0;
+  background: none;
+}
+.nr-steps--thread .nr-steps__step.nr-steps__step--done::before {
+  height: 2px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  box-shadow: 0 0 var(--space-6) var(--accent-soft);
+}
+.nr-steps--thread .nr-steps__step.nr-steps__step[aria-current="step"]::before {
+  height: 2px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--accent-soft), color-mix(in srgb, var(--accent-soft) 55%, white));
+  box-shadow: 0 0 var(--space-6) var(--accent-soft);
+}
+.nr-steps--thread .nr-steps__step--done { color: var(--text-secondary); }
+.nr-steps--thread .nr-steps__step[aria-current="step"] { color: var(--text-primary); }
+.nr-steps__back {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.nr-steps__back:hover { color: var(--text-primary); }
 
 /* ===========================================================================
    EdgeRail (macOS): a glanceable rail on the screen's right edge. Closed, a
@@ -920,6 +981,8 @@
 .nr-edge-rail__dot { flex: none; width: var(--space-8); height: var(--space-8); border-radius: 50%; background: var(--neutral); }
 .nr-edge-rail__dot--positive { background: var(--positive); }
 .nr-edge-rail__dot--caution { background: var(--caution); }
+.nr-edge-rail__dot--shared { background: var(--data-1); }
+.nr-edge-rail__dot--kept { background: var(--data-2); }
 .nr-edge-rail__button {
   appearance: none;
   position: relative;
@@ -941,6 +1004,34 @@
 .nr-edge-rail__button:active { filter: brightness(0.92); }
 .nr-edge-rail__link { color: var(--accent-text); font-weight: 600; text-decoration: none; }
 .nr-edge-rail__link:hover { text-decoration: underline; }
+/* The peek's header: the section's title and state, then the panel's round buttons. */
+.nr-edge-rail__head { display: flex; align-items: center; gap: var(--space-8); min-width: 0; }
+.nr-edge-rail__head .nr-edge-rail__title { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: var(--inline-gap); }
+.nr-edge-rail__app svg { width: var(--space-20); height: var(--space-20); color: var(--brand-blue); }
+/* Traces peek: every watched folder, scrolling past seven rows. */
+.nr-edge-rail__list {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(var(--size-list-row) * 7);
+  overflow-y: auto;
+  border-radius: var(--radius-card);
+  background: var(--card);
+}
+.nr-edge-rail__folder {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-width: 0;
+  min-height: var(--size-list-row);
+  padding: 0 var(--space-8) 0 var(--space-6);
+}
+.nr-edge-rail__folder + .nr-edge-rail__folder { box-shadow: inset 0 1px 0 var(--hairline); }
+.nr-edge-rail__folder--session { padding-inline-start: calc(var(--space-6) + var(--space-16) + var(--space-8)); }
+.nr-edge-rail__chevron { flex: none; width: var(--space-16); color: var(--text-secondary); }
+.nr-edge-rail__chevron svg { display: block; width: var(--space-10); height: var(--space-10); margin: 0 auto; }
+.nr-edge-rail__folder[aria-expanded="true"] .nr-edge-rail__chevron svg { transform: rotate(90deg); }
+.nr-edge-rail__folder-text { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+.nr-edge-rail__folder-text > * { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* Documentation stand-in for a screen whose right edge the rail sits on. */
 .nr-edge-rail__screen {
   position: relative;
@@ -982,6 +1073,64 @@
 /* Documentation only: draws a window at a fraction of its size. */
 .nr-pane-layout--miniature { zoom: 0.6; }
 
+/* ===========================================================================
+   StatusItem (macOS menu bar): the N at 14, 4 apart, a 17 x 17 micro bar
+   graph of the last 24 hours (six 4-hour steps, each two touching 1pt bars),
+   then the badge slot. 22 tall, nothing filled behind it; it takes the
+   menu bar's ink. The bar stand-in is for documentation only.
+   =========================================================================== */
+.nr-status-item__bar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-12);
+  height: var(--space-24);
+  padding: 0 var(--space-12);
+  border-radius: var(--radius-tile);
+  background: var(--pane-base);
+  color: var(--text-primary);
+}
+.nr-status-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: calc(var(--space-20) + var(--space-2));
+  color: var(--text-primary);
+}
+.nr-status-item__mark { flex: none; width: var(--space-14); height: var(--space-14); }
+.nr-status-item__graph { flex: none; width: calc(var(--space-16) + 1px); height: calc(var(--space-16) + 1px); shape-rendering: crispEdges; }
+.nr-status-item__axis { fill: currentColor; opacity: 0.35; }
+.nr-status-item__shared { fill: var(--data-1); }
+.nr-status-item__kept { fill: var(--data-2); }
+.nr-status-item__verified { fill: var(--positive); }
+.nr-status-item__calls { fill: var(--caution); }
+.nr-status-item--paused :is(.nr-status-item__shared, .nr-status-item__kept) { fill: var(--neutral); }
+.nr-status-item__badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(var(--space-10) + 1px);
+  height: calc(var(--space-10) + 1px);
+  padding: 0 calc(var(--space-2) + 0.5px);
+  border-radius: var(--radius-pill);
+  background: var(--badge-fill);
+  color: var(--text-on-status);
+  font-size: calc(var(--space-6) + 1px);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.nr-status-item__attention {
+  box-sizing: border-box;
+  flex: none;
+  width: var(--space-8);
+  height: var(--space-8);
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+
 /* ---- Forced colors and Reduce Motion -------------------------------------- */
 @media (forced-colors: active) {
   .nr-tabs__ember::after { background: Highlight; }
@@ -993,12 +1142,13 @@
   .nr-edge-rail__tile[aria-current="true"] { background: Highlight; color: HighlightText; forced-color-adjust: none; }
   .nr-steps__step--done .nr-steps__node,
   .nr-steps__step[aria-current="step"] .nr-steps__node { background: Highlight; }
+  .nr-status-item__badge { background: Highlight; color: HighlightText; forced-color-adjust: none; }
   .nr-tabbar__tabs, .nr-tabbar__search, .nr-tabbar__accessory,
   .nr-toolbar--floating, .nr-toolbar__group { border: 1px solid CanvasText; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .nr-tabs__ember, .nr-tabs__tab, .nr-breadcrumb__back, .nr-breadcrumb__crumb,
+  .nr-tabs__ember, .nr-tabs__tab, .nr-tabs__tab--lifted, .nr-breadcrumb__back, .nr-breadcrumb__crumb,
   .nr-sidebar__item, .nr-rail__menu, .nr-rail__item, .nr-rail__indicator,
   .nr-tabbar__tab, .nr-tabbar__indicator, .nr-toolbar__button, .nr-toolbar__button::before,
-  .nr-toolbar__prominent, .nr-edge-rail__tile, .nr-edge-rail__button { transition: none; }
+  .nr-toolbar__prominent, .nr-edge-rail__tile, .nr-edge-rail__button, .nr-steps--thread .nr-steps__step { transition: none; }
 }

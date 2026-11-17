@@ -1,6 +1,6 @@
 # Accessibility
 
-Every NEAR AI surface holds the same floors on every platform, measured against the worst ground glass can show, and checked by tests in each theme. Components carry the semantics of the system controls they stand in for, author no words of their own, and follow the person's settings for text size, motion, transparency and contrast. A product theme can change the accent; it can never lower a floor.
+Every Near AI surface holds the same floors on every platform, measured against the worst ground glass can show, and checked by tests in each theme. Components carry the semantics of the system controls they stand in for, author no words of their own, and follow the person's settings for text size, motion, transparency and contrast. A product theme can change the accent; it can never lower a floor.
 
 ## The floors
 
@@ -21,34 +21,26 @@ Contrast uses WCAG 2.x relative luminance with the sRGB linearization threshold 
 
 | Theme | Pairs checked | Pass | Closest text pair | Closest mark pair |
 |---|---|---|---|---|
-| `light` | 30 | 30 | `accent-text` on the pane, 4.74 | `toolbar-glyph-off` on a control, 3.03 |
-| `dark` | 30 | 30 | `caution-text` on the pane, 4.55 | `toolbar-glyph-off` on a control, 3.00 |
-| `light-hc` | 31 | 31 | `accent-text` on `menu`, 7.05 | `neutral` mark on `pane-opaque`, 3.09 |
-| `dark-hc` | 31 | 31 | `text-on-accent` on `accent-pressed`, 7.03 | `edge-hc` on `menu`, 3.00 |
-| `trace-light` | 30 | 29 | `text-placeholder` on the pane, 4.79 | `toolbar-glyph-off` on a control, 2.27 (fails) |
-| `trace-dark` | 30 | 28 | `caution-text` on the pane, 4.55 | `accent` selected fill on the pane, 1.09 (fails) |
+| `light` | 32 | 32 | `text-placeholder-on-opaque` on `pane-opaque`, 4.57 | `toolbar-glyph-off` on a control, 3.03 |
+| `dark` | 33 | 33 | `caution-text` on the pane, 4.55 | `toolbar-glyph-off` on a control, 3.00 |
+| `light-hc` | 33 | 33 | `text-on-status` on `badge-fill`, 7.13 | `neutral` mark on `pane-opaque`, 3.09 |
+| `dark-hc` | 34 | 34 | `text-on-accent` on `accent-pressed`, 7.03 | `edge-hc` on the pane, 3.32 |
+| `gateway-light` | 32 | 32 | `text-placeholder-on-opaque` on `pane-opaque`, 4.57 | `toolbar-glyph-off` on a control, 3.03 |
+| `gateway-dark` | 33 | 33 | `caution-text` on the pane, 4.55 | `toolbar-glyph-off` on a control, 3.00 |
 
-Focus rings clear 3:1 in every theme: 3.12 light, 3.17 dark, 4.64 light-hc, 5.62 dark-hc, 3.11 trace-light and 3.42 trace-dark (where the ring is #c9b3ff, lighter than the purple accent). The status marks clear 3:1 on `pane-opaque` everywhere, and `data-1` to `data-8` clear 3:1 on `surface-chart` in every theme.
+Focus rings clear 3:1 in every theme: 3.12 light and gateway-light, 3.17 dark and gateway-dark, 4.64 light-hc, 5.62 dark-hc. The dark themes' navy off knob holds 3:1 on its 38% track (3.34 on `pane-opaque`), and a passed proof's `proof-text` holds 5.37 (light) and 7.23 (dark) on `proof-tint`. The status marks clear 3:1 on `pane-opaque` everywhere, and `data-1` to `data-8` clear 3:1 on `surface-chart` in every theme.
 
 In `light-hc` the badge turns deep red (`badge-fill` #b01218) with a white count (`text-on-status` #ffffff) at 7.1:1, because a dark count on a light red tops out near 5:1.
 
-### The flagged Trace values
+### Flagged values
 
-Trace keeps its source values exactly, and three of them miss the floor. They stay flagged in their token notes until the Trace team changes them.
-
-| Theme | Pair | Ratio | Floor | What it affects |
-|---|---|---|---|---|
-| `trace-dark` | `accent` #6d14f3 as a selected fill on the pane over a white desktop | 1.09:1 | 3:1 | Selected segments, the switch-on track, checked checkboxes, the selected row's fill as a shape |
-| `trace-dark` | `toolbar-glyph-off` #83838c on a control | 2.63:1 | 3:1 | Toolbar glyphs whose pane is hidden |
-| `trace-light` | `toolbar-glyph-off` #8a8a90 on a control | 2.27:1 | 3:1 | The same glyphs in light |
-
-While they stand, Trace components never rely on these pairs alone. A selected segment or row also shows `text-on-accent` label ink (6.9:1 on the purple) and a weight change; a checkbox shows its checkmark; a toolbar toggle exposes its state in words to assistive technology and in its tooltip. Under Increase Contrast a Trace build switches to `light-hc` and `dark-hc`, which pass.
+A product theme's source value that misses a floor stays exact, flagged in its token note, and blocks that theme from shipping under the parent until it is fixed (NDS-6). None is flagged today. Gateway's two were its dark purple selected fill (1.09:1), which left when it took the parent accent (NDS-22), and its hidden-toolbar glyph (2.27:1 light, 2.63:1 dark), which took the parent's greys (NDS-50).
 
 ## Focus
 
 The parent specifies a focus ring and turns it on by default (NDS-5): 2px solid `focus-ring`, 2px outside the control, following its shape (radius = the control's radius + 2), shown for keyboard focus only (`:focus-visible` on the web; the system focus effect under Full Keyboard Access on Apple platforms).
 - Text fields, buttons, switches and tabs show the ring. Lists, trees and tables show focus as a full-row highlight (`selection` with `text-on-accent`), never as a ring around each row. [HIG: focus and selection]
-- A product may turn the ring off with `.nr-focus-off` on the web or `.focusEffectDisabled()` in SwiftUI. Trace does, by owner ruling on 2026-10-11. **Turning the focus ring off fails WCAG 2.4.7 (Focus Visible).** A product that does so still keeps focus order, Full Keyboard Access and the list selection highlight working.
+- A product may turn the ring off with `.nr-focus-off` on the web or `.focusEffectDisabled()` in SwiftUI. Gateway does, by owner ruling on 2026-10-11. **Turning the focus ring off fails WCAG 2.4.7 (Focus Visible).** A product that does so still keeps focus order, Full Keyboard Access and the list selection highlight working.
 - Never move focus without a person's action. Streaming output, new messages and finished agent runs never take focus from the composer.
 - A modal, sheet or popover sets its initial focus and returns focus to its trigger when it closes.
 - Sticky bars, toasts and floating toolbars never cover the focused element (WCAG 2.4.11).
@@ -67,7 +59,7 @@ The parent specifies a focus ring and turns it on by default (NDS-5): 2px solid 
 | Mod+F, Mod+1…n, Mod+, | Search, tabs in order, Settings |
 
 - **One tab stop per composite.** A list, tree, radio group, segmented control or tab row is one stop; arrows move inside it and typeahead jumps by name. A row is never its own tab stop (trace-commons tests this).
-- **Return takes the default, and the default is never destructive.** It is never Cancel either. An irreversible send or consent action is drawn prominent but never answers Return (NDS-15), and Contribute has no shortcut at all. Only the topmost modal answers keys.
+- **Return takes the default, and the default is never destructive.** It is never Cancel either. An irreversible send or consent action is drawn prominent but never answers Return (NDS-15), and a send such as Submit has no shortcut at all. Only the topmost modal answers keys.
 - **macOS.** Full Keyboard Access must reach every control, and the menu bar lists every command so nothing needs a pointer (Navigation and commands).
 - **iPadOS.** Use focus groups: Tab moves between groups (sidebar, list, composer), arrows move within one. Implement keyboard navigation only for text fields, text views, sidebars and collections, and leave buttons, segmented controls and switches to Full Keyboard Access. Order groups with `focusGroupIdentifier` and mark each group's primary item with `UIFocusGroupPriority`.
 - **Web, Windows and Linux.** Every control is reachable by Tab with a visible indicator (WCAG 2.1.1). Use roving `tabindex` inside composites. Keep disabled items in toolbars and menus discoverable with `aria-disabled="true"`; use `disabled` elsewhere. No keyboard traps.
@@ -79,7 +71,7 @@ The parent specifies a focus ring and turns it on by default (NDS-5): 2px solid 
 VoiceOver (Apple), TalkBack (Android), and NVDA, JAWS and Narrator on the Windows shell all read the same structure.
 - **Components author no words** (NDS-16). The consumer passes the label, value, hint and state words from the copy source; the component wires them into the platform API. A missing word renders empty and fails review; a component never invents a fallback.
 - **Native representations.** A custom control declares the semantics of the system control it replaces. In SwiftUI, give it an `accessibilityRepresentation` built from the native `Toggle`, `Picker` or `Button`, so VoiceOver speaks "checked", "mixed", "expanded" or "2 of 3" in the person's language. On the web use native elements first (`button`, `input type="checkbox"`, `dialog`, `details`) and the WAI-ARIA patterns only for composites with no native element (tree, tablist, listbox, menu). In Compose set `Role`, `toggleableState` and `stateDescription`, the last from the copy source.
-- **Headings.** Mark screen, pane and card titles as headings (`.isHeader`, `heading()`, `h1`–`h6`), one `h1` per page, levels in order. A heading's words match the navigation label that leads to it. Tree depth may map to heading levels where it organizes the page (Trace's folders and sessions).
+- **Headings.** Mark screen, pane and card titles as headings (`.isHeader`, `heading()`, `h1`–`h6`), one `h1` per page, levels in order. A heading's words match the navigation label that leads to it. Tree depth may map to heading levels where it organizes the page (Gateway's folders and traces).
 - **Landmarks on the web.** Use `banner`, `navigation`, `main`, `complementary`, `search`, `contentinfo`, and labeled `region` and `form`.
 - **Grouping.** A list row, card, legend cell or `StatCard` is one element with a combined label (`.accessibilityElement(children: .combine)`, `Modifier.semantics(mergeDescendants = true)`, a single accessible name on the web). Notices, menus and modals are containers; a modal is marked modal (`.isModal`, `aria-modal="true"`).
 - **Status in words.** Status dots and decorative glyphs are hidden; the word is read. An unknown value reads the product's unknown word ("unavailable"), never "dash" and never zero.
@@ -97,7 +89,7 @@ VoiceOver (Apple), TalkBack (Android), and NVDA, JAWS and Narrator on the Window
 | Gaze and pinch on visionOS | `target-spatial` | 60 | Centers 60 apart |
 | Pointer on macOS and desktop web | `target-pointer` | 28 | 20 |
 
-- The visible control may be smaller than its target; the hit area extends invisibly to the target size and never over a neighbor (see Layout, density and targets). trace-commons' small controls (the 22×24 kebab, the 20pt refresh button, the 12pt info glyph, the 15pt checkbox) all get hit areas.
+- The visible control may be smaller than its target; the hit area extends invisibly to the target size and never over a neighbor (see Layout, density and targets). trace-commons' small controls (the 22×24 kebab, the refresh pill, the 12pt info glyph, the 15pt checkbox) all get hit areas.
 - On the web, WCAG 2.5.8 asks for 24×24 CSS px. A smaller pointer target passes only by spacing: a 24px circle centered on it must not touch another target or its circle. In dense toolbars that means at least 4px between 20px buttons.
 - The dense tier (`.nr-dense`, 20px rows) is for pointer input only. Touch density never shrinks below the touch floor.
 - Every gesture has an on-screen alternative: swipe actions also sit in the row's menu, drag-to-reorder also exists as Move commands, pinch-to-zoom also has buttons (WCAG 2.5.7). No custom multi-finger gestures.
@@ -131,7 +123,7 @@ Beyond Reduce Motion:
 
 ### Reduce Transparency
 
-Native materials frost themselves; painted glass does not. Read the setting (`accessibilityReduceTransparency`, `prefers-reduced-transparency: reduce`) and paint every pane and floating surface `pane-opaque` with no blur; cards and controls keep their painted fills on top. Android has no such setting; the Android stack paints `pane-base` below API 31 and `pane-opaque` in battery saver. The Windows shell paints `pane-opaque` when the system's transparency effects are off. Test Reduce Transparency and Increase Contrast separately and together, in both appearances. See Glass and materials.
+On Apple platforms Reduce Transparency is the system's to apply (NDS-23): the native material frosts itself, and the painted veil and fill stay on top unchanged, following Apple's guidance. Where a product paints its own glass, read the setting (`prefers-reduced-transparency: reduce` on the web, the shells' own flags) and paint every pane and floating surface `pane-opaque` with no blur; cards and controls keep their painted fills on top. Android has no such setting; the Android stack paints `pane-base` below API 31 and `pane-opaque` in battery saver. The Windows shell paints `pane-opaque` when the system's transparency effects are off. Test Reduce Transparency and Increase Contrast separately and together, in both appearances. See Glass and materials.
 
 ### Increase Contrast and the `-hc` themes
 
@@ -156,7 +148,7 @@ Native Windows controls use the platform's high-contrast resources.
 
 ### Clear and Tinted glass
 
-Apple's Liquid Glass setting (Clear or Tinted from the 26.1 releases; a continuous slider from most transparent to most tinted on 27) changes system glass: toolbars, tab bars and system sheets. NEAR AI's painted glass (NDS-7) does not follow it, because no public API reports the value. Legibility never depends on the setting, since the veil is measured at the worst case. Test both ends: with Tinted, system bars read denser than the painted panes beside them, an accepted trade-off.
+Apple's Liquid Glass setting (Clear or Tinted from the 26.1 releases; a continuous slider from most transparent to most tinted on 27) changes system glass: toolbars, tab bars and system sheets. Near AI's painted glass (NDS-7) does not follow it, because no public API reports the value. Legibility never depends on the setting, since the veil is measured at the worst case. Test both ends: with Tinted, system bars read denser than the painted panes beside them, an accepted trade-off.
 
 ## Color and color-vision safety
 

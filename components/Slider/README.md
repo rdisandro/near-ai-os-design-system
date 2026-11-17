@@ -2,7 +2,7 @@
 
 A track and thumb for setting a value in a fixed range where the rough position matters more than the exact number, such as an agent's temperature; pair it with a `NumberField` when the exact value matters too.
 
-Intentional addition. trace-commons has no slider. NEAR AI agent and model settings (temperature, top P, steps per run) are bounded ranges that people tune by feel, and HIG, M3 and Unity all define one.
+Intentional addition. trace-commons has no slider. Near AI agent and model settings (temperature, top P, steps per run) are bounded ranges that people tune by feel, and HIG, M3 and Unity all define one.
 
 ## When to use
 
@@ -58,7 +58,7 @@ The input's box is `--nr-target` tall, so the whole height is the hit area.
 - A native range input (`role="slider"`) named by its label. `aria-valuetext` carries the value in the consumer's words, with any unit.
 - `aria-describedby` points at the end labels.
 - The consumer supplies the label, end labels and value text.
-- The `accent` fill and thumb hold 3:1 on the pane except in Trace dark (1.09:1, flagged), where the thumb's light ring carries the position.
+- The `accent` fill and thumb hold 3:1 on the pane except in Gateway dark (1.09:1, flagged), where the thumb's light ring carries the position.
 
 ## Platforms
 

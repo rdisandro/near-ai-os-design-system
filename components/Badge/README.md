@@ -4,7 +4,7 @@ A small red count of decisions a person owes, placed on the tab, menu-bar item o
 
 ## When to use
 
-- Only for decisions owed: sessions waiting for Contribute or Keep, approvals an agent is blocked on, consent a run needs.
+- Only for decisions owed: traces waiting to be submitted, approvals an agent is blocked on, consent a run needs.
 - Never for queue depth, credit, totals, unread news or promotion. Those are values in the content.
 - Zero draws nothing.
 - Use a `StatusLabel` dot (with words in the host's accessible value) for attention without a count. There is no dot-only badge.
@@ -30,7 +30,8 @@ The **subtle** badge is 14 tall (`space-14`) on `toggle-off` (the 16% ink) and t
 
 - **Count.** Red pill on a tab title, a rail item or a menu-bar item.
 - **Subtle.** The 16% ink pill inside a segment or a selected tab.
-- **Anchored.** Over a glyph (the menu-bar tray, a toolbar icon). The host is the glyph's container (`nr-badge__host`).
+- **Anchored.** Over a glyph (a toolbar icon). The host is the glyph's container (`nr-badge__host`).
+- **Status item** (macOS menu bar, NDS-33). Drawn inside the `StatusItem` image, after its graph: 11 tall with a 7pt figure and a 2.5 inset, matched to other menu-bar apps. Hidden at zero **and when unknown**: the status item draws its attention mark instead, because a dash in the menu bar reads as a glyph, not a count.
 
 ## States
 
@@ -39,9 +40,9 @@ The **subtle** badge is 14 tall (`space-14`) on `toggle-off` (the 16% ink) and t
 | 0 | Nothing | Nothing (the host reads its name) |
 | 1 to 99 | The number | "3 decisions waiting" |
 | Over 99 | `99+` | "More than 99 decisions waiting" |
-| Unknown | `—` in the same pill | "Decisions waiting: unavailable" |
+| Unknown | `—` in the same pill (in the status item: no badge, the attention mark) | "Decisions waiting: unavailable" |
 
-- An unknown count keeps the pill so the surface never reads as "nothing owed" when the product cannot tell. It never shows 0.
+- An unknown count keeps the pill so the surface never reads as "nothing owed" when the product cannot tell. It never shows 0. The status item is the one exception: it hides the badge and shows its attention mark, which says the same thing.
 - A failed refresh keeps the last count only while the product still considers it fresh; after that it draws the dash.
 - Under the `-hc` themes `badge-fill` darkens and the count turns white (`text-on-status` changes with it).
 - Not interactive: no hover, pressed or focus. The host owns those.
@@ -66,7 +67,7 @@ The **subtle** badge is 14 tall (`space-14`) on `toggle-off` (the 16% ink) and t
 |---|---|---|---|---|
 | In tabs and segments | Custom `GlassBadge` | `.badge(n)` on `TabView` items (native, system red) | `BadgedBox { Badge(containerColor, contentColor) { Text("3") } }` | `<span class="nr-badge">` |
 | On toolbar items | `.badge(n)` on toolbar items (macOS 26), `NSItemBadge.count` in AppKit | `.badge(n)` | `BadgedBox` on the `IconButton` | `.nr-badge--anchored` |
-| App icon, menu bar | `NSDockTile.badgeLabel`; the status item draws its own count | `setBadgeCount` | Launcher badge from the notification channel | Not used |
+| App icon, menu bar | `NSDockTile.badgeLabel`; the status item draws its own count at 11 (`GlassMenuBarStrip`) | `setBadgeCount` | Launcher badge from the notification channel | Not used |
 | Native? | Native on Dock and toolbars, custom in tabs | Native | Native | Custom |
 
 ## Do and don't
@@ -80,4 +81,4 @@ The **subtle** badge is 14 tall (`space-14`) on `toggle-off` (the 16% ink) and t
 
 ## Source
 
-`GlassBadge` in `Components/Indicators.swift` (decisions owed; `badgeFill` with `textOnStatus`; 16 minimum or 14 subtle; cap 99 then `99+`; nil draws a dash; VoiceOver reads the caller's label) and the segment badge rules in `Components/Navigation.swift` ("Never queue depth or credit", `.count(0)` draws none, `.unknown` draws a dash). M3 badges (16dp large badge, 4dp padding, at most four characters) set the Android fit; the HIG `.badge` modifier is the native iOS path.
+`GlassBadge` in `Components/Indicators.swift` (decisions owed; `badgeFill` with `textOnStatus`; 16 minimum or 14 subtle; cap 99 then `99+`; nil draws a dash; VoiceOver reads the caller's label) and the segment badge rules in `Components/Navigation.swift` ("Never queue depth or credit", `.count(0)` draws none, `.unknown` draws a dash). M3 badges (16dp large badge, 4dp padding, at most four characters) set the Android fit; the HIG `.badge` modifier is the native iOS path. The status-item badge (11 tall, 7pt figure, 2.5 inset, hidden at zero or unknown with an attention mark) is `GlassMenuBarStrip` in `Components/MenuBarPanel.swift` (owner, 2026-10-21, #1539).

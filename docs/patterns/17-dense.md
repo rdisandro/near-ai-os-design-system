@@ -1,6 +1,6 @@
 # Dense and pro-tool patterns
 
-Dense is the fourth density tier (NDS-10). It is for panels people work in for hours with many values in view: an agent's configuration, a model's parameters, the spans of a trace, an evaluation table, a run's log. The benchmark is the Unity Editor (Editor Foundations) and Unity App UI, the most fully documented dense desktop system available: 20px rows, 2px between fields, an 18 / 4 / 8 inspector inset and a 15px indent. This section maps those patterns onto the NEAR AI tokens and onto Apple and Material where they differ.
+Dense is the fourth density tier (NDS-10). It is for panels people work in for hours with many values in view: an agent's configuration, a model's parameters, the spans of a trace, an evaluation table, a run's log. The benchmark is the Unity Editor (Editor Foundations) and Unity App UI, the most fully documented dense desktop system available: 20px rows, 2px between fields, an 18 / 4 / 8 inspector inset and a 15px indent. This section maps those patterns onto the Near AI tokens and onto Apple and Material where they differ.
 
 Apply `.nr-dense` to a panel's container. Components inside read the density properties: `--nr-h-control` and `--nr-h-row` become `size-control-dense` 20, `--nr-gap` becomes `space-2`, `--nr-target` becomes 20. Colors never change with density.
 
@@ -50,7 +50,7 @@ A dense panel stays usable at 275 wide with no horizontal scrolling. Below that 
 - When a field has focus, its label turns `accent-text`, so the eye finds the active row in a long list.
 - A value that can never be edited here is plain text in a `KeyValueList`, never a disabled field.
 
-**Example.** An agent named Release notes writer: Model (`Select`), Temperature 0.7 (`NumberField` with a `Slider`), Max output tokens 4,096, Tools (web.search, repo.read in a reorderable list), Tool approval (Ask me, Automatic, Never), Retries 2. A Trace session span: Started 09:14, Duration 52 min, Tool Claude Code, Redactions 3, Proof verified.
+**Example.** An agent named Release notes writer: Model (`Select`), Temperature 0.7 (`NumberField` with a `Slider`), Max output tokens 4,096, Tools (web.search, repo.read in a reorderable list), Tool approval (Ask, Automatic, Never), Retries 2. A trace's span: Started 09:14, Duration 52 min, Tool Claude Code, Redactions 3, Proof verified.
 
 [Unity Foundations: inspector, inheritance] [trace-commons: TracesInspectorHost.swift]
 
@@ -145,14 +145,14 @@ A pro-tool window (an agent workbench: runs, transcript or canvas, inspector, co
 A dense tree is a `ListRow` tree at 20 rows.
 
 - Indent `dense-indent` 15 per level, six levels at most, with the chevron in the gutter. Labels are `mac-label`; only top-level containers are bold. Counts and durations sit at the trailing end in `text-secondary`, tabular.
-- The tree is one tab stop. Up and Down move; Right expands, then moves to the first child; Left collapses, then moves to the parent; Home and End jump; typing jumps to a matching label; Return acts (in Trace, it opens the review).
+- The tree is one tab stop. Up and Down move; Right expands, then moves to the first child; Left collapses, then moves to the parent; Home and End jump; typing jumps to a matching label; Return acts (in Gateway, it opens the review).
 - Shift-click selects a range; ⌘-click (Ctrl-click) toggles a row. Rename through the context menu or by double-clicking a selected label.
 - The selected row takes `selection` with `text-on-accent`; hover takes `row-hover`, never over a selected row. Keyboard focus draws the ring around the tree.
 - Expose tree semantics: tree and tree item roles, level, expanded state, position in set.
 - Drag vertically to reorder and sideways to change the parent. The 2px `accent` insertion line starts with a small circle at the target depth.
 - Virtualize long trees. A fixed row height makes it cheap.
 
-Examples: Trace's folder and session tree; an agent run with its steps and tool calls.
+Examples: Gateway's folder and trace tree; an agent run with its steps and tool calls.
 
 [Unity Foundations: tree view, foldout] [trace-commons: TracesTree.swift]
 
@@ -218,10 +218,11 @@ Choose the tier by scope, then the tone by severity. Every message follows Probl
 
 ## Hide or disable
 
-- **Disable** a control when its value matters but cannot change now (it is set automatically, or the service has not answered), or when it is normally available and temporarily is not. Disable the whole control at `opacity-disabled` 0.45, with no hover, and give the reason in its tooltip or beside it.
+- **Hide** an action in a row or a card that cannot run, and a control whose state is not yet known (NDS-41). A Reconnect with no tool to reconnect, Stop on a session the app does not control and a switch waiting for the service's answer are absent, not dimmed. Gateway's Submit pill on a folder with nothing to submit is absent too.
 - **Hide** a control that applies only in rare cases or whose value means nothing in the current state. A dependent control appears directly below the control that reveals it, ideally on the next line.
-- Never hide a button to show state. An action the service does not offer for this item (Trace's Submit pill on a folder with nothing to submit) is absent; an action that applies but cannot run yet is disabled with a reason.
-- Context menus hide what cannot run. The menu bar disables it. Tabs are never disabled.
+- **Disable** toolbar toggles, menu-bar items and form fields whose value matters but cannot change now (it is set automatically, or the service has not answered). Disable the whole control at `opacity-disabled` 0.45, with no hover, and give the reason in its tooltip or beside it. A toolbar toggle that does not apply to the current view (Gateway's Graph outside Traces) is disabled, not hidden, so the toolbar never reflows.
+- Never hide a button to show state; state is a dot plus words beside it.
+- Context menus and row menus hide what cannot run. The menu bar disables it. Tabs are never disabled.
 
 [Unity Foundations: interactions]
 

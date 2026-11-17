@@ -60,7 +60,7 @@ The whole row is the hit area, and the box's own hit area grows to `--nr-target`
 - A native checkbox: `<input type="checkbox">` with the `indeterminate` property for mixed; a SwiftUI `Toggle` in checkbox style, with `Toggle(sources:isOn:)` for a group so the system says "mixed".
 - The sentence is the name. A parent lists its children with `aria-controls`.
 - The consumer supplies the words; the platform speaks the state.
-- State is never color alone: a check, a dash or an empty box. `text-on-accent` on `accent` holds 4.5:1. In Trace dark the accent fill sits at 1.09:1 on the pane (flagged), so the white check carries the state there.
+- State is never color alone: a check, a dash or an empty box. `text-on-accent` on `accent` holds 4.5:1. In Gateway dark the accent fill sits at 1.09:1 on the pane (flagged), so the white check carries the state there.
 
 ## Platforms
 

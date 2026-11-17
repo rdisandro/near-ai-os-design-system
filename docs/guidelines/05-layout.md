@@ -24,18 +24,21 @@ The lead desktop layout is trace-commons' floating three-pane window (`Pane`):
 
 | Pane | Width | Behavior |
 |---|---|---|
-| Main (navigation) | `size-pane-main` 440, fixed | Always shown; holds the tabs and the list or tree |
-| Content (map, document, canvas) | flexible, minimum `size-pane-content-min` 360 | The only pane that takes window resizes; content layer |
+| Main (navigation) | `size-pane-main` 440 by default | Always shown; holds the tabs and the list or tree. A divider moves width between it and the content pane; with the content pane hidden it takes the width |
+| Content (map, document, canvas) | flexible, minimum `size-pane-content-min` 360 | Takes window resizes; content layer |
 | Inspector | `size-pane-inspector` 293 (two thirds of main) | Opens on demand (a selection, a review); nothing closes it automatically |
 
-Panes float `pane-gap` 10 apart with no window padding; opening a pane grows the window to the right by the pane plus its gap and closing one shrinks it, so nothing else moves. On first launch the window shows the inspector at a screen width of `bp-inspector` 900 and the content pane at `bp-map` 1100. The default window is 1193 by 614; the traffic lights sit inside the main pane, which reserves 78 by 30 for them.
+Panes float `pane-gap` 10 apart with no window padding; opening a pane grows the window to the right by the pane plus its gap and closing one shrinks it from the right, so nothing else moves. Near the screen edge the window slides left just enough to show the new pane, and closing never snaps it back (NDS-35). Pane widths are remembered per window. On first launch the window shows the inspector at a screen width of `bp-inspector` 900 and the content pane at `bp-map` 1100. The default window is 1193 by 614; the traffic lights sit inside the main pane, which reserves 78 by 30 for them.
 
-Other desktop measures: modals 780 wide (regular) or 450 (narrow); a settings section list 180; popovers and node cards 260; menus at least 220; menu-bar panels and peeks 380.
+Lay tab content out for the main pane's default first: at 440 with 16 insets the content is 408 wide, one column, two columns above about 690. The first element of every tab sits 16 below the tab bar; the pane owns that gap.
+
+Other desktop measures: modals 780 wide (regular) or 450 (narrow); a settings section list 180; popovers and node cards 260; menus at least 220; the menu-bar panel 285 (NDS-33); edge-rail peeks and tray flyouts 380 (`size-panel-width`); the first-run stage 860 by 760, scaled to fit (NDS-32).
 
 ## Margins, gutters and spacing
 
 - Page margins: 16 below 600, 24 from 600. On Apple, respect the readable content guide and safe areas; on Android, the window insets; on the web, `env(safe-area-inset-*)`.
 - Inside panes: `pane-padding` 12, cards `card-padding-y` 12 and `card-padding-x` 14, `card-gap` 10 between cards, `inline-gap` 6 between a dot or icon and its words.
+- Inside a section card, body text sits `space-10` further in than the card's title and its bottom actions. Nested containers (chart wells, quiet cards, row cards, dashed boxes) give that inset back and line up with the title. Text inside a container gets `space-8` more on each side; quote and warning boxes keep the container's edge.
 - The spacing scale is `space-2` to `space-16` in steps of 2, then `space-20` and `space-24` inside components; `space-32`, `space-40`, `space-48` and `space-64` separate page sections on the web and tablets.
 - Space sibling groups with gap, not margins on each element.
 - Keep running text within `size-readable-width` 680; on wide screens widen the margins or add panes, never the measure.
@@ -68,7 +71,7 @@ A control smaller than the target gets an invisible hit area extended to it (an 
 
 ## Hover is never the only way
 
-Every hover behavior needs a keyboard, tap or long-press equivalent: info popovers pin on click and on Return; menu-bar pills expand on focus; chart values show on focus and in the table view; the edge rail opens from its handle's accessibility action. Touch platforms show no hover-only content.
+Every hover behavior needs a keyboard, tap or long-press equivalent: info popovers pin on click and on Return; map node cards show on focus; chart values show on focus and in the table view; the edge rail opens from its handle's accessibility action. Touch platforms show no hover-only content.
 
 ## Reflowing panes
 

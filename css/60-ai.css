@@ -206,6 +206,15 @@
   gap: var(--space-8);
   min-width: 0;
 }
+/* One assistant: the head is read, not shown, so the thread is one voice (NDS-44). */
+.nr-message--headless .nr-message__head {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .nr-message__time { color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
 .nr-message__bubble { max-width: var(--size-readable-width); }
 .nr-message__body {
@@ -485,7 +494,7 @@
   white-space: nowrap;
   vertical-align: middle;
 }
-.nr-proof-tag--verified { background: var(--positive-tint); color: var(--positive-text); }
+.nr-proof-tag--verified { background: var(--proof-tint); color: var(--proof-text); }
 .nr-proof-tag--pending { background: var(--caution-tint); color: var(--caution-text); }
 .nr-proof-tag--outside { background: var(--critical-tint); color: var(--critical-text); }
 /* A failed check is its own pill: outlined, so it never reads as outside. */
@@ -544,8 +553,118 @@
   overflow-wrap: anywhere;
   color: var(--text-primary);
 }
+/* Seal-bearing tags (NDS-43): the reply tag leads the action row and is
+   itself the popover button; the header pill folds to its seal. */
+.nr-proof-tag--seal {
+  gap: var(--space-6);
+  min-height: var(--space-24);
+  padding: 0 var(--space-10) 0 var(--space-6);
+  border: 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+.nr-proof-tag--header {
+  gap: var(--space-6);
+  min-height: calc(var(--space-32) + var(--space-4));
+  padding: 0 var(--space-12) 0 var(--space-8);
+  border: 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+.nr-proof-tag--folded { padding: 0 var(--space-8); }
+.nr-proof-tag--seal:focus-visible,
+.nr-proof-tag--header:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 [data-theme$="-hc"] .nr-proof-tag { box-shadow: inset 0 0 0 1px var(--edge-hc); }
 [data-theme$="-hc"] .nr-proof-tag--failed { box-shadow: inset 0 0 0 2px currentColor; }
+
+/* ===========================================================================
+   ProofSeal: a guilloché drawn from the signing key (NDS-43)
+   =========================================================================== */
+.nr-proof-seal {
+  --nr-seal: 44px;
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: var(--nr-seal);
+  height: var(--nr-seal);
+  border-radius: 50%;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.nr-proof-seal svg { display: block; width: 100%; height: 100%; }
+.nr-proof-seal--14 { --nr-seal: 14px; }
+.nr-proof-seal--20 { --nr-seal: 20px; }
+.nr-proof-seal--56 { --nr-seal: 56px; }
+.nr-proof-seal--160 { --nr-seal: 160px; }
+.nr-proof-seal__band,
+.nr-proof-seal__rose,
+.nr-proof-seal__empty {
+  fill: none;
+  stroke-width: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+.nr-proof-seal__band { stroke: var(--proof-text); }
+.nr-proof-seal__rose { stroke: var(--accent-soft); }
+.nr-proof-seal__empty { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 3; }
+.nr-proof-seal__badge { fill: var(--proof-text); }
+.nr-proof-seal__mark {
+  fill: none;
+  stroke: var(--proof-tint);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* At glyph sizes the rose drops out; the bands and the badge carry it. */
+.nr-proof-seal--14 .nr-proof-seal__rose,
+.nr-proof-seal--20 .nr-proof-seal__rose { display: none; }
+.nr-proof-seal--14 .nr-proof-seal__band,
+.nr-proof-seal--20 .nr-proof-seal__band { stroke-width: 1.2; }
+.nr-proof-seal--failed .nr-proof-seal__badge { fill: var(--critical); }
+.nr-proof-seal--failed .nr-proof-seal__mark { stroke: var(--card-on-opaque); }
+.nr-proof-seal--none .nr-proof-seal__mark,
+.nr-proof-seal--checking .nr-proof-seal__mark { stroke: var(--text-tertiary); }
+.nr-proof-seal__spin {
+  fill: none;
+  stroke: var(--text-secondary);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 60 200;
+  transform-origin: 0 0;
+  animation: nr-proof-seal-spin var(--duration-spin) var(--ease-linear) infinite;
+}
+@keyframes nr-proof-seal-spin { to { transform: rotate(360deg); } }
+/* The stamp runs once, when the evidence arrives; never on a timer. */
+.nr-proof-seal--stamp { animation: nr-proof-seal-stamp var(--duration-spring-expressive) var(--spring-expressive) both; }
+.nr-proof-seal--stamp::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, var(--proof-tint) 50%, transparent 65%);
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: nr-proof-seal-shine 900ms var(--ease-standard) 250ms;
+}
+@keyframes nr-proof-seal-stamp { from { transform: scale(0.9); opacity: 0.4; } to { transform: none; opacity: 1; } }
+@keyframes nr-proof-seal-shine {
+  from { transform: translateX(-100%); opacity: 0.7; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+.nr-proof-seal-code {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-width: 0;
+}
+.nr-proof-seal-code__value { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.nr-proof-seal-match {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-8) var(--space-10);
+  border-radius: var(--radius-control);
+  background: var(--proof-tint);
+  color: var(--proof-text);
+}
 
 /* ===========================================================================
    AgentRun
@@ -812,6 +931,9 @@
   .nr-prompt-composer__box,
   .nr-tool-call__command { border: 1px solid CanvasText; }
   .nr-proof-tag { border: 1px solid CanvasText; }
+  .nr-proof-seal__band, .nr-proof-seal__rose, .nr-proof-seal__empty { stroke: CanvasText; }
+  .nr-proof-seal__badge { fill: CanvasText; }
+  .nr-proof-seal__mark { stroke: Canvas; }
   .nr-agent-run__fill { background: Highlight; }
 }
 
@@ -820,7 +942,8 @@
   .nr-message__caret,
   .nr-message__spinner,
   .nr-agent-run__spinner,
-  .nr-agent-run__progress--indeterminate .nr-agent-run__fill { animation: none; }
+  .nr-agent-run__progress--indeterminate .nr-agent-run__fill,
+  .nr-proof-seal__spin, .nr-proof-seal--stamp, .nr-proof-seal--stamp::after { animation: none; }
   .nr-message__action, .nr-message__cite, .nr-prompt-composer__pill,
   .nr-prompt-composer__icon, .nr-prompt-composer__send, .nr-prompt-composer__chip-remove,
   .nr-proof-tag__info, .nr-agent-run__button, .nr-agent-run__fill,

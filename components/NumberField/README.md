@@ -2,7 +2,7 @@
 
 A field for an exact number with its unit, stepper buttons and keyboard nudging, for values like max tokens or a timeout; in dense inspectors its label scrubs the value.
 
-Intentional addition. trace-commons has no numeric input, stepper or slider. NEAR AI agent and inference settings are numbers with units (max tokens, temperature, timeouts, budgets), and Unity's numeric field (units, label scrubbing, expressions, commit and revert) is the benchmark for editing many of them.
+Intentional addition. trace-commons has no numeric input, stepper or slider. Near AI agent and inference settings are numbers with units (max tokens, temperature, timeouts, budgets), and Unity's numeric field (units, label scrubbing, expressions, commit and revert) is the benchmark for editing many of them.
 
 ## When to use
 

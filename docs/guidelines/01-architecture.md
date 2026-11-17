@@ -5,12 +5,12 @@ The system has three layers. The parent defines every role and rule. A product t
 | Layer | Owns | Example |
 |---|---|---|
 | Parent (this system) | Color roles, type steps, spacing, radii, materials, motion, density, components, patterns, contrast floors | `card` is the painted fill of a card; `size-cta` is 34 |
-| Product theme | The accent family and, optionally, the first data colors | Trace: `accent` #6d14f3 in dark, #15608a in light |
+| Product theme | The accent family and, optionally, the first data colors | Gateway: the parent's Near AI blue since 2026-10-19 (NDS-22), with an accent-filled open toolbar menu and a lighter light well |
 | Platform adapter | How a role renders: native material, control, font face, motion engine | `glass-veil` over `NSGlassEffectView` on macOS; over `backdrop-filter` on web |
 
 ## Token tiers
 
-1. **Brand constants.** Colors that belong to a brand and never change with the theme: `brand-blue`, `brand-tile`, `brand-paper`, `brand-ink`, and the Trace product purple `trace-purple`. Use them in logos, illustration and, where a role says so, as a role's value. Never style a control with a brand constant directly.
+1. **Brand constants.** Colors that belong to a brand and never change with the theme: `brand-blue`, `brand-sky`, `brand-deep-blue` (the near.ai/brand blues), `brand-tile`, `brand-tile-dark` (the dark app-icon ground), `brand-paper`, `brand-ink`, and the Gateway product purple `gateway-purple`. Use them in logos, illustration and, where a role says so, as a role's value. Never style a control with a brand constant directly.
 2. **Roles.** Every other color token names a job, not a hue: `pane-fill`, `text-secondary`, `accent`, `caution-text`, `data-3`. Components and screens use roles only. A role has a value in each of the six themes.
 3. **Measures.** Spacing, radius, size, opacity, blur, z-index, breakpoint, duration and easing tokens. They do not change with the theme.
 4. **Type styles.** One step scale (`micro` to `mono`) rendered per platform tier (`mac-`, `web-`, `ios-`, `android-`), plus two hero styles.
@@ -22,14 +22,14 @@ The CSS custom property for any token is `--` plus its name (`--accent`, `--spac
 
 | Theme | When | Notes |
 |---|---|---|
-| `light` | Light appearance, any NEAR AI surface without a product theme | Cool grey glass, NEAR blue accent #035ca3 |
-| `dark` | Dark appearance | Navy glass, NEAR blue accent #7ebcff with dark text |
+| `light` | Light appearance, any Near AI surface without a product theme | Cool grey glass, Near AI blue accent #035ca3 |
+| `dark` | Dark appearance | Navy glass, Near AI blue accent #7ebcff with dark text |
 | `light-hc` | Light appearance with Increase Contrast, `prefers-contrast: more` or high-contrast text | Veil 90%, every text pair 7:1, 1px `edge-hc` on every painted surface |
 | `dark-hc` | Dark appearance with increased contrast | As above |
-| `trace-light` | Trace, light | The trace-commons flat light theme: blue accent #15608a |
-| `trace-dark` | Trace, dark | The trace-commons flat dark theme: purple accent #6d14f3 |
+| `gateway-light` | Gateway, light | The trace-commons flat light theme: the parent accent #035ca3, an accent-filled open toolbar menu, a 28% well |
+| `gateway-dark` | Gateway, dark | The trace-commons flat dark theme: the parent accent #7ebcff with dark text, an accent-filled open toolbar menu |
 
-Pick the theme in this order: the product (parent or Trace), then the appearance (the person's in-app choice if they made one, else the system's), then contrast (the `-hc` variant when the system asks for more contrast). A product without its own increased-contrast pair uses the parent `-hc` themes, accent included; legibility wins over brand there.
+Pick the theme in this order: the product (parent or Gateway), then the appearance (the person's in-app choice if they made one, else the system's), then contrast (the `-hc` variant when the system asks for more contrast). A product without its own increased-contrast pair uses the parent `-hc` themes, accent included; legibility wins over brand there.
 
 Appearance follows the system by default. An in-app Light / Dark / System choice is allowed and lives in Settings > General > Appearance. It applies at once to every window and never needs a restart.
 
@@ -57,7 +57,7 @@ Glass shows whatever is behind it, so text is measured over the worst case. Unde
 
 ## The relationship to trace-commons
 
-trace-commons keeps `design-tokens/glass.tokens.json` as the Trace product's own source, generating `GlassTokens.swift` and its GTK and WinUI roles. The parent took its flat-theme values as the baseline and its accent family as the Trace theme. The main names map like this:
+trace-commons keeps `design-tokens/glass.tokens.json` as the Gateway product's own source, generating `GlassTokens.swift` and its GTK and WinUI roles. The parent took its flat-theme values as the baseline and its accent family as the Gateway theme; since 2026-10-20 trace-commons has taken the parent's accent, chart and `surface-chart` values back (NDS-22). The main names map like this:
 
 | trace-commons key | Parent role |
 |---|---|
@@ -69,22 +69,25 @@ trace-commons keeps `design-tokens/glass.tokens.json` as the Trace product's own
 | `wellFill`, `fieldFill`, `consentFill` | `well`, `field`, `consent` |
 | `popoverFill`, `menuFill` | `popover`, `menu` |
 | `textPrimary`, `textSecondary`, `textTertiary`, `placeholder` | `text-primary`, `text-secondary`, `text-tertiary`, `text-placeholder` |
-| `purple` / flat `controlSelected` | `accent` (Trace themes) |
-| `purpleText` | `accent-text` |
+| `purple` / flat `controlSelected`, `ctaFill`, `toggleOn` | `accent` |
+| `purpleText`, `linkText` | `accent-text` |
 | `purpleSoft` | `accent-soft` |
 | `statusOn`, `statusAsk`, `statusOutside`, `statusOff` | `positive`, `caution`, `critical`, `neutral` |
 | `statusOnText`, `statusAskText`, `statusOutsideText` | `positive-text`, `caution-text`, `critical-text` |
 | `tintOn`, `tintAsk`, `tintOutside`, `tintAccent`, `tintNeutral` | `positive-tint`, `caution-tint`, `critical-tint`, `accent-tint`, `neutral-tint` |
 | `selection`, `menuHover`, `menuHoverText` | `selection`, `menu-hover`, `text-on-accent` |
 | `hairline`, `rule`, `edgeHighContrast` | `hairline`, `rule`, `edge-hc` |
-| `dataShared`, `dataKept`, `dataInference` | `data-1`, `data-2`, `data-3` (Trace themes) |
+| `chartSeries1` to `chartSeries4`, `chartSurface`, `chartGrid` | `data-1` to `data-4`, `surface-chart`, `chart-grid` |
+| `dataShared`, `dataKept` | Gateway's Shared and Kept graph pair (product vocabulary) |
+| `cardNested`, `controlOnMenu`, `controlOnSelection`, `toggleKnobOff` | `card-nested`, `control-on-menu`, `control-on-selection`, `toggle-knob-off` |
+| `firstRunCard`, `firstRunControl`, `firstRunRule`, `firstRunGlow` | `scene-card`, `scene-control`, `scene-rule`, `scene-glow-brand` |
 | `radius.pane/card/cardQuiet/control` (flat) | `radius-pane`, `radius-card`, `radius-card-quiet`, `radius-control` |
 | `size.cta`, `size.controlLarge`, `size.control` | `size-cta`, `size-control-large`, `size-control` |
 | `motion.fast`, `motion.standard`, curve 0.2, 0.8, 0.2, 1 | `duration-fast`, `duration-standard`, `ease-standard` |
 
-Trace-only tokens (menu-bar mode colors, map fields, tool tints, the edge-rail handle) stay in the Trace file; they are product vocabulary, not parent roles. The window-tier values trace-commons dropped for macOS (pane and popover blur, scrim blur, window radius 22, scene glows) come back here as `blur-pane`, `blur-floating`, `blur-scrim`, `radius-window` and `scene-glow-1` to `-3`, because the web, Windows, Linux and Android need them.
+Gateway-only tokens (menu-bar mode colors, the status item's `menuStrip*` colors, map fields, tool tints, the edge-rail handle, the first run's beam and approve greens, the hero promotion gradients) stay in the Gateway file; they are product vocabulary, not parent roles. The window-tier values trace-commons dropped for macOS (pane and popover blur, scrim blur, window radius 22, scene glows) come back here as `blur-pane`, `blur-floating`, `blur-scrim`, `radius-window` and `scene-glow-1` to `-3`, because the web, Windows, Linux and Android need them.
 
-Migration path for Trace, when its team chooses: keep the generator and the drift test, read the parent `tokens.json` first, then apply `glass.tokens.json` as the Trace overrides. Nothing in the parent requires that change today.
+Migration path for Gateway, when its team chooses: keep the generator and the drift test, read the parent `tokens.json` first, then apply `glass.tokens.json` as the Gateway overrides. Nothing in the parent requires that change today.
 
 ## Governance
 

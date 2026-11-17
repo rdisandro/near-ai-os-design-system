@@ -1,4 +1,4 @@
-"""Colour helpers for the NEAR AI parent system: sRGB <-> OKLCH, alpha
+"""Colour helpers for the Near AI parent system: sRGB <-> OKLCH, alpha
 compositing, WCAG 2 contrast. Pure stdlib."""
 import math
 

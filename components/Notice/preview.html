@@ -1,37 +1,50 @@
-<!-- @dsCard group="Feedback" height=340 subtitle="A quiet card whose title dot carries the tone" -->
+<!-- @dsCard group="Feedback" height=420 subtitle="Popover notices with a tone coin, and the inline form" -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Notice — preview</title></head>
 <body>
-<div class="nr-preview nr-scene">
-  <section class="nr-pane" style="width: 352px">
-    <div class="nr-notice-stack">
-      <div class="nr-notice-stack__head"><button class="nr-button nr-button--link web-label">Dismiss all</button></div>
-      <section class="nr-notice" aria-labelledby="n1">
-        <span class="nr-status-label nr-status-label--strong web-label" id="n1"><span class="nr-status-label__dot nr-status-label__dot--caution"></span><span class="nr-status-label__text">The watcher isn't running.</span></span>
-        <p class="nr-notice__body web-label">It stopped when this Mac went to sleep, so new sessions aren't being read. Restart it to pick them up.</p>
-        <div class="nr-notice__actions">
-          <button class="nr-button nr-button--glass web-label">Restart</button>
-          <button class="nr-button nr-button--link web-label">Dismiss</button>
+<div class="nr-preview nr-scene nr-compact">
+  <section class="nr-pane nr-stack" style="width: 440px" aria-label="Private AI tab">
+    <div class="nr-notice-pile">
+      <section class="nr-notice nr-notice--popover" aria-labelledby="p1">
+        <span class="nr-notice__coin nr-notice__coin--neutral" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 7.2v4M8 4.8v.01"/></svg></span>
+        <div class="nr-notice__main">
+          <p class="nr-notice__title mac-body-strong" id="p1">Private AI is available on this Mac.<span class="nr-tag mac-micro">New</span></p>
+          <p class="nr-notice__body mac-caption">Lets your tools send AI requests through this app, answered by Near AI once you sign in. While it's on, other apps on this computer can use it too, charged to your accounts.</p>
+          <details class="nr-expander">
+            <summary class="nr-expander__summary"><svg class="nr-expander__chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5L8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="nr-expander__label mac-label">Details</span></summary>
+            <div class="nr-expander__content mac-caption">Turning it on doesn't change where any tool sends requests. You connect tools one at a time.</div>
+          </details>
+          <div class="nr-notice__actions">
+            <button class="nr-button nr-button--primary mac-label">Turn on</button>
+            <button class="nr-button nr-button--link mac-label">Not now</button>
+          </div>
         </div>
+        <span></span>
       </section>
-      <section class="nr-notice" aria-labelledby="n2">
-        <span class="nr-status-label nr-status-label--strong web-label" id="n2"><span class="nr-status-label__dot nr-status-label__dot--neutral"></span><span class="nr-status-label__text">Watching is paused until 9:00.</span></span>
-        <p class="nr-notice__body web-label">Sessions that finish before then stay on this Mac until you resume.</p>
-        <div class="nr-notice__actions">
-          <button class="nr-button nr-button--link web-label">Dismiss</button>
-        </div>
-      </section>
+      <section class="nr-notice nr-notice--popover" aria-hidden="true"><span></span><div></div><span></span></section>
+      <section class="nr-notice nr-notice--popover" aria-hidden="true"><span></span><div></div><span></span></section>
     </div>
+    <section class="nr-notice nr-notice--popover" aria-labelledby="p2">
+      <span class="nr-notice__coin nr-notice__coin--caution" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5l6 10.5H2z"/><path d="M8 6.5v3M8 11.2v.01"/></svg></span>
+      <div class="nr-notice__main">
+        <p class="nr-notice__title mac-body-strong" id="p2">The watcher isn't running.</p>
+        <p class="nr-notice__body mac-caption">It stopped when this Mac went to sleep, so new traces aren't being read.</p>
+        <div class="nr-notice__actions">
+          <button class="nr-button nr-button--primary mac-label">Restart</button>
+        </div>
+      </div>
+      <button class="nr-icon-button nr-icon-button--small" aria-label="Close"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+    </section>
   </section>
-  <section class="nr-pane" style="width: 352px">
+  <section class="nr-pane nr-regular" style="width: 352px" aria-label="Inline notice on a compact layout">
     <section class="nr-notice" aria-labelledby="n3">
       <span class="nr-status-label nr-status-label--strong web-label" id="n3"><span class="nr-status-label__dot nr-status-label__dot--critical"></span><span class="nr-status-label__text">History couldn't be read.</span></span>
-      <p class="nr-notice__body web-label">Another Near.ai window has the history file open. Close that window, then try again.</p>
+      <p class="nr-notice__body web-label">Another window has the history file open. Close that window, then refresh.</p>
       <div class="nr-notice__actions">
-        <button class="nr-button nr-button--glass web-label">Try again</button>
+        <button class="nr-button nr-button--primary web-label">Refresh</button>
+        <button class="nr-button nr-button--link web-label">Dismiss</button>
       </div>
-      <p class="nr-inline-alert" role="alert"><span class="nr-inline-alert__text web-caption">The file is still open. Quit Near.ai from the menu bar and open it again.</span></p>
     </section>
   </section>
 </div>

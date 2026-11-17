@@ -37,9 +37,9 @@ tokens.json                 parent roles x six themes, scales, type, motion
       +-- GTK       brand_tokens.rs      @define-color sheets, flattened opaque
 ```
 
-**Shape of the source.** Colors carry one value per theme (`light`, `dark`, `light-hc`, `dark-hc`, `trace-light`, `trace-dark`) as `#rrggbb` or `#rrggbbaa`, plus a `usage` note. Shadows are per theme too. Spacing, radius, size, opacity, blur, zIndex, breakpoint, duration and easing are theme-independent. Type is a set of tiers (`mac`, `web`, `ios`, `android`, `hero`) over one step scale. Names are kebab-case; CSS uses `--<name>`, Swift and Kotlin use lowerCamel (`glass-veil` becomes `glassVeil`).
+**Shape of the source.** Colors carry one value per theme (`light`, `dark`, `light-hc`, `dark-hc`, `gateway-light`, `gateway-dark`) as `#rrggbb` or `#rrggbbaa`, plus a `usage` note. Shadows are per theme too. Spacing, radius, size, opacity, blur, zIndex, breakpoint, duration and easing are theme-independent. Type is a set of tiers (`mac`, `web`, `ios`, `android`, `hero`) over one step scale. Names are kebab-case; CSS uses `--<name>`, Swift and Kotlin use lowerCamel (`glass-veil` becomes `glassVeil`).
 
-**Product themes are overrides.** A product authors only what differs from the parent's light and dark columns (NDS-1), and the build resolves them into full theme columns, which is what `trace-light` and `trace-dark` are. Trace overrides 16 roles: `accent`, `accent-pressed`, `text-on-accent`, `accent-text`, `accent-soft`, `accent-tint`, `tab-ember`, `tab-ember-halo`, `focus-ring`, `selection`, `menu-hover`, `toolbar-expanded`, `toolbar-glyph-off` and `data-1..3`. Product-only roles (Trace's menu-bar strip, edge rail, map, tool tints, promo treatments, the Classic gradients) stay in the product file and never enter the parent. A product theme without its own increased-contrast pair falls back to the parent `light-hc` and `dark-hc`, whose accent is NEAR AI blue; a product that needs its accent there adds `<product>-light-hc` and `<product>-dark-hc` solved to the 7:1 text floor.
+**Product themes are overrides.** A product authors only what differs from the parent's light and dark columns (NDS-1), and the build resolves them into full theme columns, which is what `gateway-light` and `gateway-dark` are. Gateway overrides two roles today: `toolbar-expanded` and the light `well` (it took the parent's accent family and data colors, NDS-22, and hidden-toolbar greys, NDS-50). Product-only roles (Gateway's menu-bar strip, edge rail, map, tool tints, promo treatments, the Classic gradients) stay in the product file and never enter the parent. A product theme without its own increased-contrast pair falls back to the parent `light-hc` and `dark-hc`, whose accent is Near AI blue; a product that needs its accent there adds `<product>-light-hc` and `<product>-dark-hc` solved to the 7:1 text floor.
 
 **Every generator validates before it writes.** Port the checks from trace-commons' `scripts/design-tokens/generate.py` and add the parent's:
 
@@ -60,7 +60,7 @@ Follow trace-commons' pattern: one generator, one generated file, one drift test
 public enum NRColor {
     public static let glassVeil = NRDynamicColor(
         light: 0xE3E6EC_A8, dark: 0x070A1A_AD, lightHC: 0xE3E6EC_E6, darkHC: 0x070A1A_E6)
-    public static let accent = NRDynamicColor(            // Trace build: trace-light / trace-dark columns
+    public static let accent = NRDynamicColor(            // Gateway build: gateway-light / gateway-dark columns
         light: 0x15608A_FF, dark: 0x6D14F3_FF, lightHC: 0x01599F_FF, darkHC: 0x7EBCFF_FF)
 }
 
@@ -87,10 +87,10 @@ On iOS the same struct resolves through `UIColor { traits in … }` on `traits.u
 **Migrating trace-commons to inherit from the parent.** Do it in steps. The first three ship with no visual change; each later step changes one thing and its tests:
 
 1. Vendor the parent `tokens.json` into `design-tokens/near-ai/` at a pinned version, recording its `meta.synced` date and a content hash that `--check` verifies.
-2. Write `design-tokens/trace.theme.json` with Trace's 16 overrides and its product-only roles, seeded from the flat theme's values as they ship, including the three that `contrast-report.json` flags.
+2. Write `design-tokens/trace.theme.json` with Gateway's 16 overrides and its product-only roles, seeded from the flat theme's values as they ship, including the three that `contrast-report.json` flags.
 3. Teach `generate.py` to read both files and map kebab names onto the existing keys through an alias table (`glass-veil` to `glassVeil`, `accent-soft` to `purpleSoft`, `critical-text` to `statusOutsideText`), so `GlassTokens.swift` keeps its API and, for the flat theme, its values. No screen changes.
 4. Replace the `*HighContrast` partner tokens with the `-hc` columns, and extend `TokenDriftTests` and `FlatThemeContrastTests` to every theme.
-5. Keep Classic as the optional expressive treatment in the product file (`edge-classic-*` from the parent, the gradients from Trace).
+5. Keep Classic as the optional expressive treatment in the product file (`edge-classic-*` from the parent, the gradients from Gateway).
 6. Retire `glass.tokens.json`, then rename the deprecated keys over one release (`purpleSoft` to `accentSoft`).
 7. Widen the GTK and WinUI outputs from the 11 shell roles to the full parent role set.
 
@@ -155,7 +155,7 @@ Rules for Android:
 
 ### CSS custom properties
 
-The artifact compiles `tokens.json` into `tokens.css`: a `:root, [data-theme="light"]` block, one block per other theme (`[data-theme="dark"]`, `light-hc`, `dark-hc`, `trace-light`, `trace-dark`), one `:root` block of theme-independent scales, then the type classes (`.mac-*`, `.web-*`, `.ios-*`, `.android-*`, `.hero-*`). Products import the same file.
+The artifact compiles `tokens.json` into `tokens.css`: a `:root, [data-theme="light"]` block, one block per other theme (`[data-theme="dark"]`, `light-hc`, `dark-hc`, `gateway-light`, `gateway-dark`), one `:root` block of theme-independent scales, then the type classes (`.mac-*`, `.web-*`, `.ios-*`, `.android-*`, `.hero-*`). Products import the same file.
 
 Set `data-theme` on `<html>` from a small resolver that runs inline in `<head>` before first paint, and again when the system setting or the user's Light / Dark / System choice changes (NDS-17):
 
@@ -244,7 +244,7 @@ Rules for Tailwind:
 
 ## Glass by platform
 
-Glass lives on the navigation and floating layers only (NDS-9). Each platform below draws the same three tiers: the native or CSS blur with the veil and fill, an opaque `pane-base` where blur is missing, and `pane-opaque` under Reduce Transparency and its equivalents.
+Glass lives on the navigation and floating layers only (NDS-9). Each platform below draws the same three tiers: the native or CSS blur with the veil and fill, an opaque `pane-base` where blur is missing, and `pane-opaque` under Reduce Transparency and its equivalents on the shells that paint their own glass. On Apple platforms Reduce Transparency is the system's to apply (NDS-23).
 
 ### macOS: SwiftUI and AppKit
 
@@ -254,24 +254,21 @@ A pane is the native material with the parent's veil and flat fill painted over 
 /// Tier code. The only place that knows which material this Mac draws.
 struct NRPaneBackground: View {
     var radius: CGFloat = NRRadius.pane                          // radius-pane 20
-    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     @Environment(\.controlActiveState) private var activeState
     @Environment(\.colorSchemeContrast) private var contrast
 
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: radius, style: .continuous)
-        if reduceTransparency {
-            shape.fill(NRColor.paneOpaque.color)                    // solid, no material
-        } else {
-            ZStack {
-                NRNativeMaterial(cornerRadius: radius)
-                shape.fill(NRColor.glassVeil.color)
-                shape.fill(NRColor.paneFill.color)
-                if activeState != .key { shape.fill(NRColor.inactiveDim.color) }
-            }
-            .overlay {
-                if contrast == .increased { shape.strokeBorder(NRColor.edgeHc.color, lineWidth: 1) }
-            }
+        // Reduce Transparency is the system's to apply (NDS-23): the material
+        // frosts itself; the veil and fill stay as they are.
+        ZStack {
+            NRNativeMaterial(cornerRadius: radius)
+            shape.fill(NRColor.glassVeil.color)
+            shape.fill(NRColor.paneFill.color)
+            if activeState != .key { shape.fill(NRColor.inactiveDim.color) }
+        }
+        .overlay {
+            if contrast == .increased { shape.strokeBorder(NRColor.edgeHc.color, lineWidth: 1) }
         }
     }
 }
@@ -304,7 +301,7 @@ struct NRNativeMaterial: NSViewRepresentable {
 
 Rules for the Mac:
 
-- Paint `pane-opaque` when `accessibilityReduceTransparency` is on. Apple asks painted translucency to turn opaque; the system frosts its own glass but not our veil. trace-commons currently leaves this to the system (its R14), and the migration closes that gap.
+- Leave Reduce Transparency to the system (NDS-23). The owner ruled on 2026-10-02 not to regress Apple's guidance: the native material frosts itself, and the painted veil and fill stay. trace-commons does the same (its R14). Only the shells that paint their own glass (web, Windows, Linux, Android) switch to `pane-opaque`.
 - Under Increase Contrast, the `-hc` columns resolve by themselves; add the 1pt `edge-hc` stroke to painted surfaces and never a border of our own on system glass. On macOS 27, also stroke interactive controls when `accessibilityShowBorders` is true.
 - `.glassEffect`, `GlassEffectContainer`, `.glassProminent` and `NSGlassEffectView` appear only in tier code behind `#available`. Keep trace-commons' source-scan test that fails when a screen calls them.
 - The window is transparent with a full-size content view and no title-bar separator, so the material shows through.
@@ -326,19 +323,17 @@ extension View {
 
 ### iOS and iPadOS: SwiftUI and UIKit
 
-The screen is an opaque pane: `pane-base`, or `pane-opaque` under Reduce Transparency. System bars, tab bars, toolbars and sheets keep their own Liquid Glass; set `.tint(accent)` at the root and never paint them. A floating toolbar the app draws follows the Mac recipe.
+The screen is an opaque pane, `pane-base`; Reduce Transparency is the system's to apply to its own glass (NDS-23). System bars, tab bars, toolbars and sheets keep their own Liquid Glass; set `.tint(accent)` at the root and never paint them. A floating toolbar the app draws follows the Mac recipe.
 
 ```swift
 /// Design-system tier code: the only iOS view that calls .glassEffect.
 struct NRFloatingToolbar<Content: View>: View {
     @ViewBuilder var content: Content
-    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     var body: some View {
         let bar = HStack(spacing: NRSpace.s8) { content }.padding(NRSpace.s8)
-        if reduceTransparency {
-            bar.background(NRColor.paneOpaque.color, in: .capsule)
-        } else if #available(iOS 26, *) {
+        // Reduce Transparency: the system frosts its own glass (NDS-23).
+        if #available(iOS 26, *) {
             bar.background(NRColor.glassVeil.color, in: .capsule)
                .glassEffect(.regular.tint(NRColor.glassVeil.scaledAlpha(0.25).color), in: .capsule)
         } else {
@@ -349,7 +344,7 @@ struct NRFloatingToolbar<Content: View>: View {
 }
 ```
 
-In UIKit the same tiers are `UIVisualEffectView(effect: UIGlassEffect(style: .regular))` with `tintColor` on iOS 26, `UIBlurEffect(style: .systemMaterial)` before it, and an opaque view when `UIAccessibility.isReduceTransparencyEnabled`. Partial sheets stay inset and go opaque at full height, as the system draws them. Never stack glass: controls on a glass toolbar are plain fills.
+In UIKit the same tiers are `UIVisualEffectView(effect: UIGlassEffect(style: .regular))` with `tintColor` on iOS 26, `UIBlurEffect(style: .systemMaterial)` before it, with Reduce Transparency left to the system (NDS-23). Partial sheets stay inset and go opaque at full height, as the system draws them. Never stack glass: controls on a glass toolbar are plain fills.
 
 ### Android: Compose
 
@@ -451,7 +446,7 @@ Every spring token is a (stiffness, damping ratio) pair at mass 1. Each platform
 
 The conversions:
 
-- **SwiftUI.** response = 2π / √k and dampingFraction = ζ. The exact equivalent is `.interpolatingSpring(mass: 1, stiffness: k, damping: 2ζ√k)`; `Spring(duration: response, bounce: 1 − ζ)` is the same curve. `spring-ember` is Trace's tab ember, `.spring(response: 0.35, dampingFraction: 0.85)`, as shipped.
+- **SwiftUI.** response = 2π / √k and dampingFraction = ζ. The exact equivalent is `.interpolatingSpring(mass: 1, stiffness: k, damping: 2ζ√k)`; `Spring(duration: response, bounce: 1 − ζ)` is the same curve. `spring-ember` is Gateway's tab ember, `.spring(response: 0.35, dampingFraction: 0.85)`, as shipped.
 - **Compose.** `spring(dampingRatio = ζ, stiffness = k)`, used directly or through `NearMotion`.
 - **CSS.** The `linear()` token samples the spring's step response; its `duration-spring-*` partner is the settle time. Always use the pair together. Where `linear()` is unsupported, fall back to `ease-standard` at the same duration.
 
@@ -495,7 +490,7 @@ export function Button({ kind = 'glass', bar = false, className, ...rest }: Butt
 }
 ```
 
-**Choose one primitive library per app.** React Aria Components covers the whole inventory, including number fields, tables and internationalized behavior. Radix covers the overlays and form controls. The Tauri shell on `main` already uses Base UI through shadcn, which is an equivalent choice there. Render native elements wherever the primitive allows, so the bundle's `:hover`, `:active`, `:focus-visible` and `:disabled` rules apply; where a primitive manages a state itself, style its attribute beside the pseudo-class (`[data-pressed]` with `:active`).
+**Choose one primitive library per app.** React Aria Components covers the whole inventory, including number fields, tables and internationalized behavior. Radix covers the overlays and form controls. The Tauri shell on trace-commons `main` still uses Base UI through shadcn. The owner ordered every shadcn reference removed from it on 2026-09-30, including the colored left bar on alerts; that work is in #1146, which has not merged. Don't build new surfaces on shadcn. Render native elements wherever the primitive allows, so the bundle's `:hover`, `:active`, `:focus-visible` and `:disabled` rules apply; where a primitive manages a state itself, style its attribute beside the pseudo-class (`[data-pressed]` with `:active`).
 
 | Component | React Aria Components | Radix |
 |---|---|---|
@@ -536,7 +531,7 @@ export function accentCandidates(seed: string) {
 }
 ```
 
-HCT tone differences predict contrast, which makes MCU a good first guess; the solver in the token build then nudges lightness in OKLCH against the worst-case grounds, as it did for the parent's NEAR AI blue (`brand-blue` #0091fd stepped to `accent` #035ca3 light and #7ebcff dark). Run MCU at build time only. A runtime seeded theme is out of scope until a product asks for one.
+HCT tone differences predict contrast, which makes MCU a good first guess; the solver in the token build then nudges lightness in OKLCH against the worst-case grounds, as it did for the parent's Near AI blue (`brand-blue` #0091fd stepped to `accent` #035ca3 light and #7ebcff dark). Run MCU at build time only. A runtime seeded theme is out of scope until a product asks for one.
 
 [material-web: status, recommendations] [trace-commons: Tauri on main]
 
@@ -580,11 +575,11 @@ The full matrix:
 | `toolbar-glyph-off` on `control` over the pane | 3:1 |
 | `edge-hc` on every ground, `-hc` themes | 3:1 |
 
-Write one shared checker (one linearization threshold, 0.04045) and call it from every platform's suite; trace-commons has six Swift copies plus Python, C# and Rust with two thresholds between them. Known failures are listed in `contrast-report.json` and kept visible as expected failures: in `trace-light`, `toolbar-glyph-off` on a control at 2.27:1; in `trace-dark`, the purple `accent` as a selected fill on the pane at 1.09:1 and `toolbar-glyph-off` at 2.63:1. A new failure fails the build. The tests model glass composites; they never measure a device, so the release that ships a new shell also records an on-device check over a pure white and a pure black wallpaper.
+Write one shared checker (one linearization threshold, 0.04045) and call it from every platform's suite; trace-commons has six Swift copies plus Python, C# and Rust with two thresholds between them. Known failures would be listed in `contrast-report.json` and kept visible as expected failures; there are none today. A new failure fails the build. The tests model glass composites; they never measure a device, so the release that ships a new shell also records an on-device check over a pure white and a pure black wallpaper.
 
 **Token drift.** Every generator runs with `--check` in CI. Each platform also decodes `tokens.json` in a unit test and compares every generated constant, every theme included: XCTest for Swift, a JUnit test for Kotlin, a Vitest test that parses `tokens.css`. A CSS lint fails any color, size, radius, shadow, blur, duration or easing literal in a part file that is not one of the allowed literals, and any `nr-` class outside its component's prefix.
 
-**Visual previews.** Render every component in at least `light`, `dark`, `trace-dark` and `light-hc`, over the scene and over a busy image:
+**Visual previews.** Render every component in at least `light`, `dark`, `gateway-dark` and `light-hc`, over the scene and over a busy image:
 
 - this artifact's component cards (`preview.html` in each folder);
 - the TCDesign gallery (`swift run TCDesignGallery`) and a SwiftUI `#Preview` per theme;
@@ -596,7 +591,7 @@ Write one shared checker (one linearization threshold, 0.04045) and call it from
 - **Web:** axe-core in Playwright; keyboard traversal tests (Tab order, Escape, Return, the visible focus ring); emulated `forced-colors`, `prefers-contrast: more`, `prefers-reduced-motion` and `prefers-reduced-transparency`; 200% text zoom.
 - **Apple:** `performAccessibilityAudit()` in XCUITest; Dynamic Type to AX5 and the macOS text sizes; VoiceOver with Reduce Transparency, Increase Contrast and Reduce Motion on.
 - **Android:** Espresso `AccessibilityChecks`, Compose semantics assertions, a 200% font scale run and a TalkBack pass.
-- **All:** targets measured against `target-pointer` 28, `target-touch-apple` 44, `target-touch-android` 48 and `target-spatial` 60. A product that turns the focus ring off (`.nr-focus-off`, as Trace does) fails WCAG 2.4.7, and its audit says so.
+- **All:** targets measured against `target-pointer` 28, `target-touch-apple` 44, `target-touch-android` 48 and `target-spatial` 60. A product that turns the focus ring off (`.nr-focus-off`, as Gateway does) fails WCAG 2.4.7, and its audit says so.
 
 [trace-commons: FlatThemeContrastTests.swift, test inventory, CI] [HIG: accessibility]
 

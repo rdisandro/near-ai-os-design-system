@@ -2,7 +2,7 @@
   "name": "near-ai-os-design-system",
   "version": "1.0.0",
   "private": true,
-  "description": "Near AI OS Design System: tokens, component styles and guidelines for NEAR AI products on desktop, web, tablet and phone.",
+  "description": "Near AI OS Design System: tokens, component styles and guidelines for Near AI products on desktop, web, tablet and phone.",
   "files": [
     "dist",
     "assets"

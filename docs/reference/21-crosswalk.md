@@ -17,7 +17,7 @@ Rows follow the catalogue groups: Actions, Presentation, Inputs, Navigation, Con
 | Component | trace-commons | macOS | iOS, iPadOS | Android (Compose M3) | Web (ours; material-web ref) | Unity (App UI; UITK) |
 |---|---|---|---|---|---|---|
 | `Button` | `GlassButtonStyle` (`.primary`, `.secondary`, `.glass`, `.submit`, `.link`, `.destructive`), `GlassButtonSize` | `Button` + custom `ButtonStyle`; `NSButton` | `Button` + `.glassProminent` / `.glass` in bars; `UIButton.Configuration` | `Button`, `FilledTonalButton`, `OutlinedButton`, `TextButton` (XS-XL) | `.nr-button` on `<button>`; `md-filled-button`, `md-gb-button` | `Button` (accent, quiet); UITK `Button` |
-| `IconButton` | `GlassRoundButton`, `GlassPillIconButton`, `GlassToolbarButton`, `GlassKebab`, `GlassRefreshButton`, `GlassInfoButton` | `Button { Image }` + `.help()`; image `NSButton` | `Button` + `.buttonBorderShape(.circle)`; `UIButton` | `IconButton`, `FilledTonalIconButton`, `IconToggleButton` | `.nr-icon-button` + `aria-label`; `md-icon-button` | `IconButton`, `ActionButton`; UITK `ToolbarButton` |
+| `IconButton` | `GlassRoundButton` (with `isOn:` as a toggle), `GlassRoundMenu`, `GlassPillIconButton`, `GlassToolbarButton`, `GlassKebab`, `GlassInfoButton`; refresh is `GlassRefreshPill` (a labelled `Button`, NDS-36) | `Button { Image }` + `.help()`; image `NSButton` | `Button` + `.buttonBorderShape(.circle)`; `UIButton` | `IconButton`, `FilledTonalIconButton`, `IconToggleButton` | `.nr-icon-button` + `aria-label`; `md-icon-button` | `IconButton`, `ActionButton`; UITK `ToolbarButton` |
 | `SplitButton` | `GlassSplitButton` | `Menu(primaryAction:)`; `NSComboButton` | `Menu(primaryAction:)`; `UIButton` with `menu` | `SplitButtonLayout` (Expressive) | `.nr-split-button`; `md-gb-split-button` | none (`Button` + `MenuTrigger`) |
 | `ActionBar` | `GlassActionBar`, `GlassActionNote` | custom footer row in the window or sheet | sheet `.toolbar` with `.cancellationAction` / `.confirmationAction` | dialog button row; custom `Row` | `.nr-action-bar`; `md-dialog` `actions` slot | `Dialog` button group (App UI `ActionBar` is a selection bar) |
 | `Menu` | `GlassMenu`, `GlassMenuItem`, `GlassMenuSeparator`, `GlassMenuRowStyle`, `GlassIconMenu` | `Menu`, `.contextMenu`; `NSMenu` | `Menu`, `.contextMenu`; `UIMenu` | `DropdownMenu`, `DropdownMenuItem` (Expressive groups) | `.nr-menu` on `[popover]`, `role="menu"`; `md-menu`, `md-gb-menu` | `Menu`, `MenuItem`, `MenuSection`; UITK `GenericDropdownMenu` |
@@ -45,8 +45,10 @@ Rows follow the catalogue groups: Actions, Presentation, Inputs, Navigation, Con
 | `Toolbar` | `GlassToolbarGroup`, `GlassToolbarButton`, `GlassFloatingGroup` | `.toolbar`, `ToolbarItemGroup`; `NSToolbar` | `.toolbar`, `ToolbarSpacer`; `UIToolbar` | `HorizontalFloatingToolbar`, `FlexibleBottomAppBar` | `.nr-toolbar`, `role="toolbar"`; `md-gb-toolbar` | `Toolbar`, `ActionGroup`; UITK `Toolbar` |
 | `StepProgress` | `GlassStepProgress` | custom | custom | custom | `.nr-steps` on `<ol>` | `PageIndicator` (nearest) |
 | `EdgeRail` | `EdgeRailGeometry`, `GlassRailTile`, `GlassRailHandle`, `GlassRailRule` | screen-edge `NSPanel` | none | none | `.nr-edge-rail` (desktop shells only) | none |
+| `StatusItem` | `GlassMenuBarStrip` (`MenuBarPanel.swift`) | `NSStatusItem` with a non-template `NSImage` drawn per menu-bar appearance | none (Live Activities, widgets) | none (ongoing notification) | none; Windows and Linux shells use a template tray icon | none |
 | `Pane` | `GlassPane`, `GlassThreePane`, `GlassPaneFill` | `NSGlassEffectView` / `NSVisualEffectView` + painted veil and fill | opaque screen pane; `.glassEffect` only in tier code | `Surface` + backdrop blur (API 31+) | `.nr-pane` | `SplitView`, `Pane`; Editor docked window |
 | `Card` | `GlassCard`, `GlassIconCard`, `GlassEyebrowCard`, `GlassPromoCard` | custom; `GroupBox` nearest | inset grouped `Section`; custom | `Card`, `ElevatedCard`, `OutlinedCard` | `.nr-card`; `md-gb-card` | none |
+| `GetStartedCard` | `GetStartedCard` (app target), `InsightsSampleBanner` | custom card | custom card | custom `Card` | `.nr-get-started` | none |
 | `ListRow` | `GlassListRow`, `GlassOptionRow`, `GlassActivityRow` | `List` row; `NSTableView` row | `List` row; `UICollectionViewListCell` | `ListItem` (Expressive segmented) | `.nr-list-row`; `md-list-item` | `ListViewItem`; UITK `ListView` |
 | `DataTable` | `GlassTableHead`, `GlassTableRow` (no sorting or scrolling) | `Table`; `NSTableView` | `Table` (one column on compact) | custom `LazyColumn` | `.nr-data-table` on `<table>` | `GridView`; UITK `MultiColumnListView` |
 | `PropertyInspector` | addition (`GlassPaneInsets.inspector` + `GlassKeyValueList`) | `.inspector`, `Form`; `NSSplitViewItem` inspector | `.inspector` (sheet on compact), `Form` | `SupportingPaneScaffold` pane | `.nr-property-inspector` | `InputLabel` rows; Editor Inspector |
@@ -59,7 +61,7 @@ Rows follow the catalogue groups: Actions, Presentation, Inputs, Navigation, Con
 | `StatusLabel` | `GlassStatusLabel`, `GlassStatusDot` | custom `Label` | custom `Label` | custom `Row` | `.nr-status-label` | none |
 | `Tag` | `GlassTag` | custom capsule | custom capsule | custom `Surface` | `.nr-tag` | non-clickable `Chip` |
 | `Badge` | `GlassBadge` | `.badge()` on rows; custom | `.badge()` on `Tab` and rows; `badgeValue` | `Badge`, `BadgedBox` | `.nr-badge`; `md-badge` | `Badge` |
-| `Notice` | `GlassNotice` | custom quiet card | custom | custom `Card` (M3 banner is tokens only) | `.nr-notice` | `HelpBox`; UITK `HelpBox` |
+| `Notice` | `GlassNotice`, `GlassPopoverNotice`, `GlassPopoverStack` | custom quiet card | custom | custom `Card` (M3 banner is tokens only) | `.nr-notice` | `HelpBox`; UITK `HelpBox` |
 | `InlineAlert` | `GlassAlert` | `Text` in `critical-text` | same | `supportingText` with `isError` | `.nr-inline-alert`, `role="alert"` | `HelpText` (destructive) |
 | `Toast` | addition | custom glass banner (no system toast) | custom glass banner | `Snackbar`, `SnackbarHost` | `.nr-toast`, `aria-live="polite"`; `md-gb-snackbar` | `Toast`; `ShowNotification` |
 | `Spinner` | `GlassSpinner` | `ProgressView()`; spinning `NSProgressIndicator` | `ProgressView()`; `UIActivityIndicatorView` | `CircularProgressIndicator`, `LoadingIndicator` | `.nr-spinner`; `md-circular-progress` | `CircularProgress` |
@@ -69,9 +71,10 @@ Rows follow the catalogue groups: Actions, Presentation, Inputs, Navigation, Con
 | `Message` | addition | custom | custom | custom | `.nr-message` in `role="log"` | `ThreadMessage` |
 | `PromptComposer` | addition | `TextEditor` in the painted well + send `Button` | `TextField(axis: .vertical)` + send `Button` | `TextField` + `IconButton` | `.nr-prompt-composer` | `ThreadComposer` |
 | `ProofTag` | addition (on `GlassTag`; `menuNoProof`) | custom | custom | custom | `.nr-proof-tag` | none |
+| `ProofSeal` | addition (LibreChat `Seal.tsx`, `ProofGlyph`; no Gateway equivalent) | `Canvas` or `Path` from the key | same | `Canvas` `drawPath` | `.nr-proof-seal` (inline SVG) | none |
 | `AgentRun` | addition (`GlassActivityRow`, `GlassSpinner`) | custom `DisclosureGroup` of steps | same | custom | `.nr-agent-run` on `<ol>` | `Thread` (nearest) |
 | `ToolCall` | addition (`GlassToolTile`, `GlassTool`) | custom `DisclosureGroup` | same | custom | `.nr-tool-call` on `<details>` | `AccordionItem` (nearest) |
-| `Logo` | `GlassBrandMark` (the "N" only) | vector asset `Image` | vector asset `Image` | `VectorDrawable` `Image` | `.nr-logo` inline `<svg>` | `Image` |
+| `Logo` | `GlassBrandMark` (the "N" only), `GlassBrandMarkDrawing` (the N drawn on), `GlassNearWordmark` (the wordmark from the kit's paths) | vector asset `Image` | vector asset `Image` | `VectorDrawable` `Image` | `.nr-logo` inline `<svg>` | `Image` |
 
 Rules the table implies:
 
@@ -139,15 +142,15 @@ Unity names are shortened. **E** is a Unity Editor variable (`--unity-colors-<na
 | `badge-fill` | `badgeFill` | `error` (badge) | system badge red | A `destructive-100` |
 | `surface-chart` | none (`paneOpaque` under the map) | `surface-container-lowest` | `controlBackgroundColor` | A `backgrounds-100` |
 | `chart-grid` | none (ink alphas) | `outline-variant` | `gridColor` | E `default-border` |
-| `data-1..8` | `dataShared`, `dataKept`, `dataInference` (three series) | none | Swift Charts default palette, replaced | A palette `color-<hue>-800` |
+| `data-1..8` | `chartSeries1` to `chartSeries4` (Gateway's Shared and Kept pair stays product vocabulary) | none | Swift Charts default palette, replaced | A palette `color-<hue>-800` |
 | `ink` | `ink` | `on-surface` at a state-layer alpha | `labelColor` at an alpha | A `transparent-black-*`, `transparent-white-*` |
 | `brand-blue`, `brand-tile`, `brand-paper`, `brand-ink` | none (logo kit) | none | none | none |
-| `trace-purple` | `purple` | none | none | none |
+| `gateway-purple` | `purple` | none | none | none |
 
 Rules for the mapping:
 
 - M3 has no glass roles. Every glass role has an opaque fallback that equals an M3 role: `pane-base` is `surface-container`, `pane-opaque` is `surface`. Under Reduce Transparency, forced colors, Android below API 31 and Linux, the fallback is what people see.
-- Apple's own accent setting does not apply inside our apps. The root `.tint(accent)` replaces it, as trace-commons sets it at the window root. A Trace window in Light shows blue #15608a and in Dark purple #6d14f3 (NDS-1).
+- Apple's own accent setting does not apply inside our apps. The root `.tint(accent)` replaces it, as trace-commons sets it at the window root. A Gateway window shows the parent's Near AI blue in both appearances (NDS-22).
 - Never use Unity's saturated highlight blue or the M3 baseline purple as a stand-in. Both systems are benchmarks for structure only.
 - Status roles have no M3 equivalent. On Android, keep them as custom roles beside `ColorScheme` (see Implementation) and never squeeze them into `tertiary`.
 

@@ -4,8 +4,8 @@
 .nr-logo--tile { height: 40px; }
 .nr-logo-showcase { gap: var(--space-24); padding: var(--space-20) var(--space-24); }
 .nr-logo--for-dark { display: none; }
-[data-theme="dark"] .nr-logo--for-light, [data-theme="dark-hc"] .nr-logo--for-light, [data-theme="trace-dark"] .nr-logo--for-light { display: none; }
-[data-theme="dark"] .nr-logo--for-dark, [data-theme="dark-hc"] .nr-logo--for-dark, [data-theme="trace-dark"] .nr-logo--for-dark { display: block; }
+[data-theme="dark"] .nr-logo--for-light, [data-theme="dark-hc"] .nr-logo--for-light, [data-theme="gateway-dark"] .nr-logo--for-light { display: none; }
+[data-theme="dark"] .nr-logo--for-dark, [data-theme="dark-hc"] .nr-logo--for-dark, [data-theme="gateway-dark"] .nr-logo--for-dark { display: block; }
 .nr-logo-ground { box-sizing: border-box; border-radius: var(--radius-card); padding: var(--space-20) var(--space-24); }
 .nr-logo-ground--light { background: var(--brand-paper); }
 .nr-logo-ground--dark { background: var(--brand-ink); }

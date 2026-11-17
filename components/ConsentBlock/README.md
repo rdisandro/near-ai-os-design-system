@@ -4,7 +4,7 @@ The product's consent sentence, verbatim, on a quiet ground directly above the a
 
 ## When to use
 
-- Before any action that sends data off the device or out of NEAR AI Cloud, publishes it, or cannot be undone: Contribute, Go public, Run with an outside model, Share this conversation.
+- Before any action that sends data off the device or out of Near AI Cloud, publishes it, or cannot be undone: Submit, Go public, Run with an outside model, Share this conversation.
 - Use it once per action, in the same place on every platform.
 - Use `Notice` for status and warnings, `InlineAlert` for a failure, and an `ActionBar` note for a short remark about the action that is not consent.
 
@@ -28,7 +28,7 @@ The block never shrinks its type to fit: on a narrow screen the sentence wraps a
 
 ## Variants
 
-- **Plain**: the sentence above the action. Trace's review uses this form; its sentence says that nothing checks whether you looked, so no checkbox stands in for reading.
+- **Plain**: the sentence above the action. Gateway's review uses this form; its sentence says that nothing checks whether you looked, so no checkbox stands in for reading.
 - **Gated**: the sentence plus a checkbox that names the decision ("Send this run to the outside provider"). Use it for consent that must be affirmed each time: going public, admitting a witness, sending to an outside model.
 - **In a notification or menu-bar panel**: the same sentence as the body, with one action that opens the full review ("Look, then decide"), never a second way to approve.
 

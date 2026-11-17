@@ -1,10 +1,10 @@
 # KeyValueList
 
-Read-only label and value pairs with the labels end-aligned in a narrow column, for the facts about one thing: a folder's path, a model's provider, a session's size.
+Read-only label and value pairs with the labels end-aligned in a narrow column, for the facts about one thing: a folder's path, a model's provider, a trace's size.
 
 ## When to use
 
-- Facts in an inspector or a card: Path, Sessions, Mode, User; Model, Provider, Attestation.
+- Facts in an inspector or a card: Path, Traces, Mode, User; Model, Provider, Attestation.
 - A detail page's summary on touch (stacked form).
 - Use `PropertyInspector` when the values can be edited, `DataTable` when several records are compared, and `StatCard` for one headline figure.
 
@@ -27,7 +27,8 @@ Read-only label and value pairs with the labels end-aligned in a narrow column, 
 
 ## Variants
 
-- **Columns** (default): Trace's inspector facts.
+- **Columns** (default): Gateway's inspector facts.
+- **Leading** (Gateway's current form, #1387): labels start-aligned with no fixed column, the value after a `space-10` gap, so short labels don't leave a gutter. The parent keeps the 70 column as its default; a product may choose this form for every list it draws.
 - **Stacked** (`.nr-key-value-list--stacked`): the label over its value, start-aligned, `space-10` between pairs. For phones and for any column narrower than about 220.
 - **Copyable value**: a value people will paste elsewhere (an attestation hash, a request ID) may add a copy `IconButton` after it; the value stays selectable either way.
 

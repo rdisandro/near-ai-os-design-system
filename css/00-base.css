@@ -6,7 +6,7 @@
    --------------------------------------------------------------------------- */
 
 html { color-scheme: light; }
-[data-theme="dark"], [data-theme="dark-hc"], [data-theme="trace-dark"] { color-scheme: dark; }
+[data-theme="dark"], [data-theme="dark-hc"], [data-theme="gateway-dark"] { color-scheme: dark; }
 
 body {
   margin: 0;

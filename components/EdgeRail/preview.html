@@ -1,4 +1,4 @@
-<!-- @dsCard group="Navigation" height=360 subtitle="macOS screen-edge rail: open with the Traces peek, and closed" -->
+<!-- @dsCard group="Navigation" height=420 subtitle="macOS screen-edge rail: open on the Traces peek, and closed" -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>EdgeRail — preview</title></head>
@@ -8,38 +8,64 @@
     <div class="nr-edge-rail__screen" aria-label="Screen, rail open">
       <div class="nr-edge-rail">
         <section class="nr-edge-rail__peek nr-pane" aria-labelledby="peek-traces">
-          <h2 class="nr-edge-rail__title mac-heading" id="peek-traces">Traces</h2>
-          <div class="nr-edge-rail__row">
-            <span class="nr-edge-rail__dot nr-edge-rail__dot--positive" aria-hidden="true"></span>
-            <span class="nr-edge-rail__row-text mac-body-strong">Watching · 3 folders</span>
-            <button class="nr-edge-rail__button mac-label">Pause</button>
+          <div class="nr-edge-rail__head">
+            <h2 class="nr-edge-rail__title mac-heading" id="peek-traces">Traces</h2>
+            <button class="nr-icon-button" aria-label="Watching" title="Watching" aria-haspopup="menu" aria-expanded="false">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8s2.5-4.5 6.5-4.5S14.5 8 14.5 8s-2.5 4.5-6.5 4.5S1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg></button>
+            <button class="nr-icon-button" aria-label="Settings" title="Settings">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M3.6 12.4l1.1-1.1M11.3 4.7l1.1-1.1"/></svg></button>
+            <button class="nr-icon-button" aria-label="Quit" title="Quit">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M8 2v5.5"/><path d="M4.6 4.2a5 5 0 1 0 6.8 0"/></svg></button>
           </div>
-          <div class="nr-card nr-stack">
-            <div><div class="mac-body-strong">near-agents</div><div class="mac-caption nr-text-secondary">Ask me · 3 sessions waiting</div></div>
-            <hr class="nr-hairline">
-            <div><div class="mac-body-strong">trace-commons</div><div class="mac-caption nr-text-secondary">Automatic · 1 session waiting</div></div>
-            <hr class="nr-hairline">
-            <div><div class="mac-body-strong">nearai-cloud</div><div class="mac-caption nr-text-secondary">Never</div></div>
+          <div class="nr-edge-rail__list" role="tree" aria-label="Watched directories">
+            <div class="nr-edge-rail__folder" role="treeitem" aria-level="1" aria-expanded="true">
+              <span class="nr-edge-rail__chevron" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M3.5 1.5L7 5l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="nr-edge-rail__folder-text"><span class="mac-body-strong">near-agents</span><span class="mac-caption nr-text-secondary">Automatic · 3 traces waiting</span></span>
+              <span class="nr-split-button mac-label">
+                <button class="nr-split-button__action">Submit 3</button>
+                <span class="nr-split-button__divider" aria-hidden="true"></span>
+                <button class="nr-split-button__menu" aria-haspopup="menu" aria-expanded="false" aria-label="More ways to submit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5L8 10.5 12 6.5"/></svg></button>
+              </span>
+              <button class="nr-icon-button nr-icon-button--small nr-icon-button--kebab" aria-label="More for near-agents" aria-haspopup="menu"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3.5" r="1.3"/><circle cx="8" cy="8" r="1.3"/><circle cx="8" cy="12.5" r="1.3"/></svg></button>
+            </div>
+            <div class="nr-edge-rail__folder nr-edge-rail__folder--session" role="treeitem" aria-level="2">
+              <span class="nr-edge-rail__folder-text"><span class="mac-body">Claude Code · Tue 3 Nov, 52 min</span><span class="mac-caption nr-text-secondary">Waiting</span></span>
+              <button class="nr-button nr-button--glass mac-label">Submit</button>
+            </div>
+            <div class="nr-edge-rail__folder" role="treeitem" aria-level="1" aria-expanded="false">
+              <span class="nr-edge-rail__chevron" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M3.5 1.5L7 5l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="nr-edge-rail__folder-text"><span class="mac-body-strong">trace-commons</span><span class="mac-caption nr-text-secondary">Ask · 1 trace waiting</span></span>
+              <span class="nr-split-button mac-label">
+                <button class="nr-split-button__action">Submit 1</button>
+                <span class="nr-split-button__divider" aria-hidden="true"></span>
+                <button class="nr-split-button__menu" aria-haspopup="menu" aria-expanded="false" aria-label="More ways to submit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5L8 10.5 12 6.5"/></svg></button>
+              </span>
+              <button class="nr-icon-button nr-icon-button--small nr-icon-button--kebab" aria-label="More for trace-commons" aria-haspopup="menu"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3.5" r="1.3"/><circle cx="8" cy="8" r="1.3"/><circle cx="8" cy="12.5" r="1.3"/></svg></button>
+            </div>
+            <div class="nr-edge-rail__folder" role="treeitem" aria-level="1" aria-expanded="false">
+              <span class="nr-edge-rail__chevron" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M3.5 1.5L7 5l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="nr-edge-rail__folder-text"><span class="mac-body-strong">nearai-cloud</span><span class="mac-caption nr-text-secondary">Never</span></span>
+              <button class="nr-icon-button nr-icon-button--small nr-icon-button--kebab" aria-label="More for nearai-cloud" aria-haspopup="menu"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3.5" r="1.3"/><circle cx="8" cy="8" r="1.3"/><circle cx="8" cy="12.5" r="1.3"/></svg></button>
+            </div>
           </div>
-          <div class="nr-spread">
-            <a class="nr-edge-rail__link mac-label" href="#open-traces">Open Traces &#8594;</a>
-            <span class="mac-caption nr-text-tertiary">Nothing is sent unless you say so.</span>
+          <div class="nr-row mac-caption nr-text-secondary">
+            <span class="nr-edge-rail__dot nr-edge-rail__dot--shared" aria-hidden="true"></span><span>Shared 12</span>
+            <span class="nr-edge-rail__dot nr-edge-rail__dot--kept" aria-hidden="true"></span><span>Kept 4</span>
+            <span>· last 11 days</span>
           </div>
         </section>
         <nav class="nr-edge-rail__rail nr-pane" aria-label="Edge rail">
-          <button class="nr-edge-rail__tile" aria-label="Home" title="Home">
-            <svg class="nr-edge-rail__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/></svg></button>
           <button class="nr-edge-rail__tile" aria-label="Private AI" title="Private AI">
-            <svg class="nr-edge-rail__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 5 6.2v5.3c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6.2z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></button>
+            <svg class="nr-edge-rail__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="14" height="10" rx="2.5"/><path d="M12 9V5.5M9 13.5h.01M15 13.5h.01M8.5 4.5h7"/></svg></button>
           <button class="nr-edge-rail__tile" aria-label="Traces" title="Traces" aria-current="true">
-            <svg class="nr-edge-rail__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3.5l2-5 4 10 3-7 1.5 2H21"/></svg></button>
+            <svg class="nr-edge-rail__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M12 7v10"/><circle cx="5" cy="7" r="2" fill="currentColor"/><circle cx="12" cy="7" r="2" fill="currentColor"/><circle cx="19" cy="7" r="2" fill="currentColor"/><circle cx="12" cy="18" r="2" fill="currentColor"/></svg></button>
           <span class="nr-edge-rail__rule" aria-hidden="true"></span>
-          <button class="nr-edge-rail__tile" aria-label="Open Near.ai" title="Open Near.ai">
-            <svg class="nr-edge-rail__mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg></button>
+          <button class="nr-edge-rail__tile nr-edge-rail__app" aria-label="Open the app" title="Open the app">
+            <svg viewBox="82.96 82.13 234.08 231.72" aria-hidden="true"><path fill="currentColor" d="M292.106 82.1357C283.445 82.1357 275.379 86.5848 270.847 93.9047L221.912 165.811C220.318 168.188 220.971 171.382 223.353 172.96C225.292 174.234 227.866 174.082 229.633 172.58L277.799 131.227C278.605 130.504 279.834 130.581 280.545 131.379C280.872 131.74 281.044 132.216 281.044 132.691V262.169C281.044 263.233 280.18 264.089 279.085 264.089C278.509 264.089 277.952 263.842 277.587 263.404L132.014 90.8817C127.271 85.3489 120.318 82.1548 112.982 82.1357H107.893C94.1229 82.1357 82.9648 93.1822 82.9648 106.814V289.167C82.9648 302.799 94.1229 313.846 107.893 313.846C116.554 313.846 124.62 309.397 129.153 302.077L178.087 230.17C179.681 227.793 179.028 224.599 176.646 223.021C174.707 221.747 172.133 221.899 170.366 223.401L122.2 264.754C121.394 265.477 120.165 265.401 119.454 264.602C119.128 264.241 118.955 263.766 118.955 263.29V133.775C118.955 132.71 119.819 131.854 120.914 131.854C121.49 131.854 122.047 132.102 122.412 132.539L267.966 305.1C272.709 310.632 279.662 313.827 286.998 313.846H292.087C305.857 313.846 317.034 302.799 317.034 289.167V106.833C317.034 93.2012 305.876 82.1548 292.106 82.1548V82.1357Z"/></svg></button>
         </nav>
       </div>
     </div>
-    <div class="mac-caption nr-text-secondary">Open: a 56-wide rail of 44 tiles, 12 from the screen edge; the peek is 380 wide, 16 to its left.</div>
+    <div class="mac-caption nr-text-secondary">Open on Traces: the peek's header carries Watching, Settings and Quit; every folder sends from its Submit split button; the blue N opens the app.</div>
   </div>
 
   <div class="nr-stack" style="width: 208px">

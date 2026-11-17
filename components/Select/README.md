@@ -1,6 +1,6 @@
 # Select
 
-A pill that shows the current value and opens a menu of values, for choosing one of a known set such as a folder's mode (Ask me, Automatic or Never).
+A pill that shows the current value and opens a menu of values, for choosing one of a known set such as a folder's mode (Ask, Automatic or Never).
 
 ## When to use
 
@@ -30,7 +30,7 @@ A pill that shows the current value and opens a menu of values, for choosing one
 - **Select**: always has a value.
 - **Picker**: optional; shows the consumer's placeholder until something is chosen.
 - **Icon menu**: a round icon-only button at the control height. The chosen option is its value, shown with a check in the menu.
-- **With status dots**: Ask me `caution`, Automatic `positive`, Never `neutral`.
+- **With status dots**: Ask `caution`, Automatic `positive`, Never `neutral`.
 
 ## States
 
@@ -75,4 +75,4 @@ A pill that shows the current value and opens a menu of values, for choosing one
 
 ## Source
 
-`GlassPicker`, `GlassPickerPill`, `GlassPickerOption` and `GlassIconMenu` in Controls.swift; `GlassSelect` in Forms.swift; `GlassMenu` in Surfaces.swift. The folder modes Ask me / Automatic / Never and the confirmation before Automatic come from Trace's Rules step. Added by the parent: the mixed and unknown values (Unity gap), dense size (Unity dropdown), and the web listbox.
+`GlassPicker`, `GlassPickerPill`, `GlassPickerOption` and `GlassIconMenu` in Controls.swift; `GlassSelect` in Forms.swift; `GlassMenu` in Surfaces.swift. The folder modes Ask / Automatic / Never ("Ask" since 2026-10-12, NDS-30) and the confirmation before Automatic come from Gateway's Rules step. Added by the parent: the mixed and unknown values (Unity gap), dense size (Unity dropdown), and the web listbox.

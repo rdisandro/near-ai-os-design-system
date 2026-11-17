@@ -1,6 +1,6 @@
 # Logos
 
-The NEAR AI master brand, copied unchanged from the NEAR AI logo kit. Three lockups, each in four colorings.
+The Near AI master brand, copied unchanged from the Near AI logo kit. Three lockups, each in four colorings.
 
 | Lockup | Files | Use |
 |---|---|---|
@@ -15,4 +15,4 @@ Inks (an `<img>` cannot inherit color, so each file carries its own):
 - Black and White: single-ink versions for one-color printing, embossing and grounds where blue would clash.
 - Tile: color is a `brand-tile` #0b8ff6 tile with the "N" in `brand-paper` #f3f3f2; white & color is a white tile with the "N" in `brand-tile`.
 
-Rules: never recolor, redraw, outline, stretch or add effects; never place the color lockup on a dark ground or the white lockup on a light one; never set "NEAR AI" in a typeface to imitate the wordmark; keep the clear space from the clear-space files on every side. The kit sets no minimum size; ask the brand owner before using the wordmark below 72px wide.
+Rules: never recolor, redraw, outline, stretch or add effects; never place the color lockup on a dark ground or the white lockup on a light one; never set "Near AI" in a typeface to imitate the wordmark; keep the clear space from the clear-space files on every side. The kit sets no minimum size; ask the brand owner before using the wordmark below 72px wide.

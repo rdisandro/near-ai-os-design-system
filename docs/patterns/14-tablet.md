@@ -6,7 +6,7 @@ As on phones, the screen is an opaque pane (`pane-base`, `pane-opaque` under Red
 
 ## Classes on tablets
 
-Lay out from the window's width in the NEAR AI classes (NDS-12). Apple's size classes only choose idiom components. Regular width gets the sidebar-adaptable tab bar, an inspector column and popovers; compact width gets a tab bar and sheets.
+Lay out from the window's width in the Near AI classes (NDS-12). Apple's size classes only choose idiom components. Regular width gets the sidebar-adaptable tab bar, an inspector column and popovers; compact width gets a tab bar and sheets.
 
 | Window | Width (pt or dp) | Class | Layout |
 |---|---|---|---|
@@ -30,21 +30,21 @@ Use `TabView` with the `.sidebarAdaptable` style. The `TabBar` floats in glass n
 
 - Keep five tabs or fewer by default so the compact and regular layouts match, and let people customize the set.
 - Label every tab with one word and a filled SF Symbol. Never disable or hide a tab; an empty destination shows an `EmptyState`.
-- In sidebar form, add sections below the tabs: pinned threads and projects in a NEAR AI chat app; watched folders under Traces. Show at most two levels; deeper hierarchy goes in a content column.
+- In sidebar form, add sections below the tabs: pinned threads and projects in a Near AI chat app; watched folders under Traces. Show at most two levels; deeper hierarchy goes in a content column.
 - Never hide the sidebar by default, and never put critical items at its bottom.
 - Tabs switch places. Actions go in the toolbar, never in the tab bar.
 
-**Trace worked example.** Home / Inference / Traces become the three tabs, Traces carrying the decisions-owed `Badge` (or a dash when the count is unknown). Home's sub-pages keep their `Breadcrumb` inside the content column.
+**Gateway worked example.** Home / Private AI / Traces / Insights become the tabs, Traces carrying the decisions-owed `Badge` (or a dash when the count is unknown). Home's sub-pages keep their `Breadcrumb` inside the content column.
 
 ### Split view and inspector
 
 Use `NavigationSplitView` with two or three columns and `.inspector` for the trailing column. The columns follow the canonical layouts in Web patterns.
 
-| Trace pane (Mac) | iPad at regular width | iPad at compact width |
+| Gateway pane (Mac) | iPad at regular width | iPad at compact width |
 |---|---|---|
 | Main pane (440: tabs, notices, tree) | Content column, about 440 | The root of the navigation stack |
 | Content pane (map) | Detail column, flexible | A pushed page from a toolbar button |
-| Inspector (293) | `.inspector`, `size-pane-inspector` 293 | Detail page for a session; `Sheet` for Summary |
+| Inspector (293) | `.inspector`, `size-pane-inspector` 293 | Detail page for a trace; `Sheet` for Summary |
 
 - Put the sidebar toggle at the leading end of the toolbar and the inspector toggle at the trailing end, beside search.
 - Let a horizontal shelf or hero image extend under the sidebar (the background extension effect); keep its text and buttons outside the extended part.
@@ -82,13 +82,13 @@ A trackpad or mouse adds to touch on iPad; it never replaces it.
 
 - Extend hit regions about 12 pt around controls with a visible shape and about 24 pt around borderless ones. Make neighboring toolbar buttons' regions touch so the pointer never flickers back between them.
 - Pointer movement reveals controls that minimized during reading. Hover is an enhancement; nothing is reachable only by hover. A `Tooltip` shows on pointer hover and its words also serve as the accessible name.
-- Support band selection in lists that allow several selections (sessions in a folder), and secondary click for the context menu. The context menu carries the same actions as the row's swipe actions.
+- Support band selection in lists that allow several selections (traces in a folder), and secondary click for the context menu. The context menu carries the same actions as the row's swipe actions.
 
 ### Keyboard
 
 - Use focus groups: Tab moves between the sidebar, the list, the detail, the inspector and the composer; arrow keys move inside a group; each group has a primary item that takes focus first. A list shows the focused row as a full-row highlight; fields show the focus ring.
 - Keep the ring on (NDS-5). If a product turns it off, keyboard users on iPad lose their only sign of where focus is, and the product fails WCAG 2.4.7.
-- With a hardware keyboard, Return sends from the `PromptComposer` and Shift+Return adds a line, as AI and agent patterns sets out. Confirmations follow the ladder (NDS-15): Trace's Contribute has no shortcut and never answers Return.
+- With a hardware keyboard, Return sends from the `PromptComposer` and Shift+Return adds a line, as AI and agent patterns sets out. Confirmations follow the ladder (NDS-15): Gateway's Submit has no shortcut and never answers Return.
 - Name each shortcut exactly as its menu item is named, so the menu bar teaches the keyboard.
 
 ### Apple Pencil
@@ -125,7 +125,7 @@ Use `ListDetailPaneScaffold` and `SupportingPaneScaffold` with window size class
 - The rail narrows only the leading pane, so the spacer stays centered in the window.
 - Offer a drag handle between the panes with snap points at 360, 412 and the visual center. In list-detail, remember the width people set; a supporting pane returns to its default each time.
 - Medium shows one pane, or two at 50/50 only when both are light (a short list beside a short detail).
-- Trace's Traces tab maps to list-detail: folders and sessions in the list pane, the session review card in the detail pane. Private AI maps to a supporting pane: the ledger primary, the account section supporting.
+- Gateway's Traces tab maps to list-detail: folders and traces in the list pane, the trace review card in the detail pane. Private AI maps to a supporting pane: the ledger primary, the account section supporting.
 
 ### Predictive back
 
@@ -182,7 +182,7 @@ The inspector is supplementary. It shows facts and decisions about the selection
 
 - A standard side sheet is part of the screen: `pane-base`, separated by a `rule`. A modal side sheet floats over `scrim` with `radius-sheet` on its inner corners and `shadow-modal`.
 - Keep the person's inspector width per window.
-- Choose a detail page over a sheet when the inspector holds a decision. Trace's session review card carries Contribute, Dismiss, Look inside and Keep, so at compact it becomes the detail page; the Summary inspector, which only reports, becomes a sheet.
+- Choose a detail page over a sheet when the inspector holds a decision. Gateway's trace review card carries Submit and Look inside, so at compact it becomes the detail page; the Summary inspector, which only reports, becomes a sheet.
 - Show one sheet at a time. On iPad prefer the form or page sheet style, centered over a dimmed window.
 
 ## Drag and drop
@@ -199,7 +199,7 @@ Support drag and drop wherever content moves, and give every drag a menu equival
 - Hovering a dragged item over a sidebar item or tab opens it after a pause (spring loading).
 - The `PromptComposer` is a drop target. Accepted files become `Chip`s with upload progress; a rejected file gets an `InlineAlert` with the reason ("This file type can't be attached."). Attach and paste do the same job.
 - Dragging a `Message` out offers rich text, then Markdown, then plain text. A `CodeBlock` drags out as its text.
-- Trace's first run accepts a folder dropped on the dashed add tile; the tile's edge turns `accent-soft` while a folder is over it. The Files app is the source on iPad.
+- Gateway's first run accepts a folder dropped on the dashed add tile; the tile's edge turns `accent-soft` while a folder is over it. The Files app is the source on iPad.
 - Make drops undoable. Confirm only a drop that cannot be undone.
 
 [HIG: drag and drop]

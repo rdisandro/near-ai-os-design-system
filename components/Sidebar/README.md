@@ -31,6 +31,7 @@ A sidebar lists an app's destinations down the leading edge of a desktop, iPad o
 - **App sidebar** (default): grouped destinations with glyphs and counts.
 - **Section list** (`--sections`): settings sections. Clicking scrolls the body to the section; it selects nothing.
 - **Edge** (`--edge`): leading corners squared where the sidebar meets the window edge (macOS and iPadOS 27 run sidebars to the window's edges; 26 floats them as inset panes).
+- **Chat panel** (NDS-44, the Near AI chat): an opaque card (`card-on-opaque`) beside the conversation card, opened from an icon rail. Its first row is "New chat"; rows are 36 tall with 20 glyphs in `text-secondary` (the chat glyph is the N inside a speech bubble). The current chat takes `accent-tint` over the panel with its label and glyph unchanged, instead of the solid `selection`, and there is no edge bar. Hover and press are two clearly separate grey steps. This is the chat product's choice; the owner asked for stronger hover and selection contrast and removed the edge bar, and has not ruled on tint versus fill.
 
 ## States
 
@@ -39,7 +40,7 @@ A sidebar lists an app's destinations down the leading edge of a desktop, iPad o
 | Default | `text-primary` label, `accent-text` glyph | `text-secondary` |
 | Hover | `row-hover` fill | `row-hover` fill, `text-primary` |
 | Pressed | `filter: brightness(0.92)` | same |
-| Selected | `aria-current="page"`: `selection` fill, `text-on-accent` label, glyph and count, semibold | the section in view: `text-primary`, semibold, never a fill |
+| Selected | `aria-current="page"`: `selection` fill, `text-on-accent` label, glyph and count, semibold. Chat panel: `accent-tint`, ink unchanged, never an edge bar | the section in view: `text-primary`, semibold, never a fill |
 | Selected, pressed | `accent-pressed` | n/a |
 | Focus | 2px `focus-ring`, 2px outside (NDS-5) | same |
 | Disabled | `opacity-disabled` | a name not loaded yet shows a dash in `text-tertiary` |
@@ -55,7 +56,7 @@ A sidebar lists an app's destinations down the leading edge of a desktop, iPad o
 - A `nav` with a label from the product. Group headings are headings, and each list is `aria-labelledby` its heading.
 - `aria-current="page"` marks the destination; `aria-current="true"` marks the section in view.
 - Counts and status are words ("2 waiting", "Running"), never a color alone.
-- `text-on-accent` on `selection` holds 4.5:1. In Trace dark the `selection` fill is 1.09:1 against the pane (flagged, kept from the source), so the selected row also turns semibold and carries `aria-current`.
+- `text-on-accent` on `selection` holds 4.5:1, and `selection` holds 3:1 against every pane in every theme now that Gateway uses the parent accent (NDS-22). The selected row also turns semibold and carries `aria-current`. A tinted current row (chat panel) is not a state on its own at 3:1, so it keeps `aria-current` and its row stays the only tinted one.
 - **The product supplies**: group headings, row labels, glyphs, counts and their words, the navigation label.
 
 ## Platforms
@@ -74,4 +75,4 @@ A sidebar lists an app's destinations down the leading edge of a desktop, iPad o
 
 ## Source
 
-Section list: `GlassSectionNavRowStyle` in `macos/Sources/TCDesign/Components/SectionNav.swift` (12pt label, secondary, primary on hover over an 8% ink fill, `Radius.control`, 10 by 6 padding, "never the blue menu selection: the row scrolls a body to its section, it selects nothing"), in the 180-wide Settings list (`Views/Monitor/SettingsModal.swift`). App sidebar: intentional addition. Trace navigates with tabs in a fixed main pane, but web, iPad and desktop products with more destinations need a leading list (HIG sidebars: floating glass on 26, edge to edge on 27, two levels, accent glyphs; NDS-13).
+Section list: `GlassSectionNavRowStyle` in `macos/Sources/TCDesign/Components/SectionNav.swift` (12pt label, secondary, primary on hover over an 8% ink fill, `Radius.control`, 10 by 6 padding, "never the blue menu selection: the row scrolls a body to its section, it selects nothing"), in the 180-wide Settings list (`Views/Monitor/SettingsModal.swift`). App sidebar: intentional addition. Gateway navigates with tabs in a fixed main pane, but web, iPad and desktop products with more destinations need a leading list (HIG sidebars: floating glass on 26, edge to edge on 27, two levels, accent glyphs; NDS-13).

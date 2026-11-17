@@ -4,7 +4,7 @@ A card that confirms a reversible action the person just took and offers Undo, c
 
 ## When to use
 
-- After a reversible action that acts at once: contributed, approved, kept, archived, moved, a mode changed. Every platform gets this undo surface.
+- After a reversible action that acts at once: approved, archived, moved, a mode changed. Every platform gets this undo surface.
 - A passive confirmation with no action, only when the result is out of view. On web, show the change inline too.
 - Not for failures (`InlineAlert`, `Notice`), decisions (`Modal`), long work (`ProgressBar`), or anything that happens while the app is in the background (a system notification).
 
@@ -12,7 +12,7 @@ A card that confirms a reversible action the person just took and offers Undo, c
 
 1. **Surface.** Floating: `popover` over `blur-floating` with `shadow-float`, `radius-card`, padding `card-padding-y` x `card-padding-x`, at most `size-modal-narrow` wide, at `z-toast`. Docked: the `card` fill in the pane, no blur, no shadow, full column width.
 2. **Eyebrow** (optional). Eyebrow step in `text-tertiary` (APPROVAL SAVED).
-3. **Title.** Body-strong in `text-primary`: what happened, with its object and count ("Contributed 1 session").
+3. **Title.** Body-strong in `text-primary`: what happened, with its object and count ("Approved 1 trace").
 4. **Detail** (optional). Caption in `text-secondary`, tabular numerals: the consequence and the count-up ("Approved 12s ago").
 5. **Actions.** Undo as a glass `Button`, then Dismiss as a link, `space-8` apart. At most one action besides Dismiss.
 6. **Refusal** (optional). An `InlineAlert` under the row when Undo fails.
@@ -53,7 +53,7 @@ Text lines sit `space-2` apart; text to actions `space-16`. The floating **regio
 ## Accessibility
 
 - Keep a polite live region (`role="status"`) in the page before any toast arrives; the title and detail are read once. Keep the count-up outside the live region so it is not re-read every second.
-- The Undo label names the action when "Undo" alone is ambiguous ("Undo contribute"), from the product's copy.
+- The Undo label names the action when "Undo" alone is ambiguous ("Undo approve"), from the product's copy.
 - An actionable toast never times out, which keeps time limits out of the way (WCAG 2.2.1). A passive one repeats what it says somewhere inline.
 - Contrast: text tokens over `popover` hold 4.5:1 over the worst ground; the `-hc` themes add the 1px `edge-hc` edge.
 - Undo and Dismiss meet the touch floors on phones and tablets.
@@ -68,7 +68,7 @@ Text lines sit `space-2` apart; text to actions `space-16`. The floating **regio
 
 ## Do and don't
 
-- Do say what happened with numbers: "Contributed 1 session", "Moved 12 files to Archive".
+- Do say what happened with numbers: "Approved 1 trace", "Moved 12 files to Archive". A partial approve says what was withheld and is never drawn as a success.
 - Do keep Undo available as long as the product can honor it.
 - Don't confirm actions whose result is already in view.
 - Don't put a failure, a link or a second action in a toast.

@@ -5,7 +5,7 @@ A searchable list of every command the product offers, opened with Mod+K, that r
 ## When to use
 
 - Use it on web and in the Windows and Linux shells as the complete command inventory, beside visible primary actions.
-- Use it as the AI entry: the last row hands the typed words to the assistant ("Ask NEAR AI about “watch”").
+- Use it as the AI entry: the last row hands the typed words to the assistant ("Ask Near AI about “watch”").
 - On macOS and iPadOS the menu bar stays the command inventory; a palette is optional there.
 - Don't use it on phones. Use a `SearchField` in a `Sheet`.
 - Don't make it the only path to an action. Every command also lives in a menu, toolbar or button.

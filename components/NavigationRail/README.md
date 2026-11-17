@@ -61,7 +61,7 @@ A navigation rail holds three to seven app destinations on the leading edge of a
 - Badge counts are hidden; their words ride in the item's name ("2 need your approval").
 - Labels never truncate or shrink. At 200% text the items grow taller and labels wrap.
 - The whole item, full rail width, is the target (at least 48).
-- `text-on-accent` on `selection` holds 4.5:1. In Trace dark the `selection` fill is 1.09:1 against the pane (flagged, kept from the source), so the label also turns semibold.
+- `text-on-accent` on `selection` holds 4.5:1. In Gateway dark the `selection` fill is 1.09:1 against the pane (flagged, kept from the source), so the label also turns semibold.
 - **The product supplies**: destinations, icons, labels, badge counts and their words, the menu button's names.
 
 ## Platforms

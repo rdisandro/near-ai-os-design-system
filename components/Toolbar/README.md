@@ -4,9 +4,9 @@ A toolbar holds a screen's frequent commands in at most three groups along the t
 
 ## When to use
 
-- The top row of a window's main pane: pane toggles, the View menu, Settings (desktop).
+- The top row of a window's main pane: pane toggles and Settings (desktop). Options that belong to one list live in that list's own menu, not in the toolbar.
 - A page header on web and tablet: back, title, tools, the one primary action (Run agent).
-- A floating or docked bar on phones for a screen below the top level (reviewing a session: Look inside, Keep, Contribute).
+- A floating or docked bar on phones for a screen below the top level (reviewing a trace: Look inside, Keep, Submit).
 - Not for app destinations (`Sidebar`, `NavigationRail`, `TabBar`), not for a form's Cancel and submit row (`ActionBar`), and never together with a `TabBar` on a phone.
 
 ## Anatomy
@@ -43,7 +43,7 @@ A toolbar holds a screen's frequent commands in at most three groups along the t
 | Hover | `control-hover` behind the glyph |
 | Pressed | the fill at `filter: brightness(0.92)`; the glyph keeps its contrast |
 | Toggle on (`aria-pressed="true"`) | `toolbar-glyph` |
-| Toggle off (`aria-pressed="false"`, its pane hidden) | `toolbar-glyph-off`, 3:1 on `control`. Trace light (2.27:1) and Trace dark (2.63:1) are below the floor, kept from the source and flagged |
+| Toggle off (`aria-pressed="false"`, its pane hidden) | `toolbar-glyph-off`, 3:1 on `control` in every theme (NDS-50) |
 | Menu open (`aria-expanded="true"`) | `toolbar-expanded` fill |
 | Prominent pressed | `accent-pressed` |
 | Disabled | `opacity-disabled`, no hover; explain why nearby |
@@ -53,7 +53,7 @@ A toolbar holds a screen's frequent commands in at most three groups along the t
 
 - **Keyboard**: on web, `role="toolbar"` is one tab stop; Left and Right move between controls. On macOS every toolbar command is also a menu-bar command with a shortcut, and on web and Windows/Linux it is in the command palette (NDS-14).
 - **Overflow**: commands that do not fit move into a More menu at the trailing end. macOS and iPadOS add their own overflow menu, so never add one there. Hide whole items, never empty their contents.
-- **Prominent action**: never answers Return when it sends something that cannot be undone (Contribute); it is drawn prominent and needs a click or tap (NDS-15).
+- **Prominent action**: never answers Return when it sends something that cannot be undone (Submit); it is drawn prominent and needs a click or tap (NDS-15).
 - **Scroll**: a floating toolbar may slide away on scroll down and return on scroll up, never while VoiceOver or TalkBack runs.
 - **Motion**: fills change on `duration-fast`; showing and hiding run on `spring-spatial`; nothing moves under Reduce Motion.
 
@@ -82,4 +82,4 @@ A toolbar holds a screen's frequent commands in at most three groups along the t
 
 ## Source
 
-`GlassToolbarButton` (28 × 24, symbol 13, `toolbarGlyph` and `toolbarGlyphHidden`, `toolbarExpanded` while its menu is open, `controlHover` under the pointer, a pressed wash that never darkens the glyph) and `GlassToolbarGroup` (control capsule, 2 padding, 2 spacing) in `macos/Sources/TCDesign/Components/Controls.swift`; the main pane's top row in `Views/MonitorWindowView.swift` (78 clearance for the traffic lights, a 28 round Settings button). The floating and docked variants are an intentional addition for web, tablet and phone: HIG toolbars (at most three groups, one prominent action trailing, navigation bars folded into toolbars) and M3 Expressive toolbars (docked 64, floating pill, never with a navigation bar).
+`GlassToolbarButton` (28 × 24, symbol 13, `toolbarGlyph` and `toolbarGlyphHidden`, `toolbarExpanded` while its menu is open, `controlHover` under the pointer, a pressed wash that never darkens the glyph) and `GlassToolbarGroup` (control capsule, 2 padding, 2 spacing) in `macos/Sources/TCDesign/Components/Controls.swift`; the main pane's top row in `Views/MonitorWindowView.swift` (78 clearance for the traffic lights, a 28 round Settings button; the View button removed in #1490, its one item moved to the Traces filter menu). The floating and docked variants are an intentional addition for web, tablet and phone: HIG toolbars (at most three groups, one prominent action trailing, navigation bars folded into toolbars) and M3 Expressive toolbars (docked 64, floating pill, never with a navigation bar).

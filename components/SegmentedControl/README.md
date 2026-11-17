@@ -46,14 +46,14 @@ A row of two to five equal-width segments in a well, for choosing one of a few c
 ## Behavior
 
 - The control is one tab stop. Arrow keys move the selection and apply it; Home and End jump to the ends.
-- The choice applies at once (Trace applies Appearance immediately).
+- The choice applies at once (Gateway applies Appearance immediately).
 - Motion: this component swaps the fill on `duration-fast`. Native thumbs that slide (iOS, M3) use `spring-spatial-fast`. Nothing moves under Reduce Motion.
 
 ## Accessibility
 
 - Web: `role="radiogroup"` with the consumer's name, segments `role="radio"` with `aria-checked` and a roving `tabindex`. For views, use `Tabs` (`tablist`).
 - Dots and badges are hidden; their words go in the segment's description, supplied by the consumer.
-- The selected segment is marked by its fill, its `text-on-accent` label and its semibold weight. In Trace dark the accent fill sits at 1.09:1 on the pane (flagged), so the weight and the announced state carry it.
+- The selected segment is marked by its fill, its `text-on-accent` label and its semibold weight. In Gateway dark the accent fill sits at 1.09:1 on the pane (flagged), so the weight and the announced state carry it.
 
 ## Platforms
 

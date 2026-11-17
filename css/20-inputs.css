@@ -539,7 +539,7 @@
   margin: 0;
   border: 0;
   border-radius: var(--radius-pill);
-  background: var(--toggle-off);
+  background: var(--toggle-track-off);
   font: inherit;
   cursor: inherit;
   transition: background-color var(--duration-fast) var(--ease-standard),
@@ -553,7 +553,7 @@
   width: var(--nr-switch-knob);
   height: var(--nr-switch-knob);
   border-radius: 50%;
-  background: var(--nr-switch-knob-off, var(--text-on-accent));
+  background: var(--toggle-knob-off);
   transition: transform var(--duration-spring-spatial-fast) var(--spring-spatial-fast),
               background-color var(--duration-fast) var(--ease-standard);
 }
@@ -567,10 +567,8 @@
   transform: translateX(calc(var(--size-toggle-width) - var(--size-toggle-height)));
   background: var(--text-on-accent);
 }
-/* The off knob is the theme's light ink: text-on-accent is white in the
-   light and Trace themes, dark navy in dark and dark-hc. */
-[data-theme="dark"] .nr-switch,
-[data-theme="dark-hc"] .nr-switch { --nr-switch-knob-off: var(--text-primary); }
+/* The off knob is white in the light themes and the on knob's navy in the
+   dark ones (owner, 2026-10-22); the dark off track is 38% white for 3:1. */
 .nr-switch:not(:has(:disabled)):active .nr-switch__track { filter: brightness(0.92); }
 .nr-switch:not(:has(:disabled)):active .nr-switch__track:checked { filter: none; background: var(--accent-pressed); }
 .nr-switch:has(.nr-switch__track:disabled) { cursor: default; }

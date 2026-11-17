@@ -53,7 +53,7 @@ A small floating panel anchored to the control that opened it, for a few related
 ## Accessibility
 
 - The container is a nonmodal `dialog` labelled by its title or by its source.
-- The info glyph is a button named by the product ("More about session text"). The same text is the glyph's description (`aria-describedby`, or SwiftUI `accessibilityValue`), so screen reader users get it without opening the popover.
+- The info glyph is a button named by the product ("More about trace text"). The same text is the glyph's description (`aria-describedby`, or SwiftUI `accessibilityValue`), so screen reader users get it without opening the popover.
 - Text uses `text-secondary` on `popover`, measured over the worst ground behind the blur.
 - The consumer supplies every word: title, text, action labels and the glyph's name.
 

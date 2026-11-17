@@ -8,10 +8,10 @@ A centered glyph, sentence and at most one action that explain why a list or reg
 |---|---|---|---|
 | Blank | Nothing exists yet | Yes | Optional, one ("Add a folder") |
 | Filtered | A filter or search hides everything | No | One: clear the filter |
-| Idle | Nothing is selected | No | None ("Select a session to see what it would send.") |
+| Idle | Nothing is selected | No | None ("Select a trace to see what it would send.") |
 
 - Not for loading (`Spinner`, `Skeleton`), not for a failed read (`Notice` with Try again), not for an unknown value (a dash).
-- First-run starter content belongs in a `Card` flow, not in an empty state.
+- First-run starter content belongs in a `Card` flow, not in an empty state. A surface that has not started yet (Insights before any traces) uses `GetStartedCard` in place of its content (NDS-39); its empty state is for "nothing here" once the surface is running.
 
 ## Anatomy
 
@@ -41,7 +41,7 @@ A centered column, `space-4` between glyph, title and detail, `space-8` above th
 ## States
 
 - **Shown** only when the source has answered and the answer is empty. While the answer is pending, show the loading state; when the read failed, show a `Notice`.
-- **Filtered** names the filter and how many items it hides ("No sessions match “Failed”." / "12 sessions are hidden by this filter.").
+- **Filtered** names the filter and how many items it hides ("No traces match “Failed”." / "12 traces are hidden by this filter.").
 - **Increased contrast.** The text tokens step up with the theme; there is no surface of its own to edge.
 
 ## Behavior

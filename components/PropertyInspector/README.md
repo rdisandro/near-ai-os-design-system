@@ -34,7 +34,7 @@ On touch the inspector becomes a settings-style list: one value per row, nested 
 
 ## Variants
 
-- **Regular inspector**: groups on quiet cards (Trace's inspector sections).
+- **Regular inspector**: groups on quiet cards (Gateway's inspector sections).
 - **Dense inspector** (`.nr-dense`): Unity-style pro panel, no containers, arrows in the gutter.
 - **Multi-selection**: the header names the count; values that differ show the mixed state.
 - **Read-only rows** sit beside editable ones as plain text values (no well).
@@ -88,4 +88,4 @@ On touch the inspector becomes a settings-style list: one value per row, nested 
 
 ## Source
 
-Intentional addition for dense desktop and web panels. Grounded in Unity Editor Foundations (inspector padding 18 / 4 / 8, 2px field gap, 8px group gap, 15px indent to 6 levels, 275 minimum width, foldouts, hide versus disable, revert on invalid) and App UI (units, live versus committed changes, undo at commit points), with mixed values specified here because neither source does. Trace's own inspector sections (`InspectorSection` with `GlassExpander` on a quiet card, `GlassPaneInsets.inspector`) set the regular form [trace-commons §5.4]. HIG inspectors and split views set the pane.
+Intentional addition for dense desktop and web panels. Grounded in Unity Editor Foundations (inspector padding 18 / 4 / 8, 2px field gap, 8px group gap, 15px indent to 6 levels, 275 minimum width, foldouts, hide versus disable, revert on invalid) and App UI (units, live versus committed changes, undo at commit points), with mixed values specified here because neither source does. Gateway's own inspector sections (`InspectorSection` with `GlassExpander` on a quiet card, `GlassPaneInsets.inspector`) set the regular form [trace-commons §5.4]. HIG inspectors and split views set the pane.

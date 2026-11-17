@@ -68,7 +68,7 @@ A disclosure row (a chevron that turns, a label, an optional count) that shows o
 
 ## Do and don't
 
-- Do name what is inside ("Sources", "Tool calls (3)"). Don't write "More" or "Details".
+- Do name what is inside ("Sources", "Tool calls (3)"). Don't write "More" or "Details", except as the label of a notice's own detail expander, where "Details" is the fixed word for "everything this decision does not need" (NDS-25).
 - Do keep reasoning and tool calls closed by default. Don't open them on their own.
 - Do use foldouts for groups of five or more properties. Don't hide a single high-traffic control.
 - Don't nest more than six levels, and don't put a foldout inside a container in a dense panel.

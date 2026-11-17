@@ -80,4 +80,4 @@ Filter, input, suggestion and status, as above. Filter sets are single-select or
 
 ## Source
 
-`GlassChip` in Indicators.swift (mono pill, 6pt dot, status ink, neutral tint in flat); the History filter pills (`HistoryFilterPill` in HomeViews.swift: label and count, the chosen one lit, wrapping onto a second line); Trace's redaction chips. The parent draws the selected filter on `accent-tint` with a check (the token's stated use) in place of the source's solid selected fill, widens spacing to 8 for touch targets (M3 chips), and adds input and suggestion chips (HIG token fields, M3 chips).
+`GlassChip` in Indicators.swift (mono pill, 6pt dot, status ink, neutral tint in flat); the History filter pills (`HistoryFilterPill` in HomeViews.swift: label and count, the chosen one lit, wrapping onto a second line); Gateway's redaction chips. The parent draws the selected filter on `accent-tint` with a check (the token's stated use) in place of the source's solid selected fill, widens spacing to 8 for touch targets (M3 chips), and adds input and suggestion chips (HIG token fields, M3 chips).
